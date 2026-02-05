@@ -1,3 +1,25 @@
 <resources>
-    <string name="app_name">P4_ciudad_JoséMaríaHugoPabloTapia</string>
+    <string name="app_name">Biomas de Minecraft</string>
+
+    <string name="start">Empezar</string>
+    <string name="welcome">Explora los biomas de Minecraft</string>
+
+    <!-- Biomas -->
+    <string name="campos_setas">Campos de setas</string>
+    <string name="taiga">Taiga</string>
+    <string name="jungla">Jungla</string>
+    <string name="sabana">Sabana</string>
+    <string name="bosque">Bosque</string>
+
+    <!-- Categorías -->
+    <string name="estructuras">Estructuras</string>
+    <string name="criaturas">Criaturas</string>
+    <string name="recursos">Recursos</string>
+    <string name="vegetacion">Vegetación</string>
+
+    <string name = "elegirCategoria">Elige la categoria del bioma: </string>
+    <string name = "elegirBioma">Elige el bioma: </string>
+    <string name = "elegirOpcion">Elige la opcion que quieras</string>
+
+
 </resources>

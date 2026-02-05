@@ -52,7 +52,7 @@ fun P4_ciudad_JoséMaríaHugoPabloTapiaTheme(
 
     MaterialTheme(
         colorScheme = colorScheme,
-        typography = Typography,
+        typography = AppTypography,
         content = content
     )
 }
