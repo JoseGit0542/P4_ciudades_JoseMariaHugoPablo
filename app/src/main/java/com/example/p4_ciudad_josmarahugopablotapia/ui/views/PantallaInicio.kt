@@ -1,8 +1,5 @@
 package com.example.p4_ciudad_josmarahugopablotapia
 
-import android.R.attr.fontFamily
-import android.R.attr.onClick
-import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -15,12 +12,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -29,22 +24,16 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.P4_ciudad_JoséMaríaHugoPabloTapiaTheme
-import androidx.compose.material.icons.Icons
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.scale
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.text.font.Font
-import androidx.compose.ui.text.font.FontFamily
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.MinecraftFont
-import kotlinx.coroutines.delay
 
 
 @Composable
@@ -58,7 +47,7 @@ fun PantallaInicio(
     val imagenSol = painterResource(R.drawable.sol)
     val fondoNoche = painterResource(R.drawable.fondo_noche)
     val fondoDia = painterResource(R.drawable.fondodia)
-    val minecraftLogo = painterResource(R.drawable.minecraft_logo_2013)
+    val logoMinecraft = painterResource(R.drawable.logominecraft)
     val imagenBoton1 = painterResource(R.drawable.comienzaboton)
 
     P4_ciudad_JoséMaríaHugoPabloTapiaTheme { // <-- Abrimos el bloque del tema correctamente
@@ -101,27 +90,33 @@ fun PantallaInicio(
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(32.dp),
-                verticalArrangement = Arrangement.Top,
+                    .padding(bottom = 180.dp),
+                verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             )
             {
                 Spacer(modifier = Modifier.height(10.dp)) // 👈 baja el inicio del contenido
 
                 Image(
-                    painter = minecraftLogo,
+                    painter = logoMinecraft,
                     contentDescription = null,
-                    modifier = Modifier.size(350.dp)
+                    modifier = Modifier.height(120.dp).size(340.dp),
+                    contentScale = ContentScale.Fit
                 )
 
-                Spacer(modifier = Modifier.height(24.dp))
 
-                Text(
-                    text = "Descubre mundos, criaturas y recursos del maravilloso mundo de Minecraft",
-                    modifier = Modifier.padding(top = 8.dp),
-                )
 
-                Spacer(modifier = Modifier.height(32.dp))
+
+                MinecraftPanel(
+                    modifier = Modifier.fillMaxWidth(0.9f)
+                ) {
+                    MinecraftTextDay(
+                        "Descubre criaturas, elementos y recursos del mundo de Minecraft"
+                    )
+                }
+
+
+
 
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -129,13 +124,32 @@ fun PantallaInicio(
                 ) {
                     Column(
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.spacedBy(20.dp)
+                        verticalArrangement = Arrangement.spacedBy(15.dp)
                     ) {
-                        Image(
-                            painter = painterResource(R.drawable.comienzaboton),
-                            contentDescription = "Comenzar la aventura",
-                            modifier = Modifier.clickable { onComienzaClick() }.fillMaxWidth(0.8f)
-                        )
+                        Spacer(modifier = Modifier.height(10.dp))
+
+                        Row(
+                            modifier = Modifier.fillMaxWidth(0.9f),
+                            horizontalArrangement = Arrangement.SpaceEvenly,
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            MinecraftButton(
+                                text = "Comenzar",
+                                modifier = Modifier.weight(1f).padding(end = 8.dp)
+                            ) {
+                                onComienzaClick()
+                            }
+
+                            MinecraftButton(
+                                text = "Explorar",
+                                modifier = Modifier.weight(1f).padding(start = 8.dp)
+                            ) {
+                                onObjetoClick()
+                            }
+
+                        }
+
+
 
                     }
 
@@ -148,6 +162,9 @@ fun PantallaInicio(
 
 }
 
+
+
+
 @Preview(showBackground = true)
 @Composable
 fun PantallaInicioPreview() {
@@ -156,3 +173,105 @@ fun PantallaInicioPreview() {
         onObjetoClick = {}
     )
 }
+@Composable
+fun MinecraftPanel(
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit
+) {
+    Box(
+        modifier = modifier
+            .background(Color(0xFFA0A0A0))
+            .border(3.dp, Color.Black)
+            .padding(6.dp)   // antes 12dp → ahora más compacto
+    ) {
+        content()
+    }
+}
+
+
+@Composable
+fun MinecraftTextDay(text: String, modifier: Modifier = Modifier) {
+    Box(modifier = modifier.fillMaxWidth()) {
+
+        val baseModifier = Modifier
+            .fillMaxWidth()
+            .padding(2.dp)
+
+        Text(
+            text = text,
+            fontSize = 18.sp,
+            fontFamily = MinecraftFont,
+            color = Color.Black,
+            modifier = baseModifier
+                .offset(x = 1.5.dp, y = 1.5.dp), // sombra ligera
+            textAlign = androidx.compose.ui.text.style.TextAlign.Center
+        )
+
+        Text(
+            text = text,
+            fontSize = 18.sp,
+            fontFamily = MinecraftFont,
+            color = Color.White,
+            modifier = baseModifier,
+            textAlign = androidx.compose.ui.text.style.TextAlign.Center
+        )
+    }
+}
+@Composable
+fun MinecraftButton(
+    text: String,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
+) {
+    Box(
+        modifier = modifier
+            .background(Color(0xFFA0A0A0)) // gris más claro
+            .border(3.dp, Color.Black)
+            .clickable { onClick() }
+            .padding(vertical = 10.dp, horizontal = 12.dp)
+    ) {
+        MinecraftButtonText(
+            text = text,
+            modifier = Modifier.align(Alignment.Center)
+        )
+    }
+}
+
+@Composable
+fun MinecraftButtonText(text: String, modifier: Modifier = Modifier) {
+    Box(modifier = modifier.fillMaxWidth()) {
+
+        val baseModifier = Modifier
+            .fillMaxWidth()
+            .padding(2.dp)
+
+        // sombra negra
+        Text(
+            text = text,
+            fontSize = 18.sp,
+            fontFamily = MinecraftFont,
+            color = Color.Black,
+            modifier = baseModifier
+                .offset(x = 1.5.dp, y = 1.5.dp),
+            textAlign = androidx.compose.ui.text.style.TextAlign.Center
+        )
+
+        // texto amarillo estilo logros
+        Text(
+            text = text,
+            fontSize = 18.sp,
+            fontFamily = MinecraftFont,
+            color = Color(0xFFFFFF55),
+            modifier = baseModifier,
+            textAlign = androidx.compose.ui.text.style.TextAlign.Center
+        )
+    }
+}
+
+
+
+
+
+
+
+
