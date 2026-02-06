@@ -58,4 +58,6 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     implementation("androidx.compose.material:material-icons-extended")
+    // Para usar la función viewModel() en Compose
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.8.4")
 }
