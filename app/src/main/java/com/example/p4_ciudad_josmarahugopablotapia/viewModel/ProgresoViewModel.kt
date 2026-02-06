@@ -1,4 +1,4 @@
 package com.example.p4_ciudad_josmarahugopablotapia.viewModel
 
-class BiomaViewModel {
+class ProgresoViewModel {
 }

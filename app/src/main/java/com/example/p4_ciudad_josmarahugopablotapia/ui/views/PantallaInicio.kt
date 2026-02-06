@@ -265,6 +265,49 @@ fun MinecraftButtonText(text: String, modifier: Modifier = Modifier) {
             modifier = baseModifier,
             textAlign = androidx.compose.ui.text.style.TextAlign.Center
         )
+        @Composable
+        fun MinecraftBottomBar(
+            progreso: Progreso,
+            onHome: () -> Unit,
+            onBioma: () -> Unit,
+            onCategoria: () -> Unit,
+            onObjeto: () -> Unit
+        ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Color(0xFFA0A0A0))
+                    .border(3.dp, Color.Black)
+                    .padding(8.dp),
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+
+                BottomIconButton(
+                    icon = Icons.Default.Home,
+                    enabled = true,
+                    onClick = onHome
+                )
+
+                BottomIconButton(
+                    icon = Icons.Default.Public,
+                    enabled = progreso >= Progreso.BIOMA,
+                    onClick = onBioma
+                )
+
+                BottomIconButton(
+                    icon = Icons.Default.Folder,
+                    enabled = progreso >= Progreso.CATEGORIA,
+                    onClick = onCategoria
+                )
+
+                BottomIconButton(
+                    icon = Icons.Default.Inventory,
+                    enabled = progreso >= Progreso.OBJETO,
+                    onClick = onObjeto
+                )
+            }
+        }
     }
 }
 
