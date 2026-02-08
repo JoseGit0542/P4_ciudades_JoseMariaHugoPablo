@@ -7,6 +7,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import com.example.p4_ciudad_josmarahugopablotapia.R
+import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.MinecraftFont
 
 val MinecraftFont: FontFamily = FontFamily(
     Font(R.font.minecraft_font) // sin '+' ni mayúsculas

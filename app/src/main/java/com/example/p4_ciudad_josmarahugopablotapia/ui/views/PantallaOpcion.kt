@@ -1,4 +1,4 @@
-package com.example.p4_ciudad_josmarahugopablotapia
+package com.example.p4_ciudad_josmarahugopablotapia.ui.views
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -24,6 +24,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.P4_ciudad_JoséMaríaHugoPabloTapiaTheme
+
+
+
+
 
 @Composable
 fun SeleccionarOpcion(
