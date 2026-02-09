@@ -27,11 +27,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.p4_ciudad_josmarahugopablotapia.data.DataSource
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.MinecraftFont
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.P4_ciudad_JoséMaríaHugoPabloTapiaTheme
 import com.example.p4_ciudad_josmarahugopablotapia.viewModel.InicioViewModel
@@ -93,7 +95,6 @@ fun PantallaInicio(
                         .clickable { /* Acción de idiomas */ }
                         .padding(5.dp)
                 )
-
                 // 3. Selector de Tema (Arriba a la Derecha)
                 Image(
                     painter = painterResource(
@@ -131,9 +132,8 @@ fun PantallaInicio(
                 Spacer(modifier = Modifier.height(20.dp))
 
                 // 1. CAJA DE DESCRIPCIÓN (Ancho 0.85f)
-                MinecraftPanel(modifier = Modifier.fillMaxWidth(0.85f)) {
-                    MinecraftTextDay("Explora recursos, criaturas y elementos del mundo de Minecraft")
-                }
+                MinecraftPanelDescripcion(modifier = Modifier.fillMaxWidth(0.85f), isDarkTheme = uiState.isDarkTheme)
+
 
                 Spacer(modifier = Modifier.height(10.dp)) // Espacio reducido para parecerse a la UI original
 
@@ -193,6 +193,35 @@ fun MinecraftPanel(modifier: Modifier = Modifier, content: @Composable () -> Uni
         content()
     }
 }
+@Composable
+fun MinecraftPanelDescripcion(modifier: Modifier = Modifier, isDarkTheme: Boolean) {
+    Box(
+        modifier = modifier
+            .background(Color(0xFFA0A0A0))
+            .border(3.dp, Color.Black)
+            .padding(12.dp)
+    ) {
+        Text(
+            text = stringResource(DataSource.descripcion),
+            fontSize = 18.sp,
+            fontFamily = MinecraftFont,
+            color = Color.Black,
+            modifier = Modifier
+                .offset(x = 2.dp, y = 2.dp)
+                .fillMaxWidth(),
+            textAlign = TextAlign.Center
+        )
+        Text(
+            text = stringResource(DataSource.descripcion),
+            fontSize = 18.sp,
+            fontFamily = MinecraftFont,
+            color = Color.White,  // dorado tipo Minecraft
+            modifier = Modifier.fillMaxWidth(),
+            textAlign = TextAlign.Center
+        )
+    }
+
+}
 
 @Composable
 fun MinecraftButton(text: String, modifier: Modifier = Modifier, onClick: () -> Unit) {
@@ -208,7 +237,8 @@ fun MinecraftButton(text: String, modifier: Modifier = Modifier, onClick: () -> 
 }
 
 @Composable
-fun MinecraftTextDay(text: String, modifier: Modifier = Modifier) {
+fun MinecraftTextDay(text: String, modifier: Modifier = Modifier, isDarkTheme: Boolean
+) {
     Box(modifier = modifier) {
         Text(
             text = text,
@@ -224,7 +254,7 @@ fun MinecraftTextDay(text: String, modifier: Modifier = Modifier) {
             text = text,
             fontSize = 18.sp,
             fontFamily = MinecraftFont,
-            color = Color.White,
+            color = if (isDarkTheme) Color(0xFFEFE27A) else Color.White,  // dorado tipo Minecraft
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center
         )
@@ -236,7 +266,7 @@ fun MinecraftButtonText(text: String, modifier: Modifier = Modifier) {
     Box(modifier = modifier) {
         Text(
             text = text,
-            fontSize = 16.sp,
+            fontSize = 18.sp,
             fontFamily = MinecraftFont,
             color = Color.Black,
             modifier = Modifier
@@ -246,7 +276,7 @@ fun MinecraftButtonText(text: String, modifier: Modifier = Modifier) {
         )
         Text(
             text = text,
-            fontSize = 16.sp,
+            fontSize = 18.sp,
             fontFamily = MinecraftFont,
             color = Color(0xFFFFFF55),
             modifier = Modifier.fillMaxWidth(),

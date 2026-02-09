@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.update
 
 // Estado que representa lo que la UI necesita mostrar
 data class InicioUiState(
-    val isDarkTheme: Boolean = false
+    val isDarkTheme: Boolean = true
 )
 
 class InicioViewModel : ViewModel() {

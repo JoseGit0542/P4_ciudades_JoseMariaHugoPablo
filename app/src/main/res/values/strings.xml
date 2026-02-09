@@ -1,4 +1,5 @@
 <resources>
+    <string name = "descripcion">Descrube recursos, criaturas y elementos del mundo de Minecraft.</string>
     <string name="app_name">Biomas de Minecraft</string>
 
     <string name="start">Empezar</string>

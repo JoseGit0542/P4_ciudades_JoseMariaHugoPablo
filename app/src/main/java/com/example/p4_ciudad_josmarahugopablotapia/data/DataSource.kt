@@ -2,7 +2,7 @@ package com.example.p4_ciudad_josmarahugopablotapia.data
 import com.example.p4_ciudad_josmarahugopablotapia.R
 
 object DataSource {
-
+    val descripcion = R.string.descripcion
     val biomas = listOf(
         R.string.campos_setas,
         R.string.taiga,

@@ -28,6 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.MinecraftFont
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.P4_ciudad_JoséMaríaHugoPabloTapiaTheme
 import com.example.p4_ciudad_josmarahugopablotapia.viewModel.InicioViewModel
 
@@ -37,9 +38,12 @@ fun BiomaCard(
     titulo: String,
     imagenResId: Int,
     descripcion: String,
-    onTextoClick: () -> Unit
+    onTextoClick: () -> Unit,
+    miViewModel: InicioViewModel = viewModel()
 ) {
     var expandido by remember { mutableStateOf(false) }
+    val uiState by miViewModel.uiState.collectAsState()
+
 
     Surface(
         modifier = Modifier
@@ -47,7 +51,7 @@ fun BiomaCard(
             .padding(12.dp)
             .clickable { onTextoClick() }
             .animateContentSize(), // para animar la expansión
-        color = Color(0xFF2B2B2B), // fondo oscuro estilo AffirmationCard
+        color = if (uiState.isDarkTheme) Color(0xFF2B2B2B) else Color(0xFFA0A0A0), // fondo oscuro estilo AffirmationCard
         shape = RoundedCornerShape(12.dp),
         shadowElevation = 2.dp,
         border = BorderStroke(2.dp, Color.White)
@@ -55,13 +59,8 @@ fun BiomaCard(
         Column(modifier = Modifier.padding(12.dp)) {
 
             // ---------- TÍTULO ----------
-            Text(
-                text = titulo,
-                fontSize = 18.sp,
-                textAlign = TextAlign.Center,
-                color = Color(0xFFEFE27A), // dorado tipo Minecraft
-                modifier = Modifier.fillMaxWidth()
-            )
+            MinecraftTextDay(titulo, isDarkTheme = uiState.isDarkTheme)
+
 
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -216,3 +215,4 @@ fun PreviewPantallaBiomas() {
         PantallaBiomas(onNavegar = {})
     }
 }
+
