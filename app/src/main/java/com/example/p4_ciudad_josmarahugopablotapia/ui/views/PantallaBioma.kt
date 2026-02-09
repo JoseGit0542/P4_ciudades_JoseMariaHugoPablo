@@ -96,6 +96,9 @@ fun BiomaCard(
 @Composable
 fun PantallaBioma(
     onNavegar: (String) -> Unit,
+    onInicioClick: () -> Unit,
+    onCategoriasClick: () -> Unit,
+    onOpcionesClick: () -> Unit,
     miViewModel: InicioViewModel = viewModel()
 ) {
     val uiState by miViewModel.uiState.collectAsState()
@@ -181,27 +184,13 @@ fun PantallaBioma(
         }
 
         // ---------------- BARRA INFERIOR FIJA ----------------
-        Box(
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .fillMaxWidth()
-                .height(80.dp)
-        ) {
-            Image(
-                painter = painterResource(R.drawable.barradeabajo),
-                contentDescription = "Hotbar",
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.FillBounds
-            )
-
-            MinecraftBottomBar(
-                onInicioClick = {},
-                onBiomasClick = {},
-                onCategoriasClick = {},
-                onOpcionesClick = {},
-                modifier = Modifier
-            )
-        }
+        MinecraftBottomBar(
+            onInicioClick = onInicioClick,
+            mostrarBiomas = false,  // No clickeable porque ya estamos aquí
+            onCategoriasClick = onCategoriasClick,
+            onOpcionesClick = onOpcionesClick,
+            modifier = Modifier.align(Alignment.BottomCenter)
+        )
     }
 }
 
@@ -210,7 +199,12 @@ fun PantallaBioma(
 @Composable
 fun PreviewPantallaBiomas() {
     P4_ciudad_JoséMaríaHugoPabloTapiaTheme {
-        PantallaBioma(onNavegar = {})
+        PantallaBioma(
+            onNavegar = {},
+            onInicioClick = {},
+            onCategoriasClick = {},
+            onOpcionesClick = {}
+        )
     }
 }
 

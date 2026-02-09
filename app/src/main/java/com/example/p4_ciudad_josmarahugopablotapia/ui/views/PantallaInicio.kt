@@ -47,7 +47,8 @@ fun PantallaInicioPreview() {
         // Creamos una versión "falsa" o manual de la pantalla para la vista previa
         PantallaInicio(
             onComienzaClick = { /* No hace nada en preview */ },
-            onObjetoClick = { /* No hace nada en preview */ }
+            onObjetoClick = { /* No hace nada en preview */ },
+            onOpcionesClick = {}
             // El viewModel se creará por defecto, pero como es una Preview
             // mostrará el estado inicial (Día)
         )
@@ -57,6 +58,7 @@ fun PantallaInicioPreview() {
 fun PantallaInicio(
     onComienzaClick: () -> Unit,
     onObjetoClick: () -> Unit,
+    onOpcionesClick: () -> Unit,
     miViewModel: InicioViewModel = viewModel()
 ) {
     val uiState by miViewModel.uiState.collectAsState()
@@ -73,6 +75,7 @@ fun PantallaInicio(
                 contentScale = ContentScale.Crop
             )
 
+            // Contenedor para logo de idiomas y selector de tema
             Box(modifier = Modifier.fillMaxSize()) {
                 // 1. Imagen de Fondo (Se dibuja primero para quedar atrás)
                 Image(
@@ -89,7 +92,7 @@ fun PantallaInicio(
                     painter = painterResource(R.drawable.logoiidiomas2),
                     contentDescription = "Cambiar Idioma",
                     modifier = Modifier
-                        .align(Alignment.TopStart) // <--- Posición clave
+                        .align(Alignment.TopStart)
                         .padding(20.dp)
                         .size(60.dp)
                         .clip(RoundedCornerShape(8.dp))
@@ -103,7 +106,7 @@ fun PantallaInicio(
                     ),
                     contentDescription = "Cambiar Tema",
                     modifier = Modifier
-                        .align(Alignment.TopEnd) // <--- Posición clave
+                        .align(Alignment.TopEnd)
                         .padding(20.dp)
                         .size(60.dp)
                         .clip(RoundedCornerShape(8.dp))
@@ -133,46 +136,33 @@ fun PantallaInicio(
                 Spacer(modifier = Modifier.height(20.dp))
 
                 // 1. CAJA DE DESCRIPCIÓN (Ancho 0.85f)
-                MinecraftPanelDescripcion(modifier = Modifier.fillMaxWidth(0.85f), isDarkTheme = uiState.isDarkTheme)
+                MinecraftPanelDescripcion(
+                    modifier = Modifier.fillMaxWidth(0.85f),
+                    isDarkTheme = uiState.isDarkTheme
+                )
 
-
-                Spacer(modifier = Modifier.height(10.dp)) // Espacio reducido para parecerse a la UI original
+                Spacer(modifier = Modifier.height(10.dp))
 
                 // 2. FILA DE BOTONES (Ajustada a 0.85f para coincidir con el panel de arriba)
                 Row(
-                    modifier = Modifier.fillMaxWidth(0.85f), // <--- CAMBIO CLAVE AQUÍ
-                    horizontalArrangement = Arrangement.spacedBy(8.dp) // Espacio controlado entre botones
+                    modifier = Modifier.fillMaxWidth(0.85f),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
                     MinecraftButton("Comenzar", Modifier.weight(1f)) { onComienzaClick() }
                     MinecraftButton("Explorar", Modifier.weight(1f)) { onObjetoClick() }
                 }
             }
 
-        }
-        // --- BARRA INFERIOR CORREGIDA ---
-        // --- BARRA INFERIOR CON ICONBUTTONS ---
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.BottomCenter
-        ) {
-            // La imagen de la barra de Minecraft se queda al fondo
-            Image(
-                painter = painterResource(R.drawable.barradeabajo),
-                contentDescription = "Hotbar",
-                modifier = Modifier
-                    .height(80.dp)
-                    .border(3.dp, color = Color.Black), // Un poco más alta para los IconButton
-                contentScale = ContentScale.FillBounds,
-
-            )
-
+            // --- BARRA INFERIOR ---
             MinecraftBottomBar(
-                onInicioClick = {},
-                onBiomasClick = {},
-                onCategoriasClick = {},
-                onOpcionesClick = {},
+                mostrarInicio = false,
+                onBiomasClick = onComienzaClick,
+                onCategoriasClick = onObjetoClick,
+                onOpcionesClick = onOpcionesClick,
                 modifier = Modifier
-            );
+                    .align(Alignment.BottomCenter)
+                    .fillMaxWidth()
+            )
         }
     }
 }
