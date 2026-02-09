@@ -9,11 +9,6 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Category
-import androidx.compose.material.icons.filled.Chalet
-import androidx.compose.material.icons.filled.ClearAll
-import androidx.compose.material.icons.filled.Image
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.*
@@ -29,16 +24,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.p4_ciudad_josmarahugopablotapia.data.OrderUiState
 import com.example.p4_ciudad_josmarahugopablotapia.ui.components.MinecraftBottomBar
-import com.example.p4_ciudad_josmarahugopablotapia.ui.components.barraArriba
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.P4_ciudad_JoséMaríaHugoPabloTapiaTheme
-import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.amarilloMaincraftiano
-import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.grisMinecraftiano
-import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.grisOscuroMinecraftiano
 import com.example.p4_ciudad_josmarahugopablotapia.viewModel.InicioViewModel
 
-// ---------------------- Card de Bioma ----------------------
+// ---------------------- Card de Categoría ----------------------
 @Composable
 fun CategoriaCard(
     titulo: String,
@@ -50,32 +40,30 @@ fun CategoriaCard(
     var expandido by remember { mutableStateOf(false) }
     val uiState by miViewModel.uiState.collectAsState()
 
-
     Surface(
         modifier = Modifier
             .fillMaxWidth()
             .padding(12.dp)
             .clickable { onTextoClick() }
-            .animateContentSize(), // para animar la expansión
-        color = if(uiState.isDarkTheme) grisOscuroMinecraftiano else grisMinecraftiano, // fondo oscuro estilo AffirmationCard
+            .animateContentSize(),
+        color = if(uiState.isDarkTheme) Color(0xFF2B2B2B) else Color(0xFFA0A0A0),
         shape = RoundedCornerShape(4.dp),
         shadowElevation = 2.dp,
         border = BorderStroke(2.dp, Color.White)
     ) {
         Column(modifier = Modifier.padding(12.dp)) {
-
-            // ---------- TÍTULO ----------
+            // TÍTULO
             Text(
                 text = titulo,
                 fontSize = 18.sp,
                 textAlign = TextAlign.Center,
-                color = if (uiState.isDarkTheme) amarilloMaincraftiano else Color.White,
+                color = if (uiState.isDarkTheme) Color(0xFFEFE27A) else Color.White,
                 modifier = Modifier.fillMaxWidth()
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // ---------- IMAGEN ----------
+            // IMAGEN
             Image(
                 painter = painterResource(imagenResId),
                 contentDescription = titulo,
@@ -87,7 +75,7 @@ fun CategoriaCard(
                 contentScale = ContentScale.Crop
             )
 
-            // ---------- DESCRIPCIÓN EXPANDIDA ----------
+            // DESCRIPCIÓN EXPANDIDA
             if (expandido) {
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
@@ -101,17 +89,18 @@ fun CategoriaCard(
     }
 }
 
-
-// ---------------------- Pantalla Biomas ----------------------
+// ---------------------- Pantalla Categorías ----------------------
 @Composable
 fun PantallaCategoria(
     onNavegar: (String) -> Unit,
+    onInicioClick: () -> Unit,
+    onBiomasClick: () -> Unit,
+    onOpcionesClick: () -> Unit,
     miViewModel: InicioViewModel = viewModel()
 ) {
     val uiState by miViewModel.uiState.collectAsState()
 
     Box(modifier = Modifier.fillMaxSize()) {
-
         // Fondo
         Image(
             painter = painterResource(
@@ -122,25 +111,44 @@ fun PantallaCategoria(
             contentScale = ContentScale.Crop
         )
 
-        // ---------------- CONTENIDO SUPERIOR ----------------
+        // CONTENIDO SUPERIOR
         Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(16.dp)
-                .padding(bottom = 90.dp) // 👈 espacio reservado para la barra
+                .padding(bottom = 90.dp) // Espacio para la barra
         ) {
+            // Iconos arriba (idioma y tema)
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Image(
+                    painter = painterResource(R.drawable.logoiidiomas2),
+                    contentDescription = "Idioma",
+                    modifier = Modifier
+                        .size(60.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                        .clickable { /* Acción de idioma */ }
+                )
 
-            // Iconos arriba
-            barraArriba(
-                modifier = Modifier,
-                isDarkTheme = uiState.isDarkTheme,
-                miViewModel = miViewModel
-            )
+                Image(
+                    painter = painterResource(
+                        if (uiState.isDarkTheme) R.drawable.sol else R.drawable.lunaimagen
+                    ),
+                    contentDescription = "Tema",
+                    modifier = Modifier
+                        .size(60.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                        .clickable { miViewModel.toggleTheme() }
+                )
+            }
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            // Título
             Text(
-                text = stringResource( R.string.elegirCategoria),
+                text = stringResource(R.string.elegirCategoria),
                 fontSize = 28.sp,
                 color = if (uiState.isDarkTheme) Color.White else Color.Black,
                 textAlign = TextAlign.Center,
@@ -149,50 +157,37 @@ fun PantallaCategoria(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            val Categorias = listOf(
+            // Lista de categorías
+            val categorias = listOf(
                 Triple("mobs", R.drawable.mobs, "Criaturas hostiles y no hostiles"),
-                Triple("objetos", R.drawable.items, "Elemento que existe en las manos y en el inventario del jugador "),
-                Triple("estructuras", R.drawable._35px_21w07a_mineshaft, "Construcciones generadas automaticamente"),
-                Triple("vegetacion", R.drawable.vegetacion, "Generada segun el bioma, con amplias variedades")
+                Triple("objetos", R.drawable.items, "Elemento que existe en las manos y en el inventario del jugador"),
+                Triple("estructuras", R.drawable._35px_21w07a_mineshaft, "Construcciones generadas automáticamente"),
+                Triple("vegetacion", R.drawable.vegetacion, "Generada según el bioma, con amplias variedades")
             )
 
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(20.dp),
                 modifier = Modifier.fillMaxSize()
             ) {
-                items(Categorias) { bioma ->
+                items(categorias) { categoria ->
                     CategoriaCard(
-                        titulo = bioma.first,
-                        imagenResId = bioma.second,
-                        descripcion = bioma.third,
-                        onTextoClick = { onNavegar(bioma.first) }
+                        titulo = categoria.first,
+                        imagenResId = categoria.second,
+                        descripcion = categoria.third,
+                        onTextoClick = { onNavegar(categoria.first) }
                     )
                 }
             }
         }
 
-        // ---------------- BARRA INFERIOR FIJA ----------------
-        Box(
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .fillMaxWidth()
-                .height(80.dp)
-        ) {
-            Image(
-                painter = painterResource(R.drawable.barradeabajo),
-                contentDescription = "Hotbar",
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.FillBounds
-            )
-
-            MinecraftBottomBar(
-                onInicioClick = {},
-                onBiomasClick = {},
-                onCategoriasClick = {},
-                onOpcionesClick = {},
-                modifier = Modifier
-            )
-        }
+        // BARRA INFERIOR (usando el componente aislado)
+        MinecraftBottomBar(
+            onInicioClick = onInicioClick,
+            onBiomasClick = onBiomasClick,
+            mostrarCategorias = false, // No clickeable porque ya estamos aquí
+            onOpcionesClick = onOpcionesClick,
+            modifier = Modifier.align(Alignment.BottomCenter)
+        )
     }
 }
 
@@ -201,6 +196,11 @@ fun PantallaCategoria(
 @Composable
 fun PreviewPantallaCategoria() {
     P4_ciudad_JoséMaríaHugoPabloTapiaTheme {
-        PantallaCategoria(onNavegar = {})
+        PantallaCategoria(
+            onNavegar = {},
+            onInicioClick = {},
+            onBiomasClick = {},
+            onOpcionesClick = {}
+        )
     }
 }

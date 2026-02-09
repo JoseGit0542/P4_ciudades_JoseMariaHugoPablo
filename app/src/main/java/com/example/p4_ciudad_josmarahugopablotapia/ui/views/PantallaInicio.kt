@@ -35,13 +35,8 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.p4_ciudad_josmarahugopablotapia.data.DataSource
 import com.example.p4_ciudad_josmarahugopablotapia.ui.components.MinecraftBottomBar
-import com.example.p4_ciudad_josmarahugopablotapia.ui.components.barraArriba
-import com.example.p4_ciudad_josmarahugopablotapia.ui.components.botonesInicio
-import com.example.p4_ciudad_josmarahugopablotapia.ui.components.botonesInicio
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.MinecraftFont
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.P4_ciudad_JoséMaríaHugoPabloTapiaTheme
-import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.amarilloMaincraftiano
-import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.grisMinecraftiano
 import com.example.p4_ciudad_josmarahugopablotapia.viewModel.InicioViewModel
 
 
@@ -52,7 +47,8 @@ fun PantallaInicioPreview() {
         // Creamos una versión "falsa" o manual de la pantalla para la vista previa
         PantallaInicio(
             onComienzaClick = { /* No hace nada en preview */ },
-            onObjetoClick = { /* No hace nada en preview */ }
+            onObjetoClick = { /* No hace nada en preview */ },
+            onOpcionesClick = {}
             // El viewModel se creará por defecto, pero como es una Preview
             // mostrará el estado inicial (Día)
         )
@@ -62,6 +58,7 @@ fun PantallaInicioPreview() {
 fun PantallaInicio(
     onComienzaClick: () -> Unit,
     onObjetoClick: () -> Unit,
+    onOpcionesClick: () -> Unit,
     miViewModel: InicioViewModel = viewModel()
 ) {
     val uiState by miViewModel.uiState.collectAsState()
@@ -78,19 +75,45 @@ fun PantallaInicio(
                 contentScale = ContentScale.Crop
             )
 
-            // --- BARRA SUPERIOR ---
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp, vertical = 20.dp) // espacio desde bordes
-            ) {
-                barraArriba(
-                    modifier = Modifier.fillMaxWidth(),
-                    isDarkTheme = uiState.isDarkTheme,
-                    miViewModel = miViewModel
+            // Contenedor para logo de idiomas y selector de tema
+            Box(modifier = Modifier.fillMaxSize()) {
+                // 1. Imagen de Fondo (Se dibuja primero para quedar atrás)
+                Image(
+                    painter = painterResource(
+                        if (uiState.isDarkTheme) R.drawable.endermanfondo else R.drawable.fondodia
+                    ),
+                    contentDescription = null,
+                    modifier = Modifier.fillMaxSize(),
+                    contentScale = ContentScale.Crop
+                )
+
+                // 2. Logo de Idiomas (Arriba a la Izquierda)
+                Image(
+                    painter = painterResource(R.drawable.logoiidiomas2),
+                    contentDescription = "Cambiar Idioma",
+                    modifier = Modifier
+                        .align(Alignment.TopStart)
+                        .padding(20.dp)
+                        .size(60.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                        .clickable { /* Acción de idiomas */ }
+                        .padding(5.dp)
+                )
+                // 3. Selector de Tema (Arriba a la Derecha)
+                Image(
+                    painter = painterResource(
+                        if (uiState.isDarkTheme) R.drawable.sol else R.drawable.lunaimagen
+                    ),
+                    contentDescription = "Cambiar Tema",
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .padding(20.dp)
+                        .size(60.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                        .clickable { miViewModel.toggleTheme() }
+                        .padding(5.dp)
                 )
             }
-
 
             // --- Contenido Central ---
             Column(
@@ -100,7 +123,6 @@ fun PantallaInicio(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-
                 // Logo de Minecraft
                 Image(
                     painter = painterResource(R.drawable.logominecraft),
@@ -119,49 +141,33 @@ fun PantallaInicio(
                     isDarkTheme = uiState.isDarkTheme
                 )
 
-
-                Spacer(modifier = Modifier.height(10.dp)) // Espacio reducido para parecerse a la UI original
+                Spacer(modifier = Modifier.height(10.dp))
 
                 // 2. FILA DE BOTONES (Ajustada a 0.85f para coincidir con el panel de arriba)
                 Row(
-                    modifier = Modifier.fillMaxWidth(0.85f), // <--- CAMBIO CLAVE AQUÍ
-                    horizontalArrangement = Arrangement.spacedBy(8.dp) // Espacio controlado entre botones
+                    modifier = Modifier.fillMaxWidth(0.85f),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    botonesInicio("Comenzar", Modifier.weight(1f)) { onComienzaClick() }
-                    botonesInicio("Explorar", Modifier.weight(1f)) { onObjetoClick() }
+                    MinecraftButton("Comenzar", Modifier.weight(1f)) { onComienzaClick() }
+                    MinecraftButton("Explorar", Modifier.weight(1f)) { onObjetoClick() }
                 }
-
             }
-            // --- BARRA INFERIOR CORREGIDA ---
-            // --- BARRA INFERIOR CON ICONBUTTONS ---
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.BottomCenter
-            ) {
-                // La imagen de la barra de Minecraft se queda al fondo
-                Image(
-                    painter = painterResource(R.drawable.barradeabajo),
-                    contentDescription = "Hotbar",
-                    modifier = Modifier
-                        .height(80.dp)
-                        .border(3.dp, color = Color.Black), // Un poco más alta para los IconButton
-                    contentScale = ContentScale.FillBounds,
 
-                    )
-
-                MinecraftBottomBar(
-                    onInicioClick = {},
-                    onBiomasClick = {},
-                    onCategoriasClick = {},
-                    onOpcionesClick = {},
-                    modifier = Modifier
-                );
-            }
+            // --- BARRA INFERIOR ---
+            MinecraftBottomBar(
+                mostrarInicio = false,
+                onBiomasClick = onComienzaClick,
+                onCategoriasClick = onObjetoClick,
+                onOpcionesClick = onOpcionesClick,
+                modifier = Modifier
+                    .align(Alignment.BottomCenter)
+                    .fillMaxWidth()
+            )
         }
     }
+}
 // --- Componentes de UI (Sin cambios lógicos, solo visuales) ---
 
-}
 @Composable
 fun MinecraftPanel(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
     Box(
@@ -174,35 +180,10 @@ fun MinecraftPanel(modifier: Modifier = Modifier, content: @Composable () -> Uni
     }
 }
 @Composable
-fun MinecraftTextDay(
-    text: String, modifier: Modifier = Modifier, isDarkTheme: Boolean
-) {
-    Box(modifier = modifier) {
-        Text(
-            text = text,
-            fontSize = 18.sp,
-            fontFamily = MinecraftFont,
-            color = Color.Black,
-            modifier = Modifier
-                .offset(x = 2.dp, y = 2.dp)
-                .fillMaxWidth(),
-            textAlign = TextAlign.Center
-        )
-        Text(
-            text = text,
-            fontSize = 18.sp,
-            fontFamily = MinecraftFont,
-            color = if (isDarkTheme) Color(0xFFEFE27A) else Color.White,  // dorado tipo Minecraft
-            modifier = Modifier.fillMaxWidth(),
-            textAlign = TextAlign.Center
-        )
-    }
-}
-@Composable
 fun MinecraftPanelDescripcion(modifier: Modifier = Modifier, isDarkTheme: Boolean) {
     Box(
         modifier = modifier
-            .background(grisMinecraftiano)
+            .background(Color(0xFFA0A0A0))
             .border(3.dp, Color.Black)
             .padding(12.dp)
     ) {
@@ -228,5 +209,66 @@ fun MinecraftPanelDescripcion(modifier: Modifier = Modifier, isDarkTheme: Boolea
 
 }
 
+@Composable
+fun MinecraftButton(text: String, modifier: Modifier = Modifier, onClick: () -> Unit) {
+    Box(
+        modifier = modifier
+            .background(Color(0xFFA0A0A0))
+            .border(3.dp, Color.Black)
+            .clickable { onClick() }
+            .padding(vertical = 10.dp)
+    ) {
+        MinecraftButtonText(text = text, modifier = Modifier.align(Alignment.Center))
+    }
+}
 
+@Composable
+fun MinecraftTextDay(text: String, modifier: Modifier = Modifier, isDarkTheme: Boolean
+) {
+    Box(modifier = modifier) {
+        Text(
+            text = text,
+            fontSize = 18.sp,
+            fontFamily = MinecraftFont,
+            color = Color.Black,
+            modifier = Modifier
+                .offset(x = 2.dp, y = 2.dp)
+                .fillMaxWidth(),
+            textAlign = TextAlign.Center
+        )
+        Text(
+            text = text,
+            fontSize = 18.sp,
+            fontFamily = MinecraftFont,
+            color = if (isDarkTheme) Color(0xFFEFE27A) else Color.White,  // dorado tipo Minecraft
+            modifier = Modifier.fillMaxWidth(),
+            textAlign = TextAlign.Center
+        )
+    }
+}
+
+@Composable
+fun MinecraftButtonText(text: String, modifier: Modifier = Modifier) {
+    Box(modifier = modifier) {
+        Text(
+            text = text,
+            fontSize = 18.sp,
+            fontFamily = MinecraftFont,
+            color = Color.Black,
+            modifier = Modifier
+                .offset(x = 1.5.dp, y = 1.5.dp)
+                .fillMaxWidth(),
+            textAlign = TextAlign.Center
+        )
+        Text(
+            text = text,
+            fontSize = 18.sp,
+            fontFamily = MinecraftFont,
+            color = Color(0xFFFFFF55),
+            modifier = Modifier.fillMaxWidth(),
+            textAlign = TextAlign.Center
+        )
+    }
+
+}
 

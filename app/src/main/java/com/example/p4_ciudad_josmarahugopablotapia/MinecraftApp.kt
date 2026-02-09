@@ -37,22 +37,22 @@ fun MinecraftApp(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
         ) {
-            // Esto es el "router" de la aplicación
             NavHost(
                 navController = navController,
-                startDestination = Screen.Inicio.name  // Empieza en Inicio
+                startDestination = Screen.Inicio.name
             ) {
                 // 1. PANTALLA DE INICIO
                 composable(route = Screen.Inicio.name) {
                     val inicioViewModel: InicioViewModel = viewModel()
                     PantallaInicio(
                         onComienzaClick = {
-                            // Navega a la pantalla de Biomas
                             navController.navigate(Screen.Bioma.name)
                         },
                         onObjetoClick = {
-                            // Navega a la pantalla de Categorías
                             navController.navigate(Screen.Categoria.name)
+                        },
+                        onOpcionesClick = {
+                            navController.navigate("${Screen.Opcion.name}/Nada seleccionado")
                         },
                         miViewModel = inicioViewModel
                     )
@@ -62,29 +62,43 @@ fun MinecraftApp(
                 composable(route = Screen.Bioma.name) {
                     val inicioViewModel: InicioViewModel = viewModel()
                     PantallaBioma(
-                        onNavegar = { biomaSeleccionado ->
-                            // Cuando el usuario selecciona un bioma
-                            // Navega a Opcion y pasa el bioma como parámetro
-                            navController.navigate("${Screen.Opcion.name}/$biomaSeleccionado")
+                        onNavegar = { bioma ->
+                            navController.navigate("${Screen.Opcion.name}/$bioma")
+                        },
+                        onInicioClick = {
+                            navController.popBackStack(Screen.Inicio.name, inclusive = false)
+                        },
+                        onCategoriasClick = {
+                            navController.navigate(Screen.Categoria.name)
+                        },
+                        onOpcionesClick = {
+                            navController.navigate("${Screen.Opcion.name}/Nada seleccionado")
                         },
                         miViewModel = inicioViewModel
                     )
                 }
 
-                // 3. PANTALLA DE CATEGORÍAS
+                // 3. PANTALLA DE CATEGORÍAS (¡FALTABA ESTA!)
                 composable(route = Screen.Categoria.name) {
                     val inicioViewModel: InicioViewModel = viewModel()
                     PantallaCategoria(
-                        onNavegar = { categoriaSeleccionada ->
-                            // Cuando el usuario selecciona una categoría
-                            // Navega a Opcion y pasa la categoría como parámetro
-                            navController.navigate("${Screen.Opcion.name}/$categoriaSeleccionada")
+                        onNavegar = { categoria ->
+                            navController.navigate("${Screen.Opcion.name}/$categoria")
+                        },
+                        onInicioClick = {
+                            navController.popBackStack(Screen.Inicio.name, inclusive = false)
+                        },
+                        onBiomasClick = {
+                            navController.navigate(Screen.Bioma.name)
+                        },
+                        onOpcionesClick = {
+                            navController.navigate("${Screen.Opcion.name}/Nada seleccionado")
                         },
                         miViewModel = inicioViewModel
                     )
                 }
 
-                // 4. PANTALLA DE OPCIONES (con parámetro opcional)
+                // 4. PANTALLA DE OPCIONES
                 composable(
                     route = "${Screen.Opcion.name}/{seleccionado}",
                     arguments = listOf(
@@ -94,14 +108,20 @@ fun MinecraftApp(
                         }
                     )
                 ) { backStackEntry ->
-                    // Obtiene lo que seleccionó el usuario
                     val seleccionado = backStackEntry.arguments?.getString("seleccionado") ?: ""
 
-                    // Aquí necesitamos modificar PantallaOpcion para que reciba este parámetro
-                    // Por ahora solo mostramos Opcion normal
                     PantallaOpcion(
                         elementoSeleccionado = seleccionado,
-                        onNavigateBack = { navController.navigateUp() }
+                        onNavigateBack = { navController.navigateUp() },
+                        onInicioClick = {
+                            navController.popBackStack(Screen.Inicio.name, inclusive = false)
+                        },
+                        onBiomasClick = {
+                            navController.navigate(Screen.Bioma.name)
+                        },
+                        onCategoriasClick = {
+                            navController.navigate(Screen.Categoria.name)
+                        }
                     )
                 }
             }
