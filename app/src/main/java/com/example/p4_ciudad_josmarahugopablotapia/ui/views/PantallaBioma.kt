@@ -93,7 +93,7 @@ fun BiomaCard(
 
 // ---------------------- Pantalla Biomas ----------------------
 @Composable
-fun PantallaBiomas(
+fun PantallaBioma(
     onNavegar: (String) -> Unit,
     miViewModel: InicioViewModel = viewModel()
 ) {
@@ -212,7 +212,7 @@ fun PantallaBiomas(
 @Composable
 fun PreviewPantallaBiomas() {
     P4_ciudad_JoséMaríaHugoPabloTapiaTheme {
-        PantallaBiomas(onNavegar = {})
+        PantallaBioma(onNavegar = {})
     }
 }
 

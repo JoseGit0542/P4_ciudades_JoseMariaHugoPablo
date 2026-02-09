@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.view.WindowCompat.enableEdgeToEdge
+import com.example.p4_ciudad_josmarahugopablotapia.ui.navigation.MinecraftApp
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.P4_ciudad_JoséMaríaHugoPabloTapiaTheme
 
 
@@ -27,9 +28,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
         setContent {
-            P4_ciudad_JoséMaríaHugoPabloTapiaTheme {
-
-            }
+            // Iniciar la aplicación con navegación
+            MinecraftApp()
         }
     }
 }

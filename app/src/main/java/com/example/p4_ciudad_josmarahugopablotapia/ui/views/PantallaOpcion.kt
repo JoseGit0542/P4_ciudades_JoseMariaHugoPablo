@@ -23,19 +23,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.P4_ciudad_JoséMaríaHugoPabloTapiaTheme
 
-
-
-
-
 @Composable
-fun SeleccionarOpcion(
-    titulo: String,
-    opciones: List<String>,
-    onSelectionChanged: (String) -> Unit = {},
-    onCancelar: () -> Unit = {},
-    onSiguiente: () -> Unit = {},
+fun PantallaOpcion(
+    elementoSeleccionado: String = "",
+    onNavigateBack: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     var selectedValue by rememberSaveable { mutableStateOf("") }
@@ -46,10 +40,27 @@ fun SeleccionarOpcion(
             .padding(16.dp),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
+        // Botón para regresar
+        Button(
+            onClick = onNavigateBack,
+            modifier = Modifier.align(Alignment.Start)
+        ) {
+            Text("← Atrás")
+        }
 
-        // Lista de opciones con RadioButton
         Column {
-            Text(titulo, modifier = Modifier.padding(bottom = 16.dp))
+            // Muestra lo que seleccionó el usuario
+            if (elementoSeleccionado.isNotEmpty()) {
+                Text(
+                    text = "Has seleccionado: $elementoSeleccionado",
+                    fontSize = 20.sp,
+                    modifier = Modifier.padding(bottom = 24.dp)
+                )
+            }
+
+            Text("Selecciona una opción:", modifier = Modifier.padding(bottom = 16.dp))
+
+            val opciones = listOf("Opción 1", "Opción 2", "Opción 3")
 
             opciones.forEach { item ->
                 Row(
@@ -60,7 +71,6 @@ fun SeleccionarOpcion(
                             selected = selectedValue == item,
                             onClick = {
                                 selectedValue = item
-                                onSelectionChanged(item)
                             }
                         )
                         .padding(vertical = 8.dp)
@@ -69,7 +79,6 @@ fun SeleccionarOpcion(
                         selected = selectedValue == item,
                         onClick = {
                             selectedValue = item
-                            onSelectionChanged(item)
                         }
                     )
                     Spacer(modifier = Modifier.width(8.dp))
@@ -83,14 +92,14 @@ fun SeleccionarOpcion(
             )
         }
 
-        // Botones Cancelar y Siguiente
+        // Botones
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             OutlinedButton(
                 modifier = Modifier.weight(1f),
-                onClick = onCancelar
+                onClick = onNavigateBack
             ) {
                 Text("Cancelar")
             }
@@ -98,26 +107,24 @@ fun SeleccionarOpcion(
             Button(
                 modifier = Modifier.weight(1f),
                 enabled = selectedValue.isNotEmpty(),
-                onClick = onSiguiente
+                onClick = {
+                    // Aquí procesarías la selección
+                    onNavigateBack()
+                }
             ) {
-                Text("Siguiente")
+                Text("Confirmar")
             }
         }
     }
-
 }
+
 @Preview(showBackground = true)
 @Composable
-fun PreviewSeleccionarOpcion() {
+fun PreviewPantallaOpcion() {
     P4_ciudad_JoséMaríaHugoPabloTapiaTheme {
-        SeleccionarOpcion(
-            titulo = "Selecciona un elemento",
-            opciones = listOf(
-                "Mooshroom"
-            ),
-            onSelectionChanged = {},
-            onCancelar = {},
-            onSiguiente = {},
+        PantallaOpcion(
+            elementoSeleccionado = "Campos de setas",
+            onNavigateBack = {},
             modifier = Modifier.fillMaxSize()
         )
     }
