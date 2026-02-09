@@ -18,9 +18,10 @@
     <string name="recursos">Recursos</string>
     <string name="vegetacion">Vegetación</string>
 
-    <string name = "elegirCategoria">Elige la categoria del bioma: </string>
+    <string name = "elegirCategoria">Selecciona una categoria: </string>
     <string name = "elegirBioma">Elige el bioma: </string>
     <string name = "elegirOpcion">Elige la opcion que quieras</string>
+
 
 
 </resources>

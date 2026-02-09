@@ -28,6 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.p4_ciudad_josmarahugopablotapia.ui.components.MinecraftBottomBar
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.MinecraftFont
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.P4_ciudad_JoséMaríaHugoPabloTapiaTheme
 import com.example.p4_ciudad_josmarahugopablotapia.viewModel.InicioViewModel
@@ -48,7 +49,7 @@ fun BiomaCard(
     Surface(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(12.dp)
+            .padding(4.dp)
             .clickable { onTextoClick() }
             .animateContentSize(), // para animar la expansión
         color = if (uiState.isDarkTheme) Color(0xFF2B2B2B) else Color(0xFFA0A0A0), // fondo oscuro estilo AffirmationCard
@@ -193,16 +194,13 @@ fun PantallaBioma(
                 contentScale = ContentScale.FillBounds
             )
 
-            Row(
-                modifier = Modifier.fillMaxSize(),
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                BotonPagina(Icons.Default.Chalet) { }
-                BotonPagina(Icons.Default.Image) { }
-                BotonPagina(Icons.Default.Category) { }
-                BotonPagina(Icons.Default.ClearAll) { }
-            }
+            MinecraftBottomBar(
+                onInicioClick = {},
+                onBiomasClick = {},
+                onCategoriasClick = {},
+                onOpcionesClick = {},
+                modifier = Modifier
+            )
         }
     }
 }

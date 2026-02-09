@@ -23,12 +23,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.p4_ciudad_josmarahugopablotapia.data.OrderUiState
+import com.example.p4_ciudad_josmarahugopablotapia.ui.components.MinecraftBottomBar
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.P4_ciudad_JoséMaríaHugoPabloTapiaTheme
 import com.example.p4_ciudad_josmarahugopablotapia.viewModel.InicioViewModel
 
@@ -52,7 +54,7 @@ fun CategoriaCard(
             .clickable { onTextoClick() }
             .animateContentSize(), // para animar la expansión
         color = if(uiState.isDarkTheme) Color(0xFF2B2B2B) else Color(0xFFA0A0A0), // fondo oscuro estilo AffirmationCard
-        shape = RoundedCornerShape(12.dp),
+        shape = RoundedCornerShape(4.dp),
         shadowElevation = 2.dp,
         border = BorderStroke(2.dp, Color.White)
     ) {
@@ -153,7 +155,7 @@ fun PantallaCategoria(
             Spacer(modifier = Modifier.height(16.dp))
 
             Text(
-                text = "Selecciona una categoria",
+                text = stringResource( R.string.elegirCategoria),
                 fontSize = 28.sp,
                 color = if (uiState.isDarkTheme) Color.White else Color.Black,
                 textAlign = TextAlign.Center,
@@ -198,16 +200,13 @@ fun PantallaCategoria(
                 contentScale = ContentScale.FillBounds
             )
 
-            Row(
-                modifier = Modifier.fillMaxSize(),
-                horizontalArrangement = Arrangement.SpaceEvenly,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                BotonPagina(Icons.Default.Chalet) { }
-                BotonPagina(Icons.Default.Image) { }
-                BotonPagina(Icons.Default.Category) { }
-                BotonPagina(Icons.Default.ClearAll) { }
-            }
+            MinecraftBottomBar(
+                onInicioClick = {},
+                onBiomasClick = {},
+                onCategoriasClick = {},
+                onOpcionesClick = {},
+                modifier = Modifier
+            )
         }
     }
 }

@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.p4_ciudad_josmarahugopablotapia.data.DataSource
+import com.example.p4_ciudad_josmarahugopablotapia.ui.components.MinecraftBottomBar
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.MinecraftFont
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.P4_ciudad_JoséMaríaHugoPabloTapiaTheme
 import com.example.p4_ciudad_josmarahugopablotapia.viewModel.InicioViewModel
@@ -165,18 +166,13 @@ fun PantallaInicio(
 
             )
 
-            // La fila de IconButtons encima
-            Row(
-                modifier = Modifier.height(60.dp),
-                horizontalArrangement = Arrangement.spacedBy(25.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                // Usamos iconos de la librería de Android
-                BotonPagina(Icons.Default.Chalet) { /* Acción Pág 1 */ }
-                BotonPagina(Icons.Default.Image) { /* Acción Pág 2 */ }
-                BotonPagina(Icons.Default.Category) { /* Acción Pág 3 */ }
-                BotonPagina(Icons.Default.ClearAll) { }
-            }
+            MinecraftBottomBar(
+                onInicioClick = {},
+                onBiomasClick = {},
+                onCategoriasClick = {},
+                onOpcionesClick = {},
+                modifier = Modifier
+            );
         }
     }
 }
@@ -285,20 +281,4 @@ fun MinecraftButtonText(text: String, modifier: Modifier = Modifier) {
     }
 
 }
-@Composable
-fun BotonPagina(icon: ImageVector, onClick: () -> Unit) {
-    IconButton(
-        onClick = onClick,
-        modifier = Modifier
-            .size(60.dp) // Tamaño adecuado para la barra
-    ) {
-        Icon(
-            imageVector = icon,
-            contentDescription = null,
-            tint = Color.White, // Color del icono
-            modifier = Modifier
-                .size(60.dp)
-                .padding(bottom = 20.dp),
-        )
-    }
-}
+

@@ -11,6 +11,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Category
 import androidx.compose.material.icons.filled.Chalet
 import androidx.compose.material.icons.filled.ClearAll
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Image
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -40,7 +41,7 @@ fun BotonPagina(
             tint = Color.White,
             modifier = Modifier
                 .size(60.dp)
-                .padding(bottom = 20.dp)
+                .padding(bottom = 10.dp)
         )
     }
 }
@@ -73,7 +74,7 @@ fun MinecraftBottomBar(
             verticalAlignment = Alignment.CenterVertically
         ) {
             // 1. Inicio (Chalet icon)
-            BotonPagina(Icons.Default.Chalet, onClick = onInicioClick)
+            BotonPagina(Icons.Default.Home, onClick = onInicioClick)
 
             // 2. Biomas (Image icon)
             BotonPagina(Icons.Default.Image, onClick = onBiomasClick)
