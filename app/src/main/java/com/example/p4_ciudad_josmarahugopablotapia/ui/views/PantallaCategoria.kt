@@ -33,6 +33,9 @@ import com.example.p4_ciudad_josmarahugopablotapia.data.OrderUiState
 import com.example.p4_ciudad_josmarahugopablotapia.ui.components.MinecraftBottomBar
 import com.example.p4_ciudad_josmarahugopablotapia.ui.components.barraArriba
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.P4_ciudad_JoséMaríaHugoPabloTapiaTheme
+import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.amarilloMaincraftiano
+import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.grisMinecraftiano
+import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.grisOscuroMinecraftiano
 import com.example.p4_ciudad_josmarahugopablotapia.viewModel.InicioViewModel
 
 // ---------------------- Card de Bioma ----------------------
@@ -54,7 +57,7 @@ fun CategoriaCard(
             .padding(12.dp)
             .clickable { onTextoClick() }
             .animateContentSize(), // para animar la expansión
-        color = if(uiState.isDarkTheme) Color(0xFF2B2B2B) else Color(0xFFA0A0A0), // fondo oscuro estilo AffirmationCard
+        color = if(uiState.isDarkTheme) grisOscuroMinecraftiano else grisMinecraftiano, // fondo oscuro estilo AffirmationCard
         shape = RoundedCornerShape(4.dp),
         shadowElevation = 2.dp,
         border = BorderStroke(2.dp, Color.White)
@@ -66,7 +69,7 @@ fun CategoriaCard(
                 text = titulo,
                 fontSize = 18.sp,
                 textAlign = TextAlign.Center,
-                color = if (uiState.isDarkTheme) Color(0xFFEFE27A) else Color.White,
+                color = if (uiState.isDarkTheme) amarilloMaincraftiano else Color.White,
                 modifier = Modifier.fillMaxWidth()
             )
 

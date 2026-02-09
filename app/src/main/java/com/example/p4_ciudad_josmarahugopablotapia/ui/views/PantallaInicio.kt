@@ -36,8 +36,12 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.p4_ciudad_josmarahugopablotapia.data.DataSource
 import com.example.p4_ciudad_josmarahugopablotapia.ui.components.MinecraftBottomBar
 import com.example.p4_ciudad_josmarahugopablotapia.ui.components.barraArriba
+import com.example.p4_ciudad_josmarahugopablotapia.ui.components.botonesInicio
+import com.example.p4_ciudad_josmarahugopablotapia.ui.components.botonesInicio
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.MinecraftFont
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.P4_ciudad_JoséMaríaHugoPabloTapiaTheme
+import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.amarilloMaincraftiano
+import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.grisMinecraftiano
 import com.example.p4_ciudad_josmarahugopablotapia.viewModel.InicioViewModel
 
 
@@ -110,7 +114,10 @@ fun PantallaInicio(
                 Spacer(modifier = Modifier.height(20.dp))
 
                 // 1. CAJA DE DESCRIPCIÓN (Ancho 0.85f)
-                MinecraftPanelDescripcion(modifier = Modifier.fillMaxWidth(0.85f), isDarkTheme = uiState.isDarkTheme)
+                MinecraftPanelDescripcion(
+                    modifier = Modifier.fillMaxWidth(0.85f),
+                    isDarkTheme = uiState.isDarkTheme
+                )
 
 
                 Spacer(modifier = Modifier.height(10.dp)) // Espacio reducido para parecerse a la UI original
@@ -120,41 +127,41 @@ fun PantallaInicio(
                     modifier = Modifier.fillMaxWidth(0.85f), // <--- CAMBIO CLAVE AQUÍ
                     horizontalArrangement = Arrangement.spacedBy(8.dp) // Espacio controlado entre botones
                 ) {
-                    MinecraftButton("Comenzar", Modifier.weight(1f)) { onComienzaClick() }
-                    MinecraftButton("Explorar", Modifier.weight(1f)) { onObjetoClick() }
+                    botonesInicio("Comenzar", Modifier.weight(1f)) { onComienzaClick() }
+                    botonesInicio("Explorar", Modifier.weight(1f)) { onObjetoClick() }
                 }
+
             }
+            // --- BARRA INFERIOR CORREGIDA ---
+            // --- BARRA INFERIOR CON ICONBUTTONS ---
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.BottomCenter
+            ) {
+                // La imagen de la barra de Minecraft se queda al fondo
+                Image(
+                    painter = painterResource(R.drawable.barradeabajo),
+                    contentDescription = "Hotbar",
+                    modifier = Modifier
+                        .height(80.dp)
+                        .border(3.dp, color = Color.Black), // Un poco más alta para los IconButton
+                    contentScale = ContentScale.FillBounds,
 
-        }
-        // --- BARRA INFERIOR CORREGIDA ---
-        // --- BARRA INFERIOR CON ICONBUTTONS ---
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.BottomCenter
-        ) {
-            // La imagen de la barra de Minecraft se queda al fondo
-            Image(
-                painter = painterResource(R.drawable.barradeabajo),
-                contentDescription = "Hotbar",
-                modifier = Modifier
-                    .height(80.dp)
-                    .border(3.dp, color = Color.Black), // Un poco más alta para los IconButton
-                contentScale = ContentScale.FillBounds,
+                    )
 
-            )
-
-            MinecraftBottomBar(
-                onInicioClick = {},
-                onBiomasClick = {},
-                onCategoriasClick = {},
-                onOpcionesClick = {},
-                modifier = Modifier
-            );
+                MinecraftBottomBar(
+                    onInicioClick = {},
+                    onBiomasClick = {},
+                    onCategoriasClick = {},
+                    onOpcionesClick = {},
+                    modifier = Modifier
+                );
+            }
         }
     }
-}
 // --- Componentes de UI (Sin cambios lógicos, solo visuales) ---
 
+}
 @Composable
 fun MinecraftPanel(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
     Box(
@@ -167,10 +174,35 @@ fun MinecraftPanel(modifier: Modifier = Modifier, content: @Composable () -> Uni
     }
 }
 @Composable
+fun MinecraftTextDay(
+    text: String, modifier: Modifier = Modifier, isDarkTheme: Boolean
+) {
+    Box(modifier = modifier) {
+        Text(
+            text = text,
+            fontSize = 18.sp,
+            fontFamily = MinecraftFont,
+            color = Color.Black,
+            modifier = Modifier
+                .offset(x = 2.dp, y = 2.dp)
+                .fillMaxWidth(),
+            textAlign = TextAlign.Center
+        )
+        Text(
+            text = text,
+            fontSize = 18.sp,
+            fontFamily = MinecraftFont,
+            color = if (isDarkTheme) Color(0xFFEFE27A) else Color.White,  // dorado tipo Minecraft
+            modifier = Modifier.fillMaxWidth(),
+            textAlign = TextAlign.Center
+        )
+    }
+}
+@Composable
 fun MinecraftPanelDescripcion(modifier: Modifier = Modifier, isDarkTheme: Boolean) {
     Box(
         modifier = modifier
-            .background(Color(0xFFA0A0A0))
+            .background(grisMinecraftiano)
             .border(3.dp, Color.Black)
             .padding(12.dp)
     ) {
@@ -196,66 +228,5 @@ fun MinecraftPanelDescripcion(modifier: Modifier = Modifier, isDarkTheme: Boolea
 
 }
 
-@Composable
-fun MinecraftButton(text: String, modifier: Modifier = Modifier, onClick: () -> Unit) {
-    Box(
-        modifier = modifier
-            .background(Color(0xFFA0A0A0))
-            .border(3.dp, Color.Black)
-            .clickable { onClick() }
-            .padding(vertical = 10.dp)
-    ) {
-        MinecraftButtonText(text = text, modifier = Modifier.align(Alignment.Center))
-    }
-}
 
-@Composable
-fun MinecraftTextDay(text: String, modifier: Modifier = Modifier, isDarkTheme: Boolean
-) {
-    Box(modifier = modifier) {
-        Text(
-            text = text,
-            fontSize = 18.sp,
-            fontFamily = MinecraftFont,
-            color = Color.Black,
-            modifier = Modifier
-                .offset(x = 2.dp, y = 2.dp)
-                .fillMaxWidth(),
-            textAlign = TextAlign.Center
-        )
-        Text(
-            text = text,
-            fontSize = 18.sp,
-            fontFamily = MinecraftFont,
-            color = if (isDarkTheme) Color(0xFFEFE27A) else Color.White,  // dorado tipo Minecraft
-            modifier = Modifier.fillMaxWidth(),
-            textAlign = TextAlign.Center
-        )
-    }
-}
-
-@Composable
-fun MinecraftButtonText(text: String, modifier: Modifier = Modifier) {
-    Box(modifier = modifier) {
-        Text(
-            text = text,
-            fontSize = 18.sp,
-            fontFamily = MinecraftFont,
-            color = Color.Black,
-            modifier = Modifier
-                .offset(x = 1.5.dp, y = 1.5.dp)
-                .fillMaxWidth(),
-            textAlign = TextAlign.Center
-        )
-        Text(
-            text = text,
-            fontSize = 18.sp,
-            fontFamily = MinecraftFont,
-            color = Color(0xFFFFFF55),
-            modifier = Modifier.fillMaxWidth(),
-            textAlign = TextAlign.Center
-        )
-    }
-
-}
 
