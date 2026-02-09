@@ -31,6 +31,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.p4_ciudad_josmarahugopablotapia.data.OrderUiState
 import com.example.p4_ciudad_josmarahugopablotapia.ui.components.MinecraftBottomBar
+import com.example.p4_ciudad_josmarahugopablotapia.ui.components.barraArriba
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.P4_ciudad_JoséMaríaHugoPabloTapiaTheme
 import com.example.p4_ciudad_josmarahugopablotapia.viewModel.InicioViewModel
 
@@ -127,30 +128,11 @@ fun PantallaCategoria(
         ) {
 
             // Iconos arriba
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
-            ) {
-                Image(
-                    painter = painterResource(R.drawable.logoiidiomas2),
-                    contentDescription = "Idioma",
-                    modifier = Modifier
-                        .size(60.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                        .clickable { }
-                )
-
-                Image(
-                    painter = painterResource(
-                        if (uiState.isDarkTheme) R.drawable.sol else R.drawable.lunaimagen
-                    ),
-                    contentDescription = "Tema",
-                    modifier = Modifier
-                        .size(60.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                        .clickable { miViewModel.toggleTheme() }
-                )
-            }
+            barraArriba(
+                modifier = Modifier,
+                isDarkTheme = uiState.isDarkTheme,
+                miViewModel = miViewModel
+            )
 
             Spacer(modifier = Modifier.height(16.dp))
 

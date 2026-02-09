@@ -35,6 +35,7 @@ import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.p4_ciudad_josmarahugopablotapia.data.DataSource
 import com.example.p4_ciudad_josmarahugopablotapia.ui.components.MinecraftBottomBar
+import com.example.p4_ciudad_josmarahugopablotapia.ui.components.barraArriba
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.MinecraftFont
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.P4_ciudad_JoséMaríaHugoPabloTapiaTheme
 import com.example.p4_ciudad_josmarahugopablotapia.viewModel.InicioViewModel
@@ -73,44 +74,19 @@ fun PantallaInicio(
                 contentScale = ContentScale.Crop
             )
 
-            Box(modifier = Modifier.fillMaxSize()) {
-                // 1. Imagen de Fondo (Se dibuja primero para quedar atrás)
-                Image(
-                    painter = painterResource(
-                        if (uiState.isDarkTheme) R.drawable.endermanfondo else R.drawable.fondodia
-                    ),
-                    contentDescription = null,
-                    modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Crop
-                )
-
-                // 2. Logo de Idiomas (Arriba a la Izquierda)
-                Image(
-                    painter = painterResource(R.drawable.logoiidiomas2),
-                    contentDescription = "Cambiar Idioma",
-                    modifier = Modifier
-                        .align(Alignment.TopStart) // <--- Posición clave
-                        .padding(20.dp)
-                        .size(60.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                        .clickable { /* Acción de idiomas */ }
-                        .padding(5.dp)
-                )
-                // 3. Selector de Tema (Arriba a la Derecha)
-                Image(
-                    painter = painterResource(
-                        if (uiState.isDarkTheme) R.drawable.sol else R.drawable.lunaimagen
-                    ),
-                    contentDescription = "Cambiar Tema",
-                    modifier = Modifier
-                        .align(Alignment.TopEnd) // <--- Posición clave
-                        .padding(20.dp)
-                        .size(60.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                        .clickable { miViewModel.toggleTheme() }
-                        .padding(5.dp)
+            // --- BARRA SUPERIOR ---
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp, vertical = 20.dp) // espacio desde bordes
+            ) {
+                barraArriba(
+                    modifier = Modifier.fillMaxWidth(),
+                    isDarkTheme = uiState.isDarkTheme,
+                    miViewModel = miViewModel
                 )
             }
+
 
             // --- Contenido Central ---
             Column(
@@ -120,6 +96,7 @@ fun PantallaInicio(
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
+
                 // Logo de Minecraft
                 Image(
                     painter = painterResource(R.drawable.logominecraft),
