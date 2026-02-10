@@ -1,7 +1,9 @@
 package com.example.p4_ciudad_josmarahugopablotapia.ui.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Category
 import androidx.compose.material.icons.filled.Chalet
@@ -22,20 +24,29 @@ import com.example.p4_ciudad_josmarahugopablotapia.R
 @Composable
 fun BotonPagina(
     icon: ImageVector,
+    habilitado: Boolean,
     onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val colorActivo = Color.White
+    val colorDesactivado = Color(0xFF9E9E9E)
+
     IconButton(
         onClick = onClick,
-        modifier = modifier.size(60.dp)
+        enabled = habilitado,
+        modifier = modifier
+            .size(60.dp)
+            .border(
+                width = 2.dp,
+                color = if (habilitado) colorActivo else colorDesactivado,
+                shape = RoundedCornerShape(6.dp)
+            )
     ) {
         Icon(
             imageVector = icon,
             contentDescription = "Navegación",
-            tint = Color.White,
-            modifier = Modifier
-                .size(60.dp)
-                .padding(bottom = 20.dp)
+            tint = if (habilitado) colorActivo else colorDesactivado,
+            modifier = Modifier.size(40.dp)
         )
     }
 }
@@ -57,7 +68,6 @@ fun MinecraftBottomBar(
             .fillMaxWidth()
             .height(80.dp)
     ) {
-        // Fondo de la barra Minecraft
         Image(
             painter = painterResource(R.drawable.barradeabajo),
             contentDescription = "Barra de navegación",
@@ -65,47 +75,35 @@ fun MinecraftBottomBar(
             contentScale = ContentScale.FillBounds
         )
 
-        // Botones de navegación
         Row(
             modifier = Modifier.fillMaxSize(),
             horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            if (mostrarInicio) {
-                BotonPagina(
-                    icon = Icons.Default.Chalet,
-                    onClick = onInicioClick
-                )
-            } else {
-                Spacer(modifier = Modifier.size(60.dp))
-            }
 
-            if (mostrarBiomas) {
-                BotonPagina(
-                    icon = Icons.Default.Image,
-                    onClick = onBiomasClick
-                )
-            } else {
-                Spacer(modifier = Modifier.size(60.dp))
-            }
+            BotonPagina(
+                icon = Icons.Default.Chalet,
+                habilitado = mostrarInicio,
+                onClick = onInicioClick
+            )
 
-            if (mostrarCategorias) {
-                BotonPagina(
-                    icon = Icons.Default.Category,
-                    onClick = onCategoriasClick
-                )
-            } else {
-                Spacer(modifier = Modifier.size(60.dp))
-            }
+            BotonPagina(
+                icon = Icons.Default.Image,
+                habilitado = mostrarBiomas,
+                onClick = onBiomasClick
+            )
 
-            if (mostrarOpciones) {
-                BotonPagina(
-                    icon = Icons.Default.ClearAll,
-                    onClick = onOpcionesClick
-                )
-            } else {
-                Spacer(modifier = Modifier.size(60.dp))
-            }
+            BotonPagina(
+                icon = Icons.Default.Category,
+                habilitado = mostrarCategorias,
+                onClick = onCategoriasClick
+            )
+
+            BotonPagina(
+                icon = Icons.Default.ClearAll,
+                habilitado = mostrarOpciones,
+                onClick = onOpcionesClick
+            )
         }
     }
 }

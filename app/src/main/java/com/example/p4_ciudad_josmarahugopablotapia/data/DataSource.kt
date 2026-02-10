@@ -1,22 +1,57 @@
 package com.example.p4_ciudad_josmarahugopablotapia.data
+
 import com.example.p4_ciudad_josmarahugopablotapia.R
 
+// Clase que describe cada categoría
+data class Categoria(
+    val nombreResId: Int,
+    val imagenResId: Int,
+    val descripcion: String
+)
+
+// Nueva clase para Biomas
+data class Bioma(
+    val nombre: String,
+    val imagenResId: Int,
+    val descripcion: String
+)
+
+
 object DataSource {
-    val descripcion = R.string.descripcion
+
+    // Biomas con nombre, imagen y descripción
     val biomas = listOf(
-        R.string.campos_setas,
-        R.string.taiga,
-        R.string.jungla,
-        R.string.sabana
+        Bioma("Campos de setas", R.drawable.mushrooms, "Un bioma lleno de setas gigantes."),
+        Bioma("Taiga", R.drawable.taiga, "Bosques fríos con abetos."),
+        Bioma("Jungla", R.drawable.jungla, "Vegetación densa y húmeda."),
+        Bioma("Sabana", R.drawable.sabana, "Llanuras con hierba amarilla.")
     )
 
+    // Categorías con imagen y descripción
     val categorias = listOf(
-        R.string.estructuras,
-        R.string.criaturas,
-        R.string.recursos,
-        R.string.vegetacion
+        Categoria(
+            nombreResId = R.string.estructuras,
+            imagenResId = R.drawable._35px_21w07a_mineshaft,
+            descripcion = "Construcciones generadas automáticamente"
+        ),
+        Categoria(
+            nombreResId = R.string.criaturas,
+            imagenResId = R.drawable.mobs,
+            descripcion = "Criaturas hostiles y no hostiles"
+        ),
+        Categoria(
+            nombreResId = R.string.recursos,
+            imagenResId = R.drawable.items,
+            descripcion = "Elementos del inventario del jugador"
+        ),
+        Categoria(
+            nombreResId = R.string.vegetacion,
+            imagenResId = R.drawable.vegetacion,
+            descripcion = "Vegetación generada según el bioma"
+        )
     )
 
+    // Ejemplo: detalles por bioma y categoría
     fun obtenerDetalles(bioma: Int, categoria: Int): List<String> {
         return when (bioma to categoria) {
 
@@ -44,9 +79,7 @@ object DataSource {
             R.string.sabana to R.string.recursos -> listOf("Madera de acacia", "Hierba")
             R.string.sabana to R.string.vegetacion -> listOf("Acacias", "Hierba alta")
 
-
             else -> listOf("Elemento de ejemplo")
         }
     }
 }
-

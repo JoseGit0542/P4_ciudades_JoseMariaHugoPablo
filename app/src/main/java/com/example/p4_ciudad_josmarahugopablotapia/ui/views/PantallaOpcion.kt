@@ -6,7 +6,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.material3.Button
@@ -29,7 +31,10 @@ import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.P4_ciudad_JoséMarí
 @Composable
 fun PantallaOpcion(
     elementoSeleccionado: String = "",
-    onNavigateBack: () -> Unit,
+    onNavigateBack: () -> Unit = {},
+    onInicioClick: () -> Unit = {},
+    onBiomasClick: () -> Unit = {},
+    onCategoriasClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     var selectedValue by rememberSaveable { mutableStateOf("") }
@@ -37,7 +42,8 @@ fun PantallaOpcion(
     Column(
         modifier = modifier
             .fillMaxSize()
-            .padding(16.dp),
+            .padding(16.dp).statusBarsPadding()
+            .navigationBarsPadding(),
         verticalArrangement = Arrangement.SpaceBetween
     ) {
         // Botón para regresar
@@ -49,7 +55,6 @@ fun PantallaOpcion(
         }
 
         Column {
-            // Muestra lo que seleccionó el usuario
             if (elementoSeleccionado.isNotEmpty()) {
                 Text(
                     text = "Has seleccionado: $elementoSeleccionado",
@@ -69,17 +74,13 @@ fun PantallaOpcion(
                         .fillMaxWidth()
                         .selectable(
                             selected = selectedValue == item,
-                            onClick = {
-                                selectedValue = item
-                            }
+                            onClick = { selectedValue = item }
                         )
                         .padding(vertical = 8.dp)
                 ) {
                     RadioButton(
                         selected = selectedValue == item,
-                        onClick = {
-                            selectedValue = item
-                        }
+                        onClick = { selectedValue = item }
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(item)
@@ -92,31 +93,22 @@ fun PantallaOpcion(
             )
         }
 
-        // Botones
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            OutlinedButton(
-                modifier = Modifier.weight(1f),
-                onClick = onNavigateBack
-            ) {
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
+            OutlinedButton(modifier = Modifier.weight(1f), onClick = onNavigateBack) {
                 Text("Cancelar")
             }
 
             Button(
                 modifier = Modifier.weight(1f),
                 enabled = selectedValue.isNotEmpty(),
-                onClick = {
-                    // Aquí procesarías la selección
-                    onNavigateBack()
-                }
+                onClick = { onNavigateBack() }
             ) {
                 Text("Confirmar")
             }
         }
     }
 }
+
 
 @Preview(showBackground = true)
 @Composable

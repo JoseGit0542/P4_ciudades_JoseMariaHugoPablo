@@ -7,24 +7,17 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountTree
-import androidx.compose.material.icons.filled.Category
-import androidx.compose.material.icons.filled.Chalet
-import androidx.compose.material.icons.filled.ClearAll
-import androidx.compose.material.icons.filled.Image
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -33,10 +26,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.p4_ciudad_josmarahugopablotapia.data.DataSource
 import com.example.p4_ciudad_josmarahugopablotapia.ui.components.MinecraftBottomBar
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.MinecraftFont
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.P4_ciudad_JoséMaríaHugoPabloTapiaTheme
+import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.grisMinecraftiano
+import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.grisOscuroMinecraftiano
 import com.example.p4_ciudad_josmarahugopablotapia.viewModel.InicioViewModel
 
 
@@ -59,12 +53,15 @@ fun PantallaInicio(
     onComienzaClick: () -> Unit,
     onObjetoClick: () -> Unit,
     onOpcionesClick: () -> Unit,
+
     miViewModel: InicioViewModel = viewModel()
 ) {
     val uiState by miViewModel.uiState.collectAsState()
 
     P4_ciudad_JoséMaríaHugoPabloTapiaTheme {
-        Box(modifier = Modifier.fillMaxSize()) {
+        Box(modifier = Modifier.fillMaxSize().statusBarsPadding()
+            .navigationBarsPadding()) {
+
             // Fondo
             Image(
                 painter = painterResource(
@@ -148,8 +145,8 @@ fun PantallaInicio(
                     modifier = Modifier.fillMaxWidth(0.85f),
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    MinecraftButton("Comenzar", Modifier.weight(1f)) { onComienzaClick() }
-                    MinecraftButton("Explorar", Modifier.weight(1f)) { onObjetoClick() }
+                    botonMinecraft("Comenzar", Modifier.weight(1f)) { onComienzaClick() }
+                    botonMinecraft("Explorar", Modifier.weight(1f)) { onObjetoClick() }
                 }
             }
 
@@ -169,26 +166,15 @@ fun PantallaInicio(
 // --- Componentes de UI (Sin cambios lógicos, solo visuales) ---
 
 @Composable
-fun MinecraftPanel(modifier: Modifier = Modifier, content: @Composable () -> Unit) {
-    Box(
-        modifier = modifier
-            .background(Color(0xFFA0A0A0))
-            .border(3.dp, Color.Black)
-            .padding(12.dp)
-    ) {
-        content()
-    }
-}
-@Composable
 fun MinecraftPanelDescripcion(modifier: Modifier = Modifier, isDarkTheme: Boolean) {
     Box(
         modifier = modifier
-            .background(Color(0xFFA0A0A0))
+            .background(grisMinecraftiano)
             .border(3.dp, Color.Black)
             .padding(12.dp)
     ) {
         Text(
-            text = stringResource(DataSource.descripcion),
+            text = stringResource(R.string.descripcionInicio),
             fontSize = 18.sp,
             fontFamily = MinecraftFont,
             color = Color.Black,
@@ -198,7 +184,7 @@ fun MinecraftPanelDescripcion(modifier: Modifier = Modifier, isDarkTheme: Boolea
             textAlign = TextAlign.Center
         )
         Text(
-            text = stringResource(DataSource.descripcion),
+            text = stringResource(R.string.descripcionInicio),
             fontSize = 18.sp,
             fontFamily = MinecraftFont,
             color = Color.White,  // dorado tipo Minecraft
@@ -210,45 +196,42 @@ fun MinecraftPanelDescripcion(modifier: Modifier = Modifier, isDarkTheme: Boolea
 }
 
 @Composable
-fun MinecraftButton(text: String, modifier: Modifier = Modifier, onClick: () -> Unit) {
+fun botonMinecraft(
+    text: String,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
+) {
+    var pressed by remember { mutableStateOf(false) }
+
     Box(
         modifier = modifier
-            .background(Color(0xFFA0A0A0))
-            .border(3.dp, Color.Black)
-            .clickable { onClick() }
+            .background(
+                if (pressed) grisOscuroMinecraftiano else grisMinecraftiano
+            )
+            .then(
+                if (!pressed) Modifier.border(3.dp, Color.Black)
+                else Modifier
+            )
+            .clickable {
+                pressed = !pressed
+                onClick()
+            }
             .padding(vertical = 10.dp)
     ) {
-        MinecraftButtonText(text = text, modifier = Modifier.align(Alignment.Center))
-    }
-}
-
-@Composable
-fun MinecraftTextDay(text: String, modifier: Modifier = Modifier, isDarkTheme: Boolean
-) {
-    Box(modifier = modifier) {
-        Text(
+        textoBotonesInicio(
             text = text,
-            fontSize = 18.sp,
-            fontFamily = MinecraftFont,
-            color = Color.Black,
-            modifier = Modifier
-                .offset(x = 2.dp, y = 2.dp)
-                .fillMaxWidth(),
-            textAlign = TextAlign.Center
-        )
-        Text(
-            text = text,
-            fontSize = 18.sp,
-            fontFamily = MinecraftFont,
-            color = if (isDarkTheme) Color(0xFFEFE27A) else Color.White,  // dorado tipo Minecraft
-            modifier = Modifier.fillMaxWidth(),
-            textAlign = TextAlign.Center
+            modifier = Modifier.align(Alignment.Center)
         )
     }
 }
 
+
+
+
+//en vez de usar minecraftTextDay usamos esto porque queremos que los colores de los botones
+//sean siempre amarillos
 @Composable
-fun MinecraftButtonText(text: String, modifier: Modifier = Modifier) {
+fun textoBotonesInicio(text: String, modifier: Modifier = Modifier) {
     Box(modifier = modifier) {
         Text(
             text = text,
@@ -269,6 +252,5 @@ fun MinecraftButtonText(text: String, modifier: Modifier = Modifier) {
             textAlign = TextAlign.Center
         )
     }
-
 }
 
