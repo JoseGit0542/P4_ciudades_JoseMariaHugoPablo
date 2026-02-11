@@ -16,7 +16,7 @@
     <string name="estructuras">Estructuras</string>
     <string name="criaturas">Criaturas</string>
     <string name="recursos">Recursos</string>
-    <string name="vegetacion">Vegetación</string>
+    <string name="vegetacion">Vegetacion</string>
 
     <string name = "elegirCategoria">Selecciona una categoria: </string>
     <string name = "elegirBioma">Elige el bioma: </string>

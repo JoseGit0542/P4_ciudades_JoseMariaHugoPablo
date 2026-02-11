@@ -1,123 +1,155 @@
 package com.example.p4_ciudad_josmarahugopablotapia.ui.views
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.navigationBarsPadding
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.selection.selectable
-import androidx.compose.material3.Button
-import androidx.compose.material3.Divider
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.RadioButton
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.p4_ciudad_josmarahugopablotapia.R
+import com.example.p4_ciudad_josmarahugopablotapia.data.DataSource
+import com.example.p4_ciudad_josmarahugopablotapia.ui.components.BarraArriba
+import com.example.p4_ciudad_josmarahugopablotapia.ui.components.MinecraftBottomBar
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.P4_ciudad_JoséMaríaHugoPabloTapiaTheme
+import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.grisMinecraftiano
+import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.grisOscuroMinecraftiano
+import com.example.p4_ciudad_josmarahugopablotapia.viewModel.InicioViewModel
 
 @Composable
-fun PantallaOpcion(
-    elementoSeleccionado: String = "",
+fun PantallaDetalles(
+    biomaId: Int,
+    categoriaId: Int,
     onNavigateBack: () -> Unit = {},
     onInicioClick: () -> Unit = {},
     onBiomasClick: () -> Unit = {},
     onCategoriasClick: () -> Unit = {},
-    modifier: Modifier = Modifier
+    miViewModel: InicioViewModel = viewModel()
 ) {
-    var selectedValue by rememberSaveable { mutableStateOf("") }
+    val uiState by miViewModel.uiState.collectAsState()
+    val isDarkTheme = uiState.isDarkTheme
 
-    Column(
-        modifier = modifier
+    val detalles = DataSource.obtenerDetalles(biomaId, categoriaId)
+
+    Box(
+        modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp).statusBarsPadding()
-            .navigationBarsPadding(),
-        verticalArrangement = Arrangement.SpaceBetween
+            .statusBarsPadding()
+            .navigationBarsPadding()
     ) {
-        // Botón para regresar
-        Button(
-            onClick = onNavigateBack,
-            modifier = Modifier.align(Alignment.Start)
+        // Fondo
+        Image(
+            painter = painterResource(
+                if (uiState.isDarkTheme) R.drawable.endermanfondo else R.drawable.fondodia
+            ),
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+                .padding(bottom = 90.dp)
         ) {
-            Text("← Atrás")
-        }
+            BarraArriba(
+                titulo = "Detalles",
+                isDarkTheme = isDarkTheme,
+                miViewModel = miViewModel
+            )
 
-        Column {
-            if (elementoSeleccionado.isNotEmpty()) {
-                Text(
-                    text = "Has seleccionado: $elementoSeleccionado",
-                    fontSize = 20.sp,
-                    modifier = Modifier.padding(bottom = 24.dp)
-                )
-            }
+            Spacer(modifier = Modifier.height(16.dp))
 
-            Text("Selecciona una opción:", modifier = Modifier.padding(bottom = 16.dp))
+            LazyColumn(
+                verticalArrangement = Arrangement.spacedBy(16.dp),
+                modifier = Modifier.fillMaxSize()
+            ) {
+                items(detalles) { detalle ->
+                    // Cada tarjeta
+                    Surface(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .border(2.dp, Color.White, RoundedCornerShape(8.dp))
+                            .clickable { /* opcional: acción al click */ },
+                        shape = RoundedCornerShape(8.dp),
+                        color = if (isDarkTheme) grisOscuroMinecraftiano else grisMinecraftiano,
+                        shadowElevation = 4.dp
+                    ) {
+                        Column(
+                            horizontalAlignment = Alignment.CenterHorizontally,
+                            modifier = Modifier.padding(16.dp)
+                        ) {
+                            // Imagen
+                            Image(
+                                painter = painterResource(detalle.imagenResId),
+                                contentDescription = detalle.nombre,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(120.dp),
+                                contentScale = ContentScale.Crop
+                            )
 
-            val opciones = listOf("Opción 1", "Opción 2", "Opción 3")
+                            Spacer(modifier = Modifier.height(8.dp))
 
-            opciones.forEach { item ->
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .selectable(
-                            selected = selectedValue == item,
-                            onClick = { selectedValue = item }
-                        )
-                        .padding(vertical = 8.dp)
-                ) {
-                    RadioButton(
-                        selected = selectedValue == item,
-                        onClick = { selectedValue = item }
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(item)
+                            // Nombre
+                            Text(
+                                text = detalle.nombre,
+                                fontSize = 20.sp,
+                                color = Color.White,
+                                textAlign = TextAlign.Center
+                            )
+
+                            Spacer(modifier = Modifier.height(4.dp))
+
+                            // Descripción
+                            Text(
+                                text = detalle.descripcion,
+                                fontSize = 16.sp,
+                                color = Color.White,
+                                textAlign = TextAlign.Center
+                            )
+                        }
+                    }
                 }
             }
-
-            Divider(
-                thickness = 1.dp,
-                modifier = Modifier.padding(vertical = 16.dp)
-            )
         }
 
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-            OutlinedButton(modifier = Modifier.weight(1f), onClick = onNavigateBack) {
-                Text("Cancelar")
-            }
-
-            Button(
-                modifier = Modifier.weight(1f),
-                enabled = selectedValue.isNotEmpty(),
-                onClick = { onNavigateBack() }
-            ) {
-                Text("Confirmar")
-            }
-        }
+        MinecraftBottomBar(
+            onInicioClick = onInicioClick,
+            onBiomasClick = onBiomasClick,
+            onOpcionesClick = onCategoriasClick,
+            mostrarCategorias = true,
+            modifier = Modifier.align(Alignment.BottomCenter)
+        )
     }
 }
 
-
-@Preview(showBackground = true)
+@Preview(showSystemUi = true)
 @Composable
-fun PreviewPantallaOpcion() {
+fun PreviewPantallaDetalles() {
     P4_ciudad_JoséMaríaHugoPabloTapiaTheme {
-        PantallaOpcion(
-            elementoSeleccionado = "Campos de setas",
+        PantallaDetalles(
+            biomaId = DataSource.BIOMA_SETAS,
+            categoriaId = DataSource.CAT_CRIATURAS,
             onNavigateBack = {},
-            modifier = Modifier.fillMaxSize()
+            onInicioClick = {},
+            onBiomasClick = {},
+            onCategoriasClick = {}
         )
     }
 }

@@ -35,7 +35,7 @@ fun TarjetaBioma(
     titulo: String,
     imagenResId: Int,
     descripcion: String,
-    onTextoClick: () -> Unit,
+    onTextoClick: @Composable () -> Unit,
     miViewModel: InicioViewModel = viewModel()
 ) {
     var expandido by remember { mutableStateOf(false) }

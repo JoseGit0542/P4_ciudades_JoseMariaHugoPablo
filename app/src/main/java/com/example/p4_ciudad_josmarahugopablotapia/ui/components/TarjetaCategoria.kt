@@ -35,7 +35,7 @@ fun CategoriaCard(
     imagenResId: Int,
     descripcion: String,
     onTextoClick: () -> Unit,
-    miViewModel: InicioViewModel  // sin '= viewModel()' ni nada  // <--- importante
+    miViewModel: InicioViewModel
 ) {
     var expandido by remember { mutableStateOf(false) }
     val uiState by miViewModel.uiState.collectAsState()
@@ -44,7 +44,6 @@ fun CategoriaCard(
         modifier = Modifier
             .fillMaxWidth()
             .padding(12.dp)
-            .clickable { onTextoClick() }
             .animateContentSize(),
         color = if (uiState.isDarkTheme) grisOscuroMinecraftiano else grisMinecraftiano,
         shape = RoundedCornerShape(4.dp),
@@ -64,17 +63,40 @@ fun CategoriaCard(
                     .fillMaxWidth()
                     .height(160.dp)
                     .clip(RoundedCornerShape(10.dp))
-                    .clickable { expandido = !expandido },
+                    .clickable { expandido = !expandido },   // 🔹 Ahora solo expande
                 contentScale = ContentScale.Crop
             )
 
             if (expandido) {
                 Spacer(modifier = Modifier.height(8.dp))
+
                 textoMinecraftDescripciones(
                     text = descripcion,
                     isDarkTheme = uiState.isDarkTheme,
                     modifier = Modifier.fillMaxWidth()
                 )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                // 🔹 BOTÓN PARA NAVEGAR
+                Surface(
+                    color = Color(0xFFFFD700), // amarillo estilo Minecraft
+                    shape = RoundedCornerShape(6.dp),
+                    border = BorderStroke(2.dp, Color.Black),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { onTextoClick() }
+                ) {
+                    Text(
+                        text = "Ver mas",
+                        fontSize = 18.sp,
+                        color = Color.Black,
+                        modifier = Modifier
+                            .padding(vertical = 10.dp)
+                            .fillMaxWidth(),
+                        textAlign = androidx.compose.ui.text.style.TextAlign.Center
+                    )
+                }
             }
         }
     }

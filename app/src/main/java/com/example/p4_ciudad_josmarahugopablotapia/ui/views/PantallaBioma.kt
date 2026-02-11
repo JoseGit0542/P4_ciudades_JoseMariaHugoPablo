@@ -16,6 +16,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -79,10 +80,10 @@ fun PantallaBioma(
             ) {
                 items(DataSource.biomas) { bioma ->
                     TarjetaBioma(
-                        titulo = bioma.nombre,
+                        titulo = stringResource(bioma.nombreResId) ,
                         imagenResId = bioma.imagenResId,
                         descripcion = bioma.descripcion,
-                        onTextoClick = { onNavegar(bioma.nombre) },
+                        onTextoClick = { onNavegar(stringResource(bioma.nombreResId)) },
                         miViewModel = miViewModel
                     )
                 }

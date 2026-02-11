@@ -93,7 +93,6 @@ fun PantallaCategoria(
                         descripcion = categoria.descripcion,
                         onTextoClick = { onNavegar(tituloTexto) },
                         miViewModel = miViewModel
-
                         // lambda normal, sin @Composable
                     )
                 }

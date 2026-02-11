@@ -13,76 +13,126 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.example.p4_ciudad_josmarahugopablotapia.R
 import com.example.p4_ciudad_josmarahugopablotapia.PantallaBioma
 import com.example.p4_ciudad_josmarahugopablotapia.PantallaCategoria
 import com.example.p4_ciudad_josmarahugopablotapia.PantallaInicio
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.P4_ciudad_JoséMaríaHugoPabloTapiaTheme
-import com.example.p4_ciudad_josmarahugopablotapia.ui.views.PantallaOpcion
 import com.example.p4_ciudad_josmarahugopablotapia.viewModel.InicioViewModel
 
-// Este enum define las rutas de navegación, IGUAL que en Cupcake
 enum class Screen(@StringRes val title: Int) {
-    Inicio(com.example.p4_ciudad_josmarahugopablotapia.R.string.welcome),
-    Bioma(com.example.p4_ciudad_josmarahugopablotapia.R.string.elegirBioma),
-    Categoria(com.example.p4_ciudad_josmarahugopablotapia.R.string.elegirCategoria),
-    Opcion(com.example.p4_ciudad_josmarahugopablotapia.R.string.elegirOpcion)
+    Inicio(R.string.welcome),
+    Bioma(R.string.elegirBioma),
+    Categoria(R.string.elegirCategoria),
+    Opcion(R.string.elegirOpcion)
 }
 
 @Composable
 fun MinecraftApp(
     navController: NavHostController = rememberNavController()
 ) {
-    // Instancia única del ViewModel
+
     val inicioViewModel: InicioViewModel = viewModel()
 
     P4_ciudad_JoséMaríaHugoPabloTapiaTheme {
-        Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-            NavHost(navController = navController, startDestination = Screen.Inicio.name) {
+        Surface(
+            modifier = Modifier.fillMaxSize(),
+            color = MaterialTheme.colorScheme.background
+        ) {
 
-                // 1. Pantalla de Inicio
+            NavHost(
+                navController = navController,
+                startDestination = Screen.Inicio.name
+            ) {
+
+                // 1️⃣ Inicio
                 composable(Screen.Inicio.name) {
                     PantallaInicio(
                         miViewModel = inicioViewModel,
                         onComienzaClick = { navController.navigate(Screen.Bioma.name) },
                         onObjetoClick = { navController.navigate(Screen.Categoria.name) },
-                        onOpcionesClick = { navController.navigate("${Screen.Opcion.name}/Nada seleccionado") }
+                        onOpcionesClick = {
+                            navController.navigate("${Screen.Opcion.name}/${R.string.taiga}/${R.string.criaturas}")
+                        }
                     )
                 }
 
-                // 2. Pantalla de Biomas
+                // 2️⃣ Biomas
                 composable(Screen.Bioma.name) {
                     PantallaBioma(
                         miViewModel = inicioViewModel,
-                        onNavegar = { bioma -> navController.navigate("${Screen.Opcion.name}/$bioma") },
-                        onInicioClick = { navController.popBackStack(Screen.Inicio.name, inclusive = false) },
-                        onCategoriasClick = { navController.navigate(Screen.Categoria.name) },
-                        onOpcionesClick = { navController.navigate("${Screen.Opcion.name}/Nada seleccionado") }
+                        onNavegar = { biomaResId ->
+                            // Aquí decides qué categoría usar por defecto
+                            navController.navigate(
+                                "${Screen.Opcion.name}/$biomaResId/${R.string.criaturas}"
+                            )
+                        },
+                        onInicioClick = {
+                            navController.popBackStack(Screen.Inicio.name, false)
+                        },
+                        onCategoriasClick = {
+                            navController.navigate(Screen.Categoria.name)
+                        },
+                        onOpcionesClick = {
+                            navController.navigate(
+                                "${Screen.Opcion.name}/${R.string.taiga}/${R.string.criaturas}"
+                            )
+                        }
                     )
                 }
 
-                // 3. Pantalla de Categorías
+                // 3️⃣ Categorías
                 composable(Screen.Categoria.name) {
                     PantallaCategoria(
                         miViewModel = inicioViewModel,
-                        onNavegar = { categoria -> navController.navigate("${Screen.Opcion.name}/$categoria") },
-                        onInicioClick = { navController.popBackStack(Screen.Inicio.name, inclusive = false) },
-                        onBiomasClick = { navController.navigate(Screen.Bioma.name) },
-                        onOpcionesClick = { navController.navigate("${Screen.Opcion.name}/Nada seleccionado") }
+                        onNavegar = { categoriaResId ->
+                            // Aquí decides qué bioma usar por defecto
+                            navController.navigate(
+                                "${Screen.Opcion.name}/${R.string.taiga}/$categoriaResId"
+                            )
+                        },
+                        onInicioClick = {
+                            navController.popBackStack(Screen.Inicio.name, false)
+                        },
+                        onBiomasClick = {
+                            navController.navigate(Screen.Bioma.name)
+                        },
+                        onOpcionesClick = {
+                            navController.navigate(
+                                "${Screen.Opcion.name}/${R.string.taiga}/${R.string.criaturas}"
+                            )
+                        }
                     )
                 }
 
-                // 4. Pantalla de Opciones
+                // 4️⃣ Opciones (ACTUALIZADA)
                 composable(
-                    route = "${Screen.Opcion.name}/{seleccionado}",
-                    arguments = listOf(navArgument("seleccionado") { type = NavType.StringType })
+                    route = "${Screen.Opcion.name}/{bioma}/{categoria}",
+                    arguments = listOf(
+                        navArgument("bioma") { type = NavType.IntType },
+                        navArgument("categoria") { type = NavType.IntType }
+                    )
                 ) { backStackEntry ->
-                    val seleccionado = backStackEntry.arguments?.getString("seleccionado") ?: ""
+
+                    val biomaResId =
+                        backStackEntry.arguments?.getInt("bioma") ?: R.string.taiga
+
+                    val categoriaResId =
+                        backStackEntry.arguments?.getInt("categoria") ?: R.string.criaturas
+
                     PantallaOpcion(
-                        elementoSeleccionado = seleccionado,
+                        biomaResId = biomaResId,
+                        categoriaResId = categoriaResId,
                         onNavigateBack = { navController.navigateUp() },
-                        onInicioClick = { navController.popBackStack(Screen.Inicio.name, inclusive = false) },
-                        onBiomasClick = { navController.navigate(Screen.Bioma.name) },
-                        onCategoriasClick = { navController.navigate(Screen.Categoria.name) }
+                        onInicioClick = {
+                            navController.popBackStack(Screen.Inicio.name, false)
+                        },
+                        onBiomasClick = {
+                            navController.navigate(Screen.Bioma.name)
+                        },
+                        onCategoriasClick = {
+                            navController.navigate(Screen.Categoria.name)
+                        }
                     )
                 }
             }
