@@ -1,9 +1,8 @@
 package com.example.p4_ciudad_josmarahugopablotapia.ui.navigation
 
 import androidx.annotation.StringRes
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -19,6 +18,8 @@ import com.example.p4_ciudad_josmarahugopablotapia.PantallaInicio
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.P4_ciudad_JoséMaríaHugoPabloTapiaTheme
 import com.example.p4_ciudad_josmarahugopablotapia.ui.views.PantallaOpcion
 import com.example.p4_ciudad_josmarahugopablotapia.viewModel.InicioViewModel
+import com.example.p4_ciudad_josmarahugopablotapia.ui.components.BottomBarViewModel
+import com.example.p4_ciudad_josmarahugopablotapia.ui.components.MinecraftBottomBar
 
 enum class Screen(@StringRes val title: Int) {
     Inicio(com.example.p4_ciudad_josmarahugopablotapia.R.string.welcome),
@@ -32,54 +33,102 @@ fun MinecraftApp(
     navController: NavHostController = rememberNavController()
 ) {
     val inicioViewModel: InicioViewModel = viewModel()
+    val bottomBarVM: BottomBarViewModel = viewModel()
+    val bottomState = bottomBarVM.state.value
 
     P4_ciudad_JoséMaríaHugoPabloTapiaTheme {
-        Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+
+        // ❗ SIN bottomBar y SIN padding del Scaffold
+        Scaffold { _ ->
 
             NavHost(
                 navController = navController,
-                startDestination = Screen.Inicio.name
+                startDestination = Screen.Inicio.name,
+                modifier = Modifier   // ❗ SIN padding(padding)
             ) {
 
-                // 1. Inicio
                 composable(Screen.Inicio.name) {
+                    bottomBarVM.soloInicio()
+
                     PantallaInicio(
                         miViewModel = inicioViewModel,
-                        onComienzaClick = { navController.navigate(Screen.Bioma.name) },
-                        onObjetoClick = { navController.navigate(Screen.Categoria.name) },
+                        bottomState = bottomState,
+                        onComienzaClick = {
+                            bottomBarVM.desbloquearBiomas()
+                            navController.navigate(Screen.Bioma.name)
+                        },
+                        onObjetoClick = {
+                            navController.navigate("${Screen.Opcion.name}/-1/-1")
+                        },
                         onOpcionesClick = {
+                            bottomBarVM.inicioYOpcion()
                             navController.navigate("${Screen.Opcion.name}/-1/-1")
                         }
                     )
                 }
 
-                // 2. Bioma
                 composable(Screen.Bioma.name) {
+                    bottomBarVM.desbloquearBiomas()
+
                     PantallaBioma(
                         miViewModel = inicioViewModel,
+                        bottomState = bottomState,
                         onNavegar = { biomaId ->
-                            navController.navigate("${Screen.Opcion.name}/$biomaId/-1")
+                            bottomBarVM.desbloquearCategorias()
+                            navController.navigate("${Screen.Categoria.name}/$biomaId")
                         },
-                        onInicioClick = { navController.popBackStack(Screen.Inicio.name, false) },
-                        onCategoriasClick = { navController.navigate(Screen.Categoria.name) },
-                        onOpcionesClick = { navController.navigate("${Screen.Opcion.name}/-1/-1") }
+                        onInicioClick = {
+                            bottomBarVM.soloInicio()
+                            navController.navigate(Screen.Inicio.name) {
+                                popUpTo(0)
+                            }
+                        },
+                        onCategoriasClick = {
+                            bottomBarVM.desbloquearCategorias()
+                            navController.navigate("${Screen.Categoria.name}/-1")
+                        },
+                        onOpcionesClick = {
+                            bottomBarVM.desbloquearOpciones()
+                            navController.navigate("${Screen.Opcion.name}/-1/-1")
+                        }
                     )
                 }
 
-                // 3. Categoría
-                composable(Screen.Categoria.name) {
+                composable(
+                    route = "${Screen.Categoria.name}/{biomaId}",
+                    arguments = listOf(navArgument("biomaId") { type = NavType.IntType })
+                ) { backStackEntry ->
+
+                    bottomBarVM.desbloquearCategorias()
+
+                    val biomaId = backStackEntry.arguments?.getInt("biomaId") ?: -1
+
                     PantallaCategoria(
                         miViewModel = inicioViewModel,
+                        bottomState = bottomState,
+                        biomaId = biomaId,
                         onNavegar = { categoriaId ->
-                            navController.navigate("${Screen.Opcion.name}/-1/$categoriaId")
+                            bottomBarVM.desbloquearOpciones()
+                            navController.navigate("${Screen.Opcion.name}/$biomaId/$categoriaId")
                         },
-                        onInicioClick = { navController.popBackStack(Screen.Inicio.name, false) },
-                        onBiomasClick = { navController.navigate(Screen.Bioma.name) },
-                        onOpcionesClick = { navController.navigate("${Screen.Opcion.name}/-1/-1") }
+                        onInicioClick = {
+                            bottomBarVM.soloInicio()
+                            navController.navigate(Screen.Inicio.name) {
+                                popUpTo(0)
+                            }
+                        },
+                        onBiomasClick = {
+                            bottomBarVM.desbloquearBiomas()
+                            navController.popBackStack()
+                        },
+                        onOpcionesClick = {
+                            bottomBarVM.desbloquearOpciones()
+                            navController.navigate("${Screen.Opcion.name}/-1/-1")
+                        }
                     )
                 }
 
-                // 4. Opción (recibe biomaId y categoriaId)
+                // 4️⃣ Opción
                 composable(
                     route = "${Screen.Opcion.name}/{biomaId}/{categoriaId}",
                     arguments = listOf(
@@ -91,16 +140,44 @@ fun MinecraftApp(
                     val biomaId = backStackEntry.arguments?.getInt("biomaId") ?: -1
                     val categoriaId = backStackEntry.arguments?.getInt("categoriaId") ?: -1
 
+                    if (biomaId == -1 && categoriaId == -1) {
+                        // Vienes de EXPLORAR → solo inicio habilitado
+                        bottomBarVM.soloInicio()
+                    } else {
+                        // Vienes del flujo normal → todo desbloqueado
+                        bottomBarVM.desbloquearOpciones()
+                    }
+
                     PantallaOpcion(
                         biomaId = biomaId,
                         categoriaId = categoriaId,
-                        onNavigateBack = { navController.navigateUp() },
-                        onInicioClick = { navController.popBackStack(Screen.Inicio.name, false) },
-                        onBiomasClick = { navController.navigate(Screen.Bioma.name) },
-                        onCategoriasClick = { navController.navigate(Screen.Categoria.name) }
+                        bottomState = bottomBarVM.state.value,
+                        onNavigateBack = { navController.popBackStack() },
+                        onInicioClick = {
+                            bottomBarVM.soloInicio()
+                            navController.navigate(Screen.Inicio.name) {
+                                popUpTo(0)
+                            }
+                        },
+                        onBiomasClick = {
+                            bottomBarVM.desbloquearBiomas()
+                            navController.navigate(Screen.Bioma.name)
+                        },
+                        onCategoriasClick = {
+                            bottomBarVM.desbloquearCategorias()
+                            navController.navigate("${Screen.Categoria.name}/-1")
+                        }
                     )
                 }
+
             }
         }
     }
 }
+
+
+
+
+
+
+

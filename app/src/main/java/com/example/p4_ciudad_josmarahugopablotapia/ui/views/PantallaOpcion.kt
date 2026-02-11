@@ -27,6 +27,7 @@ import com.example.p4_ciudad_josmarahugopablotapia.R
 import com.example.p4_ciudad_josmarahugopablotapia.data.DataSource
 import com.example.p4_ciudad_josmarahugopablotapia.data.Detalle
 import com.example.p4_ciudad_josmarahugopablotapia.ui.components.BarraArriba
+import com.example.p4_ciudad_josmarahugopablotapia.ui.components.BottomBarState
 import com.example.p4_ciudad_josmarahugopablotapia.ui.components.MinecraftBottomBar
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.P4_ciudad_JoséMaríaHugoPabloTapiaTheme
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.grisMinecraftiano
@@ -41,13 +42,18 @@ fun PantallaOpcion(
     onInicioClick: () -> Unit = {},
     onBiomasClick: () -> Unit = {},
     onCategoriasClick: () -> Unit = {},
-    miViewModel: InicioViewModel = viewModel()
+    miViewModel: InicioViewModel = viewModel(),
+    bottomState: BottomBarState
 ) {
 
     val uiState by miViewModel.uiState.collectAsState()
     val isDarkTheme = uiState.isDarkTheme
 
-    val detalles = DataSource.obtenerDetalles(biomaId, categoriaId)
+    val detalles = if (biomaId == -1 && categoriaId == -1) {
+        DataSource.obtenerTodosLosDetalles()
+    } else {
+        DataSource.obtenerDetalles(biomaId, categoriaId)
+    }
 
     val biomaNombre = DataSource.biomas
         .firstOrNull { it.id == biomaId }
@@ -60,16 +66,15 @@ fun PantallaOpcion(
         ?.nombreResId
         ?.let { stringResource(it) }
         ?: ""
- var selectedValue by rememberSaveable { mutableStateOf<Detalle?>(null) }
+
+    var selectedValue by rememberSaveable { mutableStateOf<Detalle?>(null) }
 
     Box(
         modifier = Modifier
             .fillMaxSize()
             .statusBarsPadding()
-            .navigationBarsPadding()
     ) {
 
-        // Fondo
         Image(
             painter = painterResource(if (isDarkTheme) R.drawable.endermanfondo else R.drawable.fondodia),
             contentDescription = null,
@@ -104,7 +109,12 @@ fun PantallaOpcion(
                             .clickable { selectedValue = detalle },
                         shape = RoundedCornerShape(8.dp),
                         border = BorderStroke(2.dp, Color.White),
-                        color = if (selectedValue == detalle) Color(0xFFFFD700) else if (isDarkTheme) grisOscuroMinecraftiano else grisMinecraftiano,
+                        color = if (selectedValue == detalle)
+                            Color(0xFFFFD700)
+                        else if (isDarkTheme)
+                            grisOscuroMinecraftiano
+                        else
+                            grisMinecraftiano,
                         shadowElevation = 4.dp
                     ) {
                         Row(
@@ -187,26 +197,13 @@ fun PantallaOpcion(
         }
 
         MinecraftBottomBar(
+            state = bottomState,
             onInicioClick = onInicioClick,
             onBiomasClick = onBiomasClick,
-            onOpcionesClick = onCategoriasClick,
-            mostrarCategorias = true,
+            onCategoriasClick = onCategoriasClick,
+            onOpcionesClick = {},
             modifier = Modifier.align(Alignment.BottomCenter)
         )
     }
 }
 
-@Composable
-@Preview(showSystemUi = true, showBackground = true)
-fun PreviewPantallaOpcions() {
-    P4_ciudad_JoséMaríaHugoPabloTapiaTheme {
-        PantallaOpcion(
-            biomaId = DataSource.BIOMA_TAIGA,
-            categoriaId = DataSource.CAT_CRIATURAS,
-            onNavigateBack = {},
-            onInicioClick = {},
-            onBiomasClick = {},
-            onCategoriasClick = {}
-        )
-    }
-}

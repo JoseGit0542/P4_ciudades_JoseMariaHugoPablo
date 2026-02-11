@@ -53,10 +53,7 @@ fun BotonPagina(
 
 @Composable
 fun MinecraftBottomBar(
-    mostrarInicio: Boolean = true,
-    mostrarBiomas: Boolean = true,
-    mostrarCategorias: Boolean = true,
-    mostrarOpciones: Boolean = true,
+    state: BottomBarState,
     onInicioClick: () -> Unit = {},
     onBiomasClick: () -> Unit = {},
     onCategoriasClick: () -> Unit = {},
@@ -66,7 +63,8 @@ fun MinecraftBottomBar(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .height(80.dp)
+            .height(90.dp)
+            .windowInsetsPadding(WindowInsets.navigationBars)   // ⭐ evita interferir con botones del móvil
     ) {
         Image(
             painter = painterResource(R.drawable.barradeabajo),
@@ -83,27 +81,29 @@ fun MinecraftBottomBar(
 
             BotonPagina(
                 icon = Icons.Default.Chalet,
-                habilitado = mostrarInicio,
+                habilitado = state.inicio,
                 onClick = onInicioClick
             )
 
             BotonPagina(
                 icon = Icons.Default.Image,
-                habilitado = mostrarBiomas,
+                habilitado = state.biomas,
                 onClick = onBiomasClick
             )
 
             BotonPagina(
                 icon = Icons.Default.Category,
-                habilitado = mostrarCategorias,
+                habilitado = state.categorias,
                 onClick = onCategoriasClick
             )
 
             BotonPagina(
                 icon = Icons.Default.ClearAll,
-                habilitado = mostrarOpciones,
+                habilitado = state.opciones,
                 onClick = onOpcionesClick
             )
         }
     }
 }
+
+

@@ -26,43 +26,41 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.p4_ciudad_josmarahugopablotapia.ui.components.BottomBarState
 import com.example.p4_ciudad_josmarahugopablotapia.ui.components.MinecraftBottomBar
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.MinecraftFont
-import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.P4_ciudad_JoséMaríaHugoPabloTapiaTheme
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.grisMinecraftiano
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.grisOscuroMinecraftiano
 import com.example.p4_ciudad_josmarahugopablotapia.viewModel.InicioViewModel
 
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun PantallaInicioPreview() {
-    P4_ciudad_JoséMaríaHugoPabloTapiaTheme {
-        // Creamos una versión "falsa" o manual de la pantalla para la vista previa
-        PantallaInicio(
-            onComienzaClick = { /* No hace nada en preview */ },
-            onObjetoClick = { /* No hace nada en preview */ },
-            onOpcionesClick = {}
-            // El viewModel se creará por defecto, pero como es una Preview
-            // mostrará el estado inicial (Día)
-        )
-    }
-}
 @Composable
 fun PantallaInicio(
     onComienzaClick: () -> Unit,
     onObjetoClick: () -> Unit,
     onOpcionesClick: () -> Unit,
-
-    miViewModel: InicioViewModel = viewModel()
+    miViewModel: InicioViewModel = viewModel(),
+    bottomState: BottomBarState
 ) {
     val uiState by miViewModel.uiState.collectAsState()
 
-    P4_ciudad_JoséMaríaHugoPabloTapiaTheme {
-        Box(modifier = Modifier.fillMaxSize().statusBarsPadding()
-            .navigationBarsPadding()) {
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .statusBarsPadding()
 
-            // Fondo
+    ) {
+
+        Image(
+            painter = painterResource(
+                if (uiState.isDarkTheme) R.drawable.endermanfondo else R.drawable.fondodia
+            ),
+            contentDescription = null,
+            modifier = Modifier.fillMaxSize(),
+            contentScale = ContentScale.Crop
+        )
+
+        Box(modifier = Modifier.fillMaxSize()) {
+
             Image(
                 painter = painterResource(
                     if (uiState.isDarkTheme) R.drawable.endermanfondo else R.drawable.fondodia
@@ -72,97 +70,81 @@ fun PantallaInicio(
                 contentScale = ContentScale.Crop
             )
 
-            // Contenedor para logo de idiomas y selector de tema
-            Box(modifier = Modifier.fillMaxSize()) {
-                // 1. Imagen de Fondo (Se dibuja primero para quedar atrás)
-                Image(
-                    painter = painterResource(
-                        if (uiState.isDarkTheme) R.drawable.endermanfondo else R.drawable.fondodia
-                    ),
-                    contentDescription = null,
-                    modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Crop
-                )
-
-                // 2. Logo de Idiomas (Arriba a la Izquierda)
-                Image(
-                    painter = painterResource(R.drawable.logoiidiomas2),
-                    contentDescription = "Cambiar Idioma",
-                    modifier = Modifier
-                        .align(Alignment.TopStart)
-                        .padding(20.dp)
-                        .size(60.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                        .clickable { /* Acción de idiomas */ }
-                        .padding(5.dp)
-                )
-                // 3. Selector de Tema (Arriba a la Derecha)
-                Image(
-                    painter = painterResource(
-                        if (uiState.isDarkTheme) R.drawable.sol else R.drawable.lunaimagen
-                    ),
-                    contentDescription = "Cambiar Tema",
-                    modifier = Modifier
-                        .align(Alignment.TopEnd)
-                        .padding(20.dp)
-                        .size(60.dp)
-                        .clip(RoundedCornerShape(8.dp))
-                        .clickable { miViewModel.toggleTheme() }
-                        .padding(5.dp)
-                )
-            }
-
-            // --- Contenido Central ---
-            Column(
+            Image(
+                painter = painterResource(R.drawable.logoiidiomas2),
+                contentDescription = "Cambiar Idioma",
                 modifier = Modifier
-                    .fillMaxSize()
-                    .padding(bottom = 80.dp),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
-            ) {
-                // Logo de Minecraft
-                Image(
-                    painter = painterResource(R.drawable.logominecraft),
-                    contentDescription = "Logo",
-                    modifier = Modifier
-                        .height(100.dp)
-                        .fillMaxWidth(0.8f),
-                    contentScale = ContentScale.Fit
-                )
+                    .align(Alignment.TopStart)
+                    .padding(20.dp)
+                    .size(60.dp)
+                    .clip(RoundedCornerShape(8.dp))
+                    .clickable { }
+                    .padding(5.dp)
+            )
 
-                Spacer(modifier = Modifier.height(20.dp))
-
-                // 1. CAJA DE DESCRIPCIÓN (Ancho 0.85f)
-                MinecraftPanelDescripcion(
-                    modifier = Modifier.fillMaxWidth(0.85f),
-                    isDarkTheme = uiState.isDarkTheme
-                )
-
-                Spacer(modifier = Modifier.height(10.dp))
-
-                // 2. FILA DE BOTONES (Ajustada a 0.85f para coincidir con el panel de arriba)
-                Row(
-                    modifier = Modifier.fillMaxWidth(0.85f),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    botonMinecraft("Comenzar", Modifier.weight(1f)) { onComienzaClick() }
-                    botonMinecraft("Explorar", Modifier.weight(1f)) { onObjetoClick() }
-                }
-            }
-
-            // --- BARRA INFERIOR ---
-            MinecraftBottomBar(
-                mostrarInicio = false,
-                onBiomasClick = onComienzaClick,
-                onCategoriasClick = onObjetoClick,
-                onOpcionesClick = onOpcionesClick,
+            Image(
+                painter = painterResource(
+                    if (uiState.isDarkTheme) R.drawable.sol else R.drawable.lunaimagen
+                ),
+                contentDescription = "Cambiar Tema",
                 modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .fillMaxWidth()
+                    .align(Alignment.TopEnd)
+                    .padding(20.dp)
+                    .size(60.dp)
+                    .clip(RoundedCornerShape(8.dp))
+                    .clickable { miViewModel.toggleTheme() }
+                    .padding(5.dp)
             )
         }
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(bottom = 80.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+
+            Image(
+                painter = painterResource(R.drawable.logominecraft),
+                contentDescription = "Logo",
+                modifier = Modifier
+                    .height(100.dp)
+                    .fillMaxWidth(0.8f),
+                contentScale = ContentScale.Fit
+            )
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            MinecraftPanelDescripcion(
+                modifier = Modifier.fillMaxWidth(0.85f),
+                isDarkTheme = uiState.isDarkTheme
+            )
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(0.85f),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                botonMinecraft("Comenzar", Modifier.weight(1f)) { onComienzaClick() }
+                botonMinecraft("Explorar", Modifier.weight(1f)) { onObjetoClick() }
+            }
+        }
+
+        MinecraftBottomBar(
+            state = bottomState,
+            onInicioClick = {},
+            onBiomasClick = onComienzaClick,
+            onCategoriasClick = onObjetoClick,
+            onOpcionesClick = onOpcionesClick,
+            modifier = Modifier.align(Alignment.BottomCenter)
+        )
     }
 }
+
+
+
 // --- Componentes de UI (Sin cambios lógicos, solo visuales) ---
 
 @Composable
@@ -253,4 +235,23 @@ fun textoBotonesInicio(text: String, modifier: Modifier = Modifier) {
         )
     }
 }
+
+@Composable
+@Preview(showBackground = true, showSystemUi = true)
+fun PreviewPantallaInicio() {
+    val fakeState = BottomBarState(
+        inicio = true,
+        biomas = true,
+        categorias = true,
+        opciones = true
+    )
+
+    PantallaInicio(
+        onComienzaClick = {},
+        onObjetoClick = {},
+        onOpcionesClick = {},
+        bottomState = fakeState
+    )
+}
+
 

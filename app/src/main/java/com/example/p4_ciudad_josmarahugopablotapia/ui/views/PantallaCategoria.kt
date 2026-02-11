@@ -26,6 +26,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.p4_ciudad_josmarahugopablotapia.data.Categoria
 import com.example.p4_ciudad_josmarahugopablotapia.data.DataSource
 import com.example.p4_ciudad_josmarahugopablotapia.ui.components.BarraArriba
+import com.example.p4_ciudad_josmarahugopablotapia.ui.components.BottomBarState
 import com.example.p4_ciudad_josmarahugopablotapia.ui.components.CategoriaCard
 import com.example.p4_ciudad_josmarahugopablotapia.ui.components.MinecraftBottomBar
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.P4_ciudad_JoséMaríaHugoPabloTapiaTheme
@@ -39,11 +40,13 @@ import com.example.p4_ciudad_josmarahugopablotapia.viewModel.InicioViewModel
 
 @Composable
 fun PantallaCategoria(
-    onNavegar: (String) -> Unit,
+    biomaId: Int,
+    onNavegar: (Int) -> Unit,
     onInicioClick: () -> Unit,
     onBiomasClick: () -> Unit,
     onOpcionesClick: () -> Unit,
-    miViewModel: InicioViewModel = viewModel()
+    miViewModel: InicioViewModel = viewModel(),
+    bottomState: BottomBarState
 ) {
     val uiState by miViewModel.uiState.collectAsState()
 
@@ -51,9 +54,8 @@ fun PantallaCategoria(
         modifier = Modifier
             .fillMaxSize()
             .statusBarsPadding()
-            .navigationBarsPadding()
     ) {
-        // Fondo
+
         Image(
             painter = painterResource(
                 if (uiState.isDarkTheme) R.drawable.endermanfondo else R.drawable.fondodia
@@ -69,6 +71,7 @@ fun PantallaCategoria(
                 .padding(16.dp)
                 .padding(bottom = 90.dp)
         ) {
+
             BarraArriba(
                 titulo = stringResource(R.string.elegirCategoria),
                 isDarkTheme = uiState.isDarkTheme,
@@ -83,43 +86,31 @@ fun PantallaCategoria(
                     .fillMaxSize()
                     .weight(1f)
             ) {
-                items(DataSource.categorias) { categoria: Categoria ->
-                    // 🔹 Resolvemos el string aquí, dentro del Composable
-                    val tituloTexto = stringResource(categoria.nombreResId)
+                items(DataSource.categorias) { categoria ->
 
                     CategoriaCard(
-                        titulo = tituloTexto,
+                        titulo = stringResource(categoria.nombreResId),
                         imagenResId = categoria.imagenResId,
                         descripcion = categoria.descripcion,
-                        onTextoClick = { onNavegar(tituloTexto) },
+                        onTextoClick = { onNavegar(categoria.id) },
                         miViewModel = miViewModel
-                        // lambda normal, sin @Composable
                     )
                 }
             }
-
         }
 
         MinecraftBottomBar(
+            state = bottomState,
             onInicioClick = onInicioClick,
             onBiomasClick = onBiomasClick,
-            mostrarCategorias = false,
+            onCategoriasClick = {},
             onOpcionesClick = onOpcionesClick,
             modifier = Modifier.align(Alignment.BottomCenter)
         )
     }
 }
 
-// ---------------------- Preview ----------------------
-@Preview(showSystemUi = true)
-@Composable
-fun PreviewPantallaCategoria() {
-    P4_ciudad_JoséMaríaHugoPabloTapiaTheme {
-        PantallaCategoria(
-            onNavegar = {},
-            onInicioClick = {},
-            onBiomasClick = {},
-            onOpcionesClick = {}
-        )
-    }
-}
+
+
+
+

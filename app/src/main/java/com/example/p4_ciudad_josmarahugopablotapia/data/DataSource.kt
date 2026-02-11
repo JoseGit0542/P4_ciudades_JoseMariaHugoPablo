@@ -139,5 +139,9 @@ object DataSource {
         }
     }
 
+    fun obtenerTodosLosDetalles(): List<Detalle> {
+        return detalles
+    }
+
 }
 
