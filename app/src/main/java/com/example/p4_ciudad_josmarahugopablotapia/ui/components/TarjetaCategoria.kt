@@ -88,7 +88,7 @@ fun CategoriaCard(
                         .clickable { onTextoClick() }
                 ) {
                     Text(
-                        text = "Ver mas",
+                        text = "explora",
                         fontSize = 18.sp,
                         color = Color.Black,
                         modifier = Modifier

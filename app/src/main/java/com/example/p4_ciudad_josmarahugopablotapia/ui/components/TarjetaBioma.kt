@@ -23,9 +23,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.P4_ciudad_JoséMaríaHugoPabloTapiaTheme
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.grisMinecraftiano
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.grisOscuroMinecraftiano
 import com.example.p4_ciudad_josmarahugopablotapia.viewModel.InicioViewModel
@@ -35,7 +37,7 @@ fun TarjetaBioma(
     titulo: String,
     imagenResId: Int,
     descripcion: String,
-    onTextoClick: @Composable () -> Unit,
+    onTextoClick: () -> Unit,
     miViewModel: InicioViewModel = viewModel()
 ) {
     var expandido by remember { mutableStateOf(false) }
@@ -45,9 +47,8 @@ fun TarjetaBioma(
         modifier = Modifier
             .fillMaxWidth()
             .padding(4.dp)
-            .clickable { onTextoClick() }
-            .animateContentSize(), // para animar la expansión
-        color = if (uiState.isDarkTheme) grisOscuroMinecraftiano else grisMinecraftiano, // fondo oscuro estilo AffirmationCard
+            .animateContentSize(), // animación de expansión
+        color = if (uiState.isDarkTheme) grisOscuroMinecraftiano else grisMinecraftiano,
         shape = RoundedCornerShape(12.dp),
         shadowElevation = 2.dp,
         border = BorderStroke(2.dp, Color.White)
@@ -56,7 +57,6 @@ fun TarjetaBioma(
 
             // ---------- TÍTULO ----------
             textoMinecraftTitulos(titulo, isDarkTheme = uiState.isDarkTheme)
-
 
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -68,18 +68,41 @@ fun TarjetaBioma(
                     .fillMaxWidth()
                     .height(160.dp)
                     .clip(RoundedCornerShape(10.dp))
-                    .clickable { expandido = !expandido },
+                    .clickable { expandido = !expandido },   // 🔹 Solo expande
                 contentScale = ContentScale.Crop
             )
 
-            // ---------- DESCRIPCIÓN EXPANDIDA ----------
+            // ---------- DESCRIPCIÓN + BOTÓN ----------
             if (expandido) {
                 Spacer(modifier = Modifier.height(8.dp))
+
                 textoMinecraftDescripciones(
                     text = descripcion,
                     isDarkTheme = uiState.isDarkTheme,
                     modifier = Modifier.fillMaxWidth()
                 )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                // 🔹 BOTÓN MINECRAFT PARA NAVEGAR
+                Surface(
+                    color = Color(0xFFFFD700), // amarillo Minecraft
+                    shape = RoundedCornerShape(6.dp),
+                    border = BorderStroke(2.dp, Color.Black),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .clickable { onTextoClick() }
+                ) {
+                    Text(
+                        text = "Ver más",
+                        fontSize = 18.sp,
+                        color = Color.Black,
+                        modifier = Modifier
+                            .padding(vertical = 10.dp)
+                            .fillMaxWidth(),
+                        textAlign = androidx.compose.ui.text.style.TextAlign.Center
+                    )
+                }
             }
         }
     }

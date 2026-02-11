@@ -80,14 +80,15 @@ fun PantallaBioma(
             ) {
                 items(DataSource.biomas) { bioma ->
                     TarjetaBioma(
-                        titulo = stringResource(bioma.nombreResId) ,
+                        titulo = stringResource(bioma.nombreResId),
                         imagenResId = bioma.imagenResId,
                         descripcion = bioma.descripcion,
-                        onTextoClick = { onNavegar(stringResource(bioma.nombreResId)) },
+                        onTextoClick = { onNavegar(bioma.nombreResId) },  // ← CORRECTO
                         miViewModel = miViewModel
                     )
                 }
             }
+
         }
 
 
