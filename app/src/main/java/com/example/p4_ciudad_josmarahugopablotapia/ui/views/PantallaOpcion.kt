@@ -73,6 +73,7 @@ fun PantallaOpcion(
         modifier = Modifier
             .fillMaxSize()
             .statusBarsPadding()
+            .windowInsetsPadding(WindowInsets.navigationBars)
     ) {
 
         Image(

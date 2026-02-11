@@ -63,7 +63,7 @@ fun MinecraftBottomBar(
     Box(
         modifier = modifier
             .fillMaxWidth()
-            .height(90.dp)
+            .height(80.dp)
             .windowInsetsPadding(WindowInsets.navigationBars)   // ⭐ evita interferir con botones del móvil
     ) {
         Image(

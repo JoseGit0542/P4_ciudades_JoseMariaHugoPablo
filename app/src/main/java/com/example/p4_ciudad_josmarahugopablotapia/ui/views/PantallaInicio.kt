@@ -47,6 +47,7 @@ fun PantallaInicio(
         modifier = Modifier
             .fillMaxSize()
             .statusBarsPadding()
+            .windowInsetsPadding(WindowInsets.navigationBars)
 
     ) {
 
