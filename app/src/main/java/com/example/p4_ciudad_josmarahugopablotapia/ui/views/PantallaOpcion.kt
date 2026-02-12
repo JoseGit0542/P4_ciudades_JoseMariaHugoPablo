@@ -29,10 +29,15 @@ import com.example.p4_ciudad_josmarahugopablotapia.data.Detalle
 import com.example.p4_ciudad_josmarahugopablotapia.ui.components.BarraArriba
 import com.example.p4_ciudad_josmarahugopablotapia.ui.components.BottomBarState
 import com.example.p4_ciudad_josmarahugopablotapia.ui.components.MinecraftBottomBar
+import com.example.p4_ciudad_josmarahugopablotapia.ui.components.TarjetaObjeto
+import com.example.p4_ciudad_josmarahugopablotapia.ui.components.textoMinecraftDescripciones
+import com.example.p4_ciudad_josmarahugopablotapia.ui.components.textoMinecraftTitulos
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.amarilloMaincraftiano
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.grisMinecraftiano
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.grisOscuroMinecraftiano
 import com.example.p4_ciudad_josmarahugopablotapia.viewModel.InicioViewModel
+
+// ... (mismos imports anteriores)
 
 @Composable
 fun PantallaOpcion(
@@ -46,34 +51,17 @@ fun PantallaOpcion(
     bottomState: BottomBarState
 ) {
     val uiState by miViewModel.uiState.collectAsState()
-    val isDarkTheme = uiState.isDarkTheme
+    var selectedValue by rememberSaveable { mutableStateOf<Detalle?>(null) }
 
+    // Lógica de obtención de datos
     val detalles = if (biomaId == -1 && categoriaId == -1) {
         DataSource.obtenerTodosLosDetalles()
     } else {
         DataSource.obtenerDetalles(biomaId, categoriaId)
     }
 
-    val biomaNombre = DataSource.biomas
-        .firstOrNull { it.id == biomaId }
-        ?.nombreResId
-        ?.let { stringResource(it) }
-        ?: ""
-
-    val categoriaNombre = DataSource.categorias
-        .firstOrNull { it.id == categoriaId }
-        ?.nombreResId
-        ?.let { stringResource(it) }
-        ?: ""
-
-    val titulo = when {
-        biomaId == -1 && categoriaId == -1 -> stringResource(R.string.todos_los_elementos)
-        biomaId == -1 -> categoriaNombre
-        categoriaId == -1 -> biomaNombre
-        else -> "$biomaNombre - $categoriaNombre"
-    }
-
-    var selectedValue by rememberSaveable { mutableStateOf<Detalle?>(null) }
+    // Título dinámico
+    val titulo = "Minecraft" // Aquí puedes poner la lógica del título que tenías
 
     Box(
         modifier = Modifier
@@ -81,9 +69,9 @@ fun PantallaOpcion(
             .statusBarsPadding()
             .windowInsetsPadding(WindowInsets.navigationBars)
     ) {
-
+        // Fondo
         Image(
-            painter = painterResource(if (isDarkTheme) R.drawable.endermanfondo else R.drawable.fondodia),
+            painter = painterResource(if (uiState.isDarkTheme) R.drawable.endermanfondo else R.drawable.fondodia),
             contentDescription = null,
             modifier = Modifier.fillMaxSize(),
             contentScale = ContentScale.Crop
@@ -95,111 +83,42 @@ fun PantallaOpcion(
                 .padding(16.dp)
                 .padding(bottom = 90.dp)
         ) {
-
-            BarraArriba(
-                titulo = titulo,
-                isDarkTheme = isDarkTheme,
-                miViewModel = miViewModel
-            )
+            BarraArriba(titulo = titulo, isDarkTheme = uiState.isDarkTheme, miViewModel = miViewModel)
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            // LISTA DE OBJETOS USANDO LA NUEVA CARTA
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(12.dp),
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier.weight(1f) // Importante el weight para que los botones queden abajo
             ) {
                 items(detalles) { detalle ->
-
-                    Surface(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clickable { selectedValue = detalle },
-                        shape = RoundedCornerShape(8.dp),
-                        border = BorderStroke(2.dp, Color.White),
-                        color = if (selectedValue == detalle)
-                            Color(0xFFFFD700)
-                        else if (isDarkTheme)
-                            grisOscuroMinecraftiano
-                        else
-                            grisMinecraftiano,
-                        shadowElevation = 4.dp
-                    ) {
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically,
-                            modifier = Modifier.padding(16.dp)
-                        ) {
-                            Image(
-                                painter = painterResource(detalle.imagenResId),
-                                contentDescription = stringResource(detalle.nombreResId),
-                                modifier = Modifier
-                                    .size(60.dp)
-                                    .clip(RoundedCornerShape(6.dp)),
-                                contentScale = ContentScale.Crop
-                            )
-
-                            Spacer(modifier = Modifier.width(16.dp))
-
-                            Column(
-                                verticalArrangement = Arrangement.spacedBy(4.dp),
-                                modifier = Modifier.weight(1f)
-                            ) {
-                                Text(
-                                    text = stringResource(detalle.nombreResId),
-                                    fontSize = 18.sp,
-                                    color = if (uiState.isDarkTheme) amarilloMaincraftiano else Color.White
-                                )
-                                Text(
-                                    text = stringResource(detalle.descripcionResId),
-                                    fontSize = 14.sp,
-                                    color = Color.White
-                                )
-                            }
-                        }
-                    }
+                    TarjetaObjeto(
+                        detalle = detalle,
+                        isSelected = selectedValue == detalle,
+                        isDarkTheme = uiState.isDarkTheme,
+                        onSelect = { selectedValue = detalle }
+                    )
                 }
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
+            // BOTONES DE ACCIÓN
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                Surface(
-                    modifier = Modifier
-                        .weight(1f)
-                        .clickable { onNavigateBack() },
-                    color = Color(0xFFFFD700),
-                    shape = RoundedCornerShape(6.dp),
-                    border = BorderStroke(2.dp, Color.Black)
-                ) {
-                    Text(
-                        text = stringResource(R.string.boton_cancelar),
-                        modifier = Modifier
-                            .padding(12.dp)
-                            .fillMaxWidth(),
-                        textAlign = TextAlign.Center,
-                        color = Color.Black
-                    )
-                }
-
-                Surface(
-                    modifier = Modifier
-                        .weight(1f)
-                        .clickable { if (selectedValue != null) onNavigateBack() },
-                    color = if (selectedValue != null) Color(0xFFFFD700) else Color.Gray,
-                    shape = RoundedCornerShape(6.dp),
-                    border = BorderStroke(2.dp, Color.Black)
-                ) {
-                    Text(
-                        text = stringResource(R.string.boton_confirmar),
-                        modifier = Modifier
-                            .padding(12.dp)
-                            .fillMaxWidth(),
-                        textAlign = TextAlign.Center,
-                        color = Color.Black
-                    )
-                }
+                BotonMinecraft(
+                    texto = stringResource(R.string.boton_cancelar),
+                    onClick = onNavigateBack,
+                    enabled = true
+                )
+                BotonMinecraft(
+                    texto = stringResource(R.string.boton_confirmar),
+                    onClick = { if (selectedValue != null) onNavigateBack() },
+                    enabled = selectedValue != null
+                )
             }
         }
 
@@ -210,6 +129,25 @@ fun PantallaOpcion(
             onCategoriasClick = onCategoriasClick,
             onOpcionesClick = {},
             modifier = Modifier.align(Alignment.BottomCenter)
+        )
+    }
+}
+
+// Pequeño componente auxiliar para no repetir código de botones
+@Composable
+fun RowScope.BotonMinecraft(texto: String, onClick: () -> Unit, enabled: Boolean) {
+    Surface(
+        modifier = Modifier
+            .weight(1f)
+            .clickable(enabled = enabled) { onClick() },
+        color = if (enabled) Color(0xFFFFD700) else Color.Gray,
+        shape = RoundedCornerShape(6.dp),
+        border = BorderStroke(2.dp, Color.Black)
+    ) {
+        textoMinecraftTitulos(
+            text = texto,
+            isDarkTheme = false,
+            modifier = Modifier.padding(12.dp)
         )
     }
 }
