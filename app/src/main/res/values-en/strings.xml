@@ -51,48 +51,82 @@
     <!-- Specific object/element names -->
     <string name="champinaca">Mooshroom</string>
     <string name="desc_champinaca">Unique creature from the mushroom biome. It is passive and can be sheared.</string>
+    <string name="vaca_seta_marron">Brown Mooshroom</string>
+    <string name="desc_vaca_marron">A rare variant of the mooshroom that appears when it is struck by lightning.</string>
 
     <string name="cueva_setas">Mushroom cave</string>
     <string name="desc_cueva_setas">Underground structure full of glowing mushrooms.</string>
 
     <string name="hongos_rojos">Red mushrooms</string>
     <string name="desc_hongos_rojos">Edible resource. You can use them to make stew.</string>
+    <string name="micelio">Mycelium</string>
+    <string name="desc_micelio">A special dirt block where fungi grow naturally.</string>
 
     <string name="setas_gigantes">Giant mushrooms</string>
     <string name="desc_setas_gigantes">Typical vegetation. You can grow them with bone meal.</string>
+    <string name="sopa_setas">Mushroom Stew</string>
+    <string name="desc_sopa_setas">Nutritious food obtained directly from Mooshrooms using a bowl.</string>
 
     <string name="lobo">Wolf</string>
     <string name="desc_lobo">Tameable creature. Protect yourself with bones to have a companion.</string>
+    <string name="zorro">Fox</string>
+    <string name="desc_zorro">A nocturnal animal that often carries items in its mouth. It loves berries.</string>
 
     <string name="aldea_taiga">Taiga village</string>
     <string name="desc_aldea_taiga">Generated structure with spruce wood architecture.</string>
+    <string name="puesto_saqueadores">Pillager Outpost</string>
+    <string name="desc_puesto_saqueadores">A watchtower inhabited by hostile Illagers armed with crossbows.</string>
+    <string name="mansion_pillagers">Woodland Mansion</string>
+    <string name="desc_mansion_pillagers">An extremely dangerous place inhabited by Evokers and Vindicators; it serves as a base to obtain the Totem of Undying, valuable loot, and to challenge intense battles.</string>
+    <string name="iglu">Igloo</string>
+    <string name="desc_iglu">Small snow structure that sometimes hides a secret basement with a zombie villager.</string>
 
     <string name="madera_abeto">Spruce wood</string>
     <string name="desc_madera_abeto">Dark-colored wood resource. Ideal for rustic constructions.</string>
+    <string name="bayas_dulces">Sweet Berries</string>
+    <string name="desc_bayas_dulces">A thorny bush that provides food but slows you down when walking through it.</string>
+    <string name="helecho">Fern</string>
+    <string name="desc_helecho">Decorative plant that thrives in the shady and humid floors of the taiga.</string>
 
     <string name="abetos">Spruce trees</string>
     <string name="desc_abetos">Tall, slender trees characteristic of the taiga.</string>
 
     <string name="ocelote">Ocelot</string>
     <string name="desc_ocelote">Wild jungle creature. Scares away creepers.</string>
+    <string name="loro">Parrot</string>
+    <string name="desc_loro">A colorful bird that mimics the sounds of nearby mobs.</string>
+    <string name="panda">Panda</string>
+    <string name="desc_panda">A peaceful creature that spends its day eating bamboo and rolling around.</string>
 
     <string name="templo_jungla">Jungle temple</string>
     <string name="desc_templo_jungla">Structure with dispenser traps and hidden chests.</string>
+    <string name="madera_jungla">Jungle Wood</string>
+    <string name="desc_madera_jungla">A warm, reddish wood type obtained from the giant trees found in jungle biomes.</string>
+    <string name="sandia">Melon</string>
+    <string name="desc_sandia">Refreshing fruit that grows naturally on the jungle floor.</string>
 
     <string name="bambu">Bamboo</string>
     <string name="desc_bambu">Fast-growing plant resource. Useful for scaffolding.</string>
+    <string name="cacao">Cocoa Beans</string>
+    <string name="desc_cacao">A fruit that grows on jungle logs, essential for making cookies.</string>
 
     <string name="lianas">Vines</string>
     <string name="desc_lianas">Climbing vegetation. You can climb them without needing ladders.</string>
 
     <string name="caballo">Horse</string>
     <string name="desc_caballo">Tameable creature. The fastest means of transportation.</string>
+    <string name="llama">Llama</string>
+    <string name="desc_llama">A pack animal that can carry chests and spits if it feels threatened.</string>
+    <string name="armadillo">Armadillo</string>
+    <string name="desc_armadillo">A timid creature that rolls into a ball. It drops scutes for armor.</string>
 
     <string name="aldea_sabana">Savanna village</string>
     <string name="desc_aldea_sabana">Acacia constructions typical of warm plains.</string>
 
     <string name="madera_acacia">Acacia wood</string>
     <string name="desc_madera_acacia">Orange-colored wood resource. Very decorative.</string>
+    <string name="pasto_seco">Tall Grass</string>
+    <string name="desc_pasto_seco">Long, yellowish grass that covers the savanna plains.</string>
 
     <string name="acacias">Acacia trees</string>
     <string name="desc_acacias">Flat-topped trees characteristic of the savanna.</string>

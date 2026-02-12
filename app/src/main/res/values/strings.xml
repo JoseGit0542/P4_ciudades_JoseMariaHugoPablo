@@ -48,51 +48,87 @@
     <string name="descripcion_recursos">Elementos que puedes obtener y utilizar en tu inventario.</string>
     <string name="descripcion_vegetacion">Flora característica de cada bioma. Desde cactus hasta helechos.</string>
 
+
     <!-- Nombres de objetos/elementos específicos -->
     <string name="champinaca">Champiñaca</string>
     <string name="desc_champinaca">Criatura única del bioma de setas. Es pasiva y puede ser esquilada.</string>
+    <string name="vaca_seta_marron">Vaca seta marrón</string>
+    <string name="desc_vaca_marron">Una variante rara de la champiñaca que aparece cuando le cae un rayo.</string>
 
     <string name="cueva_setas">Cueva de setas</string>
     <string name="desc_cueva_setas">Estructura subterránea llena de hongos luminosos.</string>
 
     <string name="hongos_rojos">Hongos rojos</string>
     <string name="desc_hongos_rojos">Recurso comestible. Puedes usarlos para hacer estofado.</string>
+    <string name="micelio">Micelio</string>
+    <string name="desc_micelio">Bloque de tierra especial donde crecen los hongos de forma natural.</string>
 
     <string name="setas_gigantes">Setas gigantes</string>
     <string name="desc_setas_gigantes">Vegetación típica. Puedes cultivarlas con hueso molido.</string>
+    <string name="sopa_setas">Estofado de setas</string>
+    <string name="desc_sopa_setas">Alimento nutritivo que se obtiene directamente de las champiñacas usando un cuenco.</string>
 
     <string name="lobo">Lobo</string>
     <string name="desc_lobo">Criatura domesticable. Protégete con huesos para tener un compañero.</string>
+    <string name="zorro">Zorro</string>
+    <string name="desc_zorro">Animal nocturno que suele llevar objetos en la boca. Le encantan las bayas.</string>
 
     <string name="aldea_taiga">Aldea de taiga</string>
     <string name="desc_aldea_taiga">Estructura generada con arquitectura de madera de abeto.</string>
+    <string name="puesto_saqueadores">Puesto de saqueadores</string>
+    <string name="desc_puesto_saqueadores">Torre de vigilancia habitada por maldeanos hostiles armada con ballestas.</string>
+    <string name="mansion_pillagers">Mansion de Pillagers</string>
+    <string name="desc_mansion_pillagers">Es un lugar extremadamente peligroso, habitado por Evocadores y Vindicadores, y sirve como base para obtener el tótem de la inmortalidad, botín valioso y desafiar intensas batallas. </string>
+    <string name="iglu">Iglú</string>
+    <string name="desc_iglu">Pequeña estructura de nieve que a veces esconde un sótano secreto con un aldeano zombie.</string>
+
 
     <string name="madera_abeto">Madera de abeto</string>
     <string name="desc_madera_abeto">Recurso de madera de color oscuro. Ideal para construcciones rústicas.</string>
+    <string name="bayas_dulces">Bayas dulces</string>
+    <string name="desc_bayas_dulces">Arbusto espinoso que proporciona alimento pero ralentiza al caminar.</string>
+    <string name="helecho">Helecho</string>
+    <string name="desc_helecho">Planta decorativa que abunda en los suelos sombríos y húmedos de la taiga.</string>
 
     <string name="abetos">Abetos</string>
     <string name="desc_abetos">Árboles altos y delgados característicos de la taiga.</string>
 
     <string name="ocelote">Ocelote</string>
     <string name="desc_ocelote">Criatura salvaje de la jungla. Espanta a los creepers.</string>
+    <string name="loro">Loro</string>
+    <string name="desc_loro">Ave colorida que imita los sonidos de las criaturas cercanas.</string>
+    <string name="panda">Panda</string>
+    <string name="desc_panda">Criatura pacífica que pasa el día comiendo bambú y rodando por el suelo.</string>
 
     <string name="templo_jungla">Templo de jungla</string>
     <string name="desc_templo_jungla">Estructura con trampas de dispensadores y cofres ocultos.</string>
+    <string name="madera_jungla">Madera de jungla</string>
+    <string name="desc_madera_jungla">es un tipo de madera rojiza y cálida, obtenida de los árboles gigantes de las junglas</string>
+    <string name="sandia">Sandía</string>
+    <string name="desc_sandia">Fruta refrescante que crece de forma natural en el suelo de la jungla.</string>
 
     <string name="bambu">Bambú</string>
     <string name="desc_bambu">Recurso vegetal de crecimiento rápido. Útil para andamios.</string>
+    <string name="cacao">Cacao</string>
+    <string name="desc_cacao">Fruto que crece en los troncos de la jungla, esencial para hacer galletas.</string>
 
     <string name="lianas">Lianas</string>
     <string name="desc_lianas">Vegetación trepadora. Puedes escalarlas sin necesidad de escaleras.</string>
 
     <string name="caballo">Caballo</string>
     <string name="desc_caballo">Criatura domesticable. El medio de transporte más rápido.</string>
+    <string name="llama">Llama</string>
+    <string name="desc_llama">Animal de carga que puede llevar cofres y escupe si se siente amenazado.</string>
+    <string name="armadillo">Armadillo</string>
+    <string name="desc_armadillo">Criatura tímida que se enrolla sobre sí misma. Suelta escamas para armaduras.</string>
 
     <string name="aldea_sabana">Aldea de sabana</string>
     <string name="desc_aldea_sabana">Construcciones de acacia típicas de las llanuras cálidas.</string>
 
     <string name="madera_acacia">Madera de acacia</string>
     <string name="desc_madera_acacia">Recurso de madera de color naranja. Muy decorativa.</string>
+    <string name="pasto_seco">Pasto seco</string>
+    <string name="desc_pasto_seco">Hierba alta y amarillenta que cubre las llanuras de la sabana.</string>
 
     <string name="acacias">Acacias</string>
     <string name="desc_acacias">Árboles de copa plana característicos de la sabana.</string>
