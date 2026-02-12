@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">Minecraft Biomes</string>
+    <string name="start">Start</string>
+    <string name="explore">Explore</string>
+    <string name="welcome">Explore Minecraft biomes</string>
+
+    <!-- Biomes -->
+    <string name="campos_setas">Mushroom Fields</string>
+    <string name="taiga">Taiga</string>
+    <string name="descripcion_taiga">A biome full of giant Mushrooms</string>
+    <string name="jungla">Jungle</string>
+    <string name="descripcion_jungla">Dense and wet vegetation</string>
+    <string name="sabana">Savanna</string>
+    <string name="descripcion_sabana">Plain with yellow grass</string>
+    <string name="bosque">Forest</string>
+
+    <!-- Categories -->
+    <string name="estructuras">Structures</string>
+    <string name="descripcion_estructuras">Buildings automatically generated</string>
+    <string name="criaturas">Creatures</string>
+    <string name="descripcion_criaturas">Hostile and non hostile creatures</string>
+    <string name="recursos">Resources</string>
+    <string name="descripcion_recursos">Player\'s inventory items</string>
+    <string name="vegetacion">Vegetation</string>
+
+    <string name="descripcion_vegetacion">Generated vegetation depending on the biome</string>
+    <string name = "elegirCategoria">Select a category: </string>
+    <string name = "elegirBioma">Choose the biome: </string>
+    <string name = "elegirOpcion">Choose the option you want</string>
+    <string name="desc_bosque">A biome with many trees and animals</string>
+    <string name="nombre_desierto">Desert</string>
+    <string name="desc_desierto">A biome with sand and cacti.</string>
+    <string name="mobs">Mobs</string>
+    <string name="desc_mobs">Living creatures in Minecraft</string>
+    <string name="desc_estructuras">Structures and constructions</string>
+    <string name="descripcionInicio">Discover Resources, creatures and elements from the world of Minecraft</string>
+    <string name="begin">Begin</string>
+    <string name="descripcion_setas">A biome full of giant shrooms</string>
+</resources>

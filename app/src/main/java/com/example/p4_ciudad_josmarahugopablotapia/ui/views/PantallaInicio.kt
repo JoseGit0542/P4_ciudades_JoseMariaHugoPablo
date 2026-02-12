@@ -128,8 +128,8 @@ fun PantallaInicio(
                 modifier = Modifier.fillMaxWidth(0.85f),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                botonMinecraft("Comenzar", Modifier.weight(1f)) { onComienzaClick() }
-                botonMinecraft("Explorar", Modifier.weight(1f)) { onObjetoClick() }
+                botonMinecraft(stringResource(R.string.begin), Modifier.weight(1f)) { onComienzaClick() }
+                botonMinecraft(stringResource(R.string.explore), Modifier.weight(1f)) { onObjetoClick() }
             }
         }
 

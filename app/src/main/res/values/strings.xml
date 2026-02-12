@@ -3,25 +3,40 @@
     <string name="app_name">Biomas de Minecraft</string>
 
     <string name="start">Empezar</string>
+    <string name="begin">Comenzar</string>
+    <string name="explore">Explorar</string>
     <string name="welcome">Explora los biomas de Minecraft</string>
 
     <!-- Biomas -->
     <string name="campos_setas">Campos de setas</string>
+    <string name="descripcion_setas">Un bioma lleno de setas gigantes</string>
     <string name="taiga">Taiga</string>
+    <string name="descripcion_taiga">Bosques frios con abetos.</string>
     <string name="jungla">Jungla</string>
+    <string name="descripcion_jungla">Vegetacion densa y humeda.</string>
     <string name="sabana">Sabana</string>
+    <string name="descripcion_sabana">Llanuras con hierba amarilla.</string>
     <string name="bosque">Bosque</string>
 
     <!-- Categorías -->
     <string name="estructuras">Estructuras</string>
+    <string name="descripcion_estructuras">Construcciones generadas automaticamente</string>
     <string name="criaturas">Criaturas</string>
+    <string name="descripcion_criaturas">Criaturas hostiles y no hostiles</string>
     <string name="recursos">Recursos</string>
+    <string name="descripcion_recursos">Elementos del inventario del jugador</string>
     <string name="vegetacion">Vegetacion</string>
+    <string name="descripcion_vegetacion">Vegetacion generada segun el bioma</string>
 
     <string name = "elegirCategoria">Selecciona una categoria: </string>
     <string name = "elegirBioma">Elige el bioma: </string>
     <string name = "elegirOpcion">Elige la opcion que quieras</string>
-
+    <string name="desc_bosque">Un bioma con muchos arboles y animales</string>
+    <string name="nombre_desierto">Desierto</string>
+    <string name="desc_desierto">Un bioma con arena y cactus.</string>
+    <string name="mobs">Mobs</string>
+    <string name="desc_mobs">Criaturas vivas en Minecraft</string>
+    <string name="desc_estructuras">Estructuras y construcciones</string>
 
 
 </resources>

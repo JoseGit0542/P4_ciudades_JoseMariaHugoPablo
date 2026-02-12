@@ -23,11 +23,9 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.P4_ciudad_JoséMaríaHugoPabloTapiaTheme
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.grisMinecraftiano
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.grisOscuroMinecraftiano
 import com.example.p4_ciudad_josmarahugopablotapia.viewModel.InicioViewModel
@@ -36,7 +34,7 @@ import com.example.p4_ciudad_josmarahugopablotapia.viewModel.InicioViewModel
 fun TarjetaBioma(
     titulo: String,
     imagenResId: Int,
-    descripcion: String,
+    descripcion: Int,
     onTextoClick: () -> Unit,
     miViewModel: InicioViewModel = viewModel()
 ) {
