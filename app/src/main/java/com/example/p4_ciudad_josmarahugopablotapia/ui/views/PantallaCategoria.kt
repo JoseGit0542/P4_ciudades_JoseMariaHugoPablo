@@ -20,9 +20,14 @@ import com.example.p4_ciudad_josmarahugopablotapia.ui.components.CategoriaCard
 import com.example.p4_ciudad_josmarahugopablotapia.ui.components.MinecraftBottomBar
 import com.example.p4_ciudad_josmarahugopablotapia.viewModel.InicioViewModel
 
+// ... tus imports ...
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+
 @Composable
 fun PantallaCategoria(
-    windowSize: WindowWidthSizeClass, // <--- AÑADE ESTO
+    windowSize: WindowWidthSizeClass,
     biomaId: Int,
     onNavegar: (Int) -> Unit,
     onInicioClick: () -> Unit,
@@ -32,6 +37,12 @@ fun PantallaCategoria(
     bottomState: BottomBarState
 ) {
     val uiState by miViewModel.uiState.collectAsState()
+
+    // Lógica del Codelab: 1 columna en móvil, 2 columnas en tablet/horizontal
+    val columnas = when (windowSize) {
+        WindowWidthSizeClass.Compact -> 1
+        else -> 2
+    }
 
     Box(
         modifier = Modifier
@@ -53,7 +64,6 @@ fun PantallaCategoria(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(16.dp)
-                .padding(bottom = 90.dp)
         ) {
 
             BarraArriba(
@@ -64,14 +74,18 @@ fun PantallaCategoria(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            LazyColumn(
+            // CAMBIO: Usamos LazyVerticalGrid con CategoriaCard
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(columnas),
                 verticalArrangement = Arrangement.spacedBy(20.dp),
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
                 modifier = Modifier
                     .fillMaxSize()
                     .weight(1f)
+                    .padding(bottom = 80.dp) // Espacio para la BottomBar
             ) {
                 items(DataSource.categorias) { categoria ->
-
+                    // Llamamos correctamente a CategoriaCard
                     CategoriaCard(
                         titulo = stringResource(categoria.nombreResId),
                         imagenResId = categoria.imagenResId,

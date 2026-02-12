@@ -208,6 +208,6 @@ fun PreviewPantallaInicio() {
         onObjetoClick = {},
         onOpcionesClick = {},
         bottomState = fakeState,
-        windowSize = ,
+        windowSize = WindowWidthSizeClass.Compact // <--- SOLUCIÓN AL ERROR
     )
 }

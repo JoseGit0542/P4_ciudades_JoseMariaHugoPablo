@@ -32,6 +32,9 @@ import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.grisMinecraftiano
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.grisOscuroMinecraftiano
 import com.example.p4_ciudad_josmarahugopablotapia.viewModel.InicioViewModel
 
+// ... tus imports ...
+import androidx.compose.foundation.layout.aspectRatio
+
 @Composable
 fun TarjetaBioma(
     titulo: String,
@@ -64,7 +67,8 @@ fun TarjetaBioma(
                 contentDescription = titulo,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(160.dp)
+                    // CAMBIO: aspectRatio en lugar de height fijo para que no se aplaste
+                    .aspectRatio(16f / 9f)
                     .clip(RoundedCornerShape(10.dp))
                     .clickable { expandido = !expandido },
                 contentScale = ContentScale.Crop

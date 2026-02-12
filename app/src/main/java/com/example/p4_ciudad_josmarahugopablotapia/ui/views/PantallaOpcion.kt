@@ -141,6 +141,8 @@ fun PantallaOpcionPreview() {
         onInicioClick = {},
         onBiomasClick = {},
         onCategoriasClick = {},
-        bottomState = bottomState
+        bottomState = bottomState,
+        windowSize = WindowWidthSizeClass.Compact // <--- SOLUCIÓN AL ERROR
+
     )
 }
