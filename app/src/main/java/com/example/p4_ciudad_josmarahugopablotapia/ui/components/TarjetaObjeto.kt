@@ -1,6 +1,5 @@
 package com.example.p4_ciudad_josmarahugopablotapia.ui.components
 
-
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -32,9 +31,10 @@ fun TarjetaObjeto(
             .fillMaxWidth()
             .clickable { onSelect() },
         shape = RoundedCornerShape(8.dp),
+        // Si está seleccionado, borde negro para que resalte sobre el amarillo
         border = BorderStroke(2.dp, if (isSelected) Color.Black else Color.White),
         color = if (isSelected)
-            Color(0xFFFFD700) // Amarillo si está seleccionado
+            Color(0xFFFFD700) // Amarillo Minecraft
         else if (isDarkTheme)
             grisOscuroMinecraftiano
         else
@@ -58,13 +58,16 @@ fun TarjetaObjeto(
 
             Column(
                 verticalArrangement = Arrangement.spacedBy(4.dp),
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
+                horizontalAlignment = Alignment.CenterHorizontally, // Alinea la columna a la izquierda
             ) {
-                textoMinecraftTitulos(
+                // Usamos tus funciones de texto con sombra
+                textoMinecraftTitulosObjetos(
                     text = stringResource(detalle.nombreResId),
-                    isDarkTheme = isDarkTheme && !isSelected, // Si está seleccionado, mejor texto oscuro
+                    isDarkTheme = isDarkTheme && !isSelected,
                     modifier = Modifier.fillMaxWidth()
                 )
+
                 textoMinecraftDescripciones(
                     text = stringResource(detalle.descripcionResId),
                     isDarkTheme = isDarkTheme && !isSelected,

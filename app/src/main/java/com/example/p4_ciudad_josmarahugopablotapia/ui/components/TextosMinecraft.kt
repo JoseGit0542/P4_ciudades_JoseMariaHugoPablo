@@ -67,3 +67,31 @@ fun textoMinecraftDescripciones(
         )
     }
 }
+@Composable
+fun textoMinecraftTitulosObjetos(
+    text: String,
+    modifier: Modifier = Modifier,
+    isDarkTheme: Boolean
+) {
+    Box(modifier = modifier) {
+        Text(
+            text = text,
+            fontSize = 18.sp,
+            fontFamily = MinecraftFont,
+            color = Color.Black,
+            modifier = Modifier
+                .offset(x = 2.dp, y = 2.dp)
+                .fillMaxWidth(),
+            textAlign = TextAlign.Start
+        )
+        Text(
+            text = text,
+            fontSize = 18.sp,
+            fontFamily = MinecraftFont,
+            color = if (isDarkTheme) Color(0xFFEFE27A) else Color.White,
+            modifier = Modifier.fillMaxWidth(),
+            textAlign = TextAlign.Start
+        )
+    }
+}
+

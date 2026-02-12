@@ -90,7 +90,7 @@ fun PantallaOpcion(
             // LISTA DE OBJETOS USANDO LA NUEVA CARTA
             LazyColumn(
                 verticalArrangement = Arrangement.spacedBy(12.dp),
-                modifier = Modifier.weight(1f) // Importante el weight para que los botones queden abajo
+                modifier = Modifier.weight(1f)
             ) {
                 items(detalles) { detalle ->
                     TarjetaObjeto(
@@ -102,26 +102,8 @@ fun PantallaOpcion(
                 }
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // BOTONES DE ACCIÓN
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(16.dp)
-            ) {
-                BotonMinecraft(
-                    texto = stringResource(R.string.boton_cancelar),
-                    onClick = onNavigateBack,
-                    enabled = true
-                )
-                BotonMinecraft(
-                    texto = stringResource(R.string.boton_confirmar),
-                    onClick = { if (selectedValue != null) onNavigateBack() },
-                    enabled = selectedValue != null
-                )
-            }
+            
         }
-
         MinecraftBottomBar(
             state = bottomState,
             onInicioClick = onInicioClick,
@@ -150,4 +132,22 @@ fun RowScope.BotonMinecraft(texto: String, onClick: () -> Unit, enabled: Boolean
             modifier = Modifier.padding(12.dp)
         )
     }
+}
+@Preview(showBackground = true)
+@Composable
+fun PantallaOpcionPreview() {
+    // Estado básico para la barra inferior necesario para que compile
+    val bottomState = remember { BottomBarState() }
+
+    // Llamada directa a tu función.
+    // Usamos -1 en los IDs para que el DataSource devuelva la lista completa y se vea algo en el LazyColumn.
+    PantallaOpcion(
+        biomaId = -1,
+        categoriaId = -1,
+        onNavigateBack = {},
+        onInicioClick = {},
+        onBiomasClick = {},
+        onCategoriasClick = {},
+        bottomState = bottomState
+    )
 }
