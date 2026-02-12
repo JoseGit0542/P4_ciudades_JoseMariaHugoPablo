@@ -1,5 +1,7 @@
 package com.example.p4_ciudad_josmarahugopablotapia.ui.views
 
+
+import TarjetaObjeto
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -8,34 +10,23 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.*
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.p4_ciudad_josmarahugopablotapia.R
 import com.example.p4_ciudad_josmarahugopablotapia.data.DataSource
-import com.example.p4_ciudad_josmarahugopablotapia.data.Detalle
 import com.example.p4_ciudad_josmarahugopablotapia.ui.components.BarraArriba
 import com.example.p4_ciudad_josmarahugopablotapia.ui.components.BottomBarState
 import com.example.p4_ciudad_josmarahugopablotapia.ui.components.MinecraftBottomBar
-import com.example.p4_ciudad_josmarahugopablotapia.ui.components.TarjetaObjeto
-import com.example.p4_ciudad_josmarahugopablotapia.ui.components.textoMinecraftDescripciones
 import com.example.p4_ciudad_josmarahugopablotapia.ui.components.textoMinecraftTitulos
-import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.amarilloMaincraftiano
-import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.grisMinecraftiano
-import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.grisOscuroMinecraftiano
 import com.example.p4_ciudad_josmarahugopablotapia.viewModel.InicioViewModel
+
 
 // ... (mismos imports anteriores)
 
@@ -51,7 +42,6 @@ fun PantallaOpcion(
     bottomState: BottomBarState
 ) {
     val uiState by miViewModel.uiState.collectAsState()
-    var selectedValue by rememberSaveable { mutableStateOf<Detalle?>(null) }
 
     // Lógica de obtención de datos
     val detalles = if (biomaId == -1 && categoriaId == -1) {
@@ -95,25 +85,26 @@ fun PantallaOpcion(
                 items(detalles) { detalle ->
                     TarjetaObjeto(
                         detalle = detalle,
-                        isSelected = selectedValue == detalle,
-                        isDarkTheme = uiState.isDarkTheme,
-                        onSelect = { selectedValue = detalle }
+                        isDarkTheme = uiState.isDarkTheme
                     )
+                }
                 }
             }
 
-            
-        }
         MinecraftBottomBar(
             state = bottomState,
             onInicioClick = onInicioClick,
             onBiomasClick = onBiomasClick,
             onCategoriasClick = onCategoriasClick,
-            onOpcionesClick = {},
+            onOpcionesClick ={},
             modifier = Modifier.align(Alignment.BottomCenter)
         )
+        }
+
     }
-}
+
+
+
 
 // Pequeño componente auxiliar para no repetir código de botones
 @Composable

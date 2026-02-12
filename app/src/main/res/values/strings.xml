@@ -35,6 +35,7 @@
     <string name="boton_biomas">Biomas</string>
     <string name="boton_categorias">Categorías</string>
     <string name="boton_opciones">Opciones</string>
+    <string name="boton_wiki">Ir a la wiki</string>
 
     <!-- Descripciones de biomas (mejoradas) -->
     <string name="descripcion_campos_setas">Un bioma mágico lleno de setas gigantes y criaturas únicas. Los hongos brillan en la oscuridad.</string>

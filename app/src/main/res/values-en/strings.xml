@@ -35,6 +35,7 @@
     <string name="boton_biomas">Biomes</string>
     <string name="boton_categorias">Categories</string>
     <string name="boton_opciones">Options</string>
+    <string name="boton_wiki">Go to wiki</string>
 
     <!-- Biome descriptions (enhanced) -->
     <string name="descripcion_campos_setas">A magical biome full of giant mushrooms and unique creatures. Mushrooms glow in the dark.</string>
