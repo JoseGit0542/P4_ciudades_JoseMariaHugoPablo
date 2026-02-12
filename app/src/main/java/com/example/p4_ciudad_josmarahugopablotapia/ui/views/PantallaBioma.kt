@@ -86,4 +86,5 @@ fun PantallaBioma(
             modifier = Modifier.align(Alignment.BottomCenter)
         )
     }
+
 }

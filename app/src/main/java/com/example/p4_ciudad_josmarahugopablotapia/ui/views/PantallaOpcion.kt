@@ -29,6 +29,7 @@ import com.example.p4_ciudad_josmarahugopablotapia.data.Detalle
 import com.example.p4_ciudad_josmarahugopablotapia.ui.components.BarraArriba
 import com.example.p4_ciudad_josmarahugopablotapia.ui.components.BottomBarState
 import com.example.p4_ciudad_josmarahugopablotapia.ui.components.MinecraftBottomBar
+import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.amarilloMaincraftiano
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.grisMinecraftiano
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.grisOscuroMinecraftiano
 import com.example.p4_ciudad_josmarahugopablotapia.viewModel.InicioViewModel
@@ -145,7 +146,7 @@ fun PantallaOpcion(
                                 Text(
                                     text = stringResource(detalle.nombreResId),
                                     fontSize = 18.sp,
-                                    color = Color.White
+                                    color = if (uiState.isDarkTheme) amarilloMaincraftiano else Color.White
                                 )
                                 Text(
                                     text = stringResource(detalle.descripcionResId),
