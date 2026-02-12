@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,6 +22,7 @@ import com.example.p4_ciudad_josmarahugopablotapia.viewModel.InicioViewModel
 
 @Composable
 fun PantallaBioma(
+    windowSize: WindowWidthSizeClass,
     miViewModel: InicioViewModel = viewModel(),
     onNavegar: (Int) -> Unit,
     onInicioClick: () -> Unit,
@@ -30,13 +32,18 @@ fun PantallaBioma(
 ) {
     val uiState by miViewModel.uiState.collectAsState()
 
+    // LÓGICA CODELAB: Definir columnas según el ancho de pantalla
+    val columnas = when (windowSize) {
+        WindowWidthSizeClass.Compact -> 1 // Móvil vertical
+        else -> 2 // Tablet o Móvil horizontal
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
             .statusBarsPadding()
             .windowInsetsPadding(WindowInsets.navigationBars)
     ) {
-
         Image(
             painter = painterResource(
                 if (uiState.isDarkTheme) R.drawable.endermanfondo else R.drawable.fondodia
@@ -50,9 +57,7 @@ fun PantallaBioma(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(16.dp)
-                .padding(bottom = 90.dp)
         ) {
-
             BarraArriba(
                 titulo = stringResource(R.string.elegirBioma),
                 isDarkTheme = uiState.isDarkTheme,
@@ -61,9 +66,14 @@ fun PantallaBioma(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            LazyColumn(
+            // CAMBIO: De LazyColumn a LazyVerticalGrid
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(columnas),
                 verticalArrangement = Arrangement.spacedBy(20.dp),
-                modifier = Modifier.fillMaxSize()
+                horizontalArrangement = Arrangement.spacedBy(16.dp),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(bottom = 80.dp) // Espacio para la barra inferior
             ) {
                 items(DataSource.biomas) { bioma ->
                     TarjetaBioma(
@@ -86,5 +96,4 @@ fun PantallaBioma(
             modifier = Modifier.align(Alignment.BottomCenter)
         )
     }
-
 }

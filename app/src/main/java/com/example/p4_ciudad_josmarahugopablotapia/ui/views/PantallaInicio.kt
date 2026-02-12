@@ -7,6 +7,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,12 +25,14 @@ import com.example.p4_ciudad_josmarahugopablotapia.ui.components.BarraArriba
 import com.example.p4_ciudad_josmarahugopablotapia.ui.components.BottomBarState
 import com.example.p4_ciudad_josmarahugopablotapia.ui.components.MinecraftBottomBar
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.MinecraftFont
+import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.amarilloMaincraftiano
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.grisMinecraftiano
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.grisOscuroMinecraftiano
 import com.example.p4_ciudad_josmarahugopablotapia.viewModel.InicioViewModel
 
 @Composable
 fun PantallaInicio(
+    windowSize: WindowWidthSizeClass, // <--- AÑADE ESTO
     onComienzaClick: () -> Unit,
     onObjetoClick: () -> Unit,
     onOpcionesClick: () -> Unit,
@@ -54,7 +57,6 @@ fun PantallaInicio(
             contentScale = ContentScale.Crop
         )
 
-        // ✅ USAR BarraArriba en lugar de los iconos manuales
         BarraArriba(
             modifier = Modifier.align(Alignment.TopCenter),
             titulo = null, // Sin título en la pantalla de inicio
@@ -184,7 +186,7 @@ fun textoBotonesInicio(text: String, modifier: Modifier = Modifier) {
             text = text,
             fontSize = 18.sp,
             fontFamily = MinecraftFont,
-            color = Color(0xFFFFFF55),
+            color = amarilloMaincraftiano,
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center
         )
@@ -205,6 +207,7 @@ fun PreviewPantallaInicio() {
         onComienzaClick = {},
         onObjetoClick = {},
         onOpcionesClick = {},
-        bottomState = fakeState
+        bottomState = fakeState,
+        windowSize = ,
     )
 }

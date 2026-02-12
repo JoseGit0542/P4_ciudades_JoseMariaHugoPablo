@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,6 +22,7 @@ import com.example.p4_ciudad_josmarahugopablotapia.viewModel.InicioViewModel
 
 @Composable
 fun PantallaCategoria(
+    windowSize: WindowWidthSizeClass, // <--- AÑADE ESTO
     biomaId: Int,
     onNavegar: (Int) -> Unit,
     onInicioClick: () -> Unit,

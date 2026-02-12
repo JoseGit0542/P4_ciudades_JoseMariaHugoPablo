@@ -1,8 +1,11 @@
 package com.example.p4_ciudad_josmarahugopablotapia.ui.navigation
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -19,7 +22,8 @@ import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.P4_ciudad_JoséMarí
 import com.example.p4_ciudad_josmarahugopablotapia.ui.views.PantallaOpcion
 import com.example.p4_ciudad_josmarahugopablotapia.viewModel.InicioViewModel
 import com.example.p4_ciudad_josmarahugopablotapia.ui.components.BottomBarViewModel
-import com.example.p4_ciudad_josmarahugopablotapia.ui.components.MinecraftBottomBar
+// Asegúrate de tener estas importaciones para los componentes adaptativos
+// import com.example.p4_ciudad_josmarahugopablotapia.ui.components.MinecraftNavigationRail
 
 enum class Screen(@StringRes val title: Int) {
     Inicio(com.example.p4_ciudad_josmarahugopablotapia.R.string.welcome),
@@ -30,154 +34,155 @@ enum class Screen(@StringRes val title: Int) {
 
 @Composable
 fun MinecraftApp(
+    windowSize: WindowWidthSizeClass, // Recibido desde MainActivity
     navController: NavHostController = rememberNavController()
 ) {
     val inicioViewModel: InicioViewModel = viewModel()
     val bottomBarVM: BottomBarViewModel = viewModel()
     val bottomState = bottomBarVM.state.value
 
+    // Lógica del Codelab: Determinar el tipo de navegación
+    val esPantallaAncha = windowSize != WindowWidthSizeClass.Compact
+
     P4_ciudad_JoséMaríaHugoPabloTapiaTheme {
+        // Estructura adaptativa: Si es ancho, usamos Row para meter el NavigationRail
+        Row(modifier = Modifier.fillMaxSize()) {
 
-        // ❗ SIN bottomBar y SIN padding del Scaffold
-        Scaffold { _ ->
+            // 1. Mostrar Navigation Rail si estamos en tablet/horizontal
+            if (esPantallaAncha) {
+                // Aquí deberías crear un componente Navigation Rail con tus iconos de Minecraft
+                // MinecraftNavigationRail(navController, bottomState)
+            }
 
-            NavHost(
-                navController = navController,
-                startDestination = Screen.Inicio.name,
-                modifier = Modifier   // ❗ SIN padding(padding)
-            ) {
-
-                composable(Screen.Inicio.name) {
-                    bottomBarVM.soloInicio()
-
-                    PantallaInicio(
-                        miViewModel = inicioViewModel,
-                        bottomState = bottomState,
-                        onComienzaClick = {
-                            bottomBarVM.desbloquearBiomas()
-                            navController.navigate(Screen.Bioma.name)
-                        },
-                        onObjetoClick = {
-                            navController.navigate("${Screen.Opcion.name}/-1/-1")
-                        },
-                        onOpcionesClick = {
-                            bottomBarVM.inicioYOpcion()
-                            navController.navigate("${Screen.Opcion.name}/-1/-1")
-                        }
-                    )
+            Scaffold(
+                bottomBar = {
+                    // 2. Mostrar BottomBar SOLO si es móvil vertical (Compact)
+                    if (!esPantallaAncha) {
+                        // MinecraftBottomBar(navController, bottomState)
+                    }
                 }
+            ) { innerPadding ->
 
-                composable(Screen.Bioma.name) {
-                    bottomBarVM.desbloquearBiomas()
+                NavHost(
+                    navController = navController,
+                    startDestination = Screen.Inicio.name,
+                    modifier = Modifier.padding(innerPadding) // Ahora sí respetamos el padding
+                ) {
 
-                    PantallaBioma(
-                        miViewModel = inicioViewModel,
-                        bottomState = bottomState,
-                        onNavegar = { biomaId ->
-                            bottomBarVM.desbloquearCategorias()
-                            navController.navigate("${Screen.Categoria.name}/$biomaId")
-                        },
-                        onInicioClick = {
-                            bottomBarVM.soloInicio()
-                            navController.navigate(Screen.Inicio.name) {
-                                popUpTo(0)
-                            }
-                        },
-                        onCategoriasClick = {
-                            bottomBarVM.desbloquearCategorias()
-                            navController.navigate("${Screen.Categoria.name}/-1")
-                        },
-                        onOpcionesClick = {
-                            bottomBarVM.desbloquearOpciones()
-                            navController.navigate("${Screen.Opcion.name}/-1/-1")
-                        }
-                    )
-                }
-
-                composable(
-                    route = "${Screen.Categoria.name}/{biomaId}",
-                    arguments = listOf(navArgument("biomaId") { type = NavType.IntType })
-                ) { backStackEntry ->
-
-                    bottomBarVM.desbloquearCategorias()
-
-                    val biomaId = backStackEntry.arguments?.getInt("biomaId") ?: -1
-
-                    PantallaCategoria(
-                        miViewModel = inicioViewModel,
-                        bottomState = bottomState,
-                        biomaId = biomaId,
-                        onNavegar = { categoriaId ->
-                            bottomBarVM.desbloquearOpciones()
-                            navController.navigate("${Screen.Opcion.name}/$biomaId/$categoriaId")
-                        },
-                        onInicioClick = {
-                            bottomBarVM.soloInicio()
-                            navController.navigate(Screen.Inicio.name) {
-                                popUpTo(0)
-                            }
-                        },
-                        onBiomasClick = {
-                            bottomBarVM.desbloquearBiomas()
-                            navController.popBackStack()
-                        },
-                        onOpcionesClick = {
-                            bottomBarVM.desbloquearOpciones()
-                            navController.navigate("${Screen.Opcion.name}/-1/-1")
-                        }
-                    )
-                }
-
-                // 4️⃣ Opción
-                composable(
-                    route = "${Screen.Opcion.name}/{biomaId}/{categoriaId}",
-                    arguments = listOf(
-                        navArgument("biomaId") { type = NavType.IntType },
-                        navArgument("categoriaId") { type = NavType.IntType }
-                    )
-                ) { backStackEntry ->
-
-                    val biomaId = backStackEntry.arguments?.getInt("biomaId") ?: -1
-                    val categoriaId = backStackEntry.arguments?.getInt("categoriaId") ?: -1
-
-                    if (biomaId == -1 && categoriaId == -1) {
-                        // Vienes de EXPLORAR → solo inicio habilitado
+                    composable(Screen.Inicio.name) {
                         bottomBarVM.soloInicio()
-                    } else {
-                        // Vienes del flujo normal → todo desbloqueado
-                        bottomBarVM.desbloquearOpciones()
+                        PantallaInicio(
+                            windowSize = windowSize, // Pasamos el tamaño a la vista
+                            miViewModel = inicioViewModel,
+                            bottomState = bottomState,
+                            onComienzaClick = {
+                                bottomBarVM.desbloquearBiomas()
+                                navController.navigate(Screen.Bioma.name)
+                            },
+                            onObjetoClick = {
+                                navController.navigate("${Screen.Opcion.name}/-1/-1")
+                            },
+                            onOpcionesClick = {
+                                bottomBarVM.inicioYOpcion()
+                                navController.navigate("${Screen.Opcion.name}/-1/-1")
+                            }
+                        )
                     }
 
-                    PantallaOpcion(
-                        biomaId = biomaId,
-                        categoriaId = categoriaId,
-                        bottomState = bottomBarVM.state.value,
-                        onNavigateBack = { navController.popBackStack() },
-                        onInicioClick = {
-                            bottomBarVM.soloInicio()
-                            navController.navigate(Screen.Inicio.name) {
-                                popUpTo(0)
+                    composable(Screen.Bioma.name) {
+                        bottomBarVM.desbloquearBiomas()
+                        PantallaBioma(
+                            windowSize = windowSize, // Pasamos el tamaño a la vista
+                            miViewModel = inicioViewModel,
+                            bottomState = bottomState,
+                            onNavegar = { biomaId ->
+                                bottomBarVM.desbloquearCategorias()
+                                navController.navigate("${Screen.Categoria.name}/$biomaId")
+                            },
+                            onInicioClick = {
+                                bottomBarVM.soloInicio()
+                                navController.navigate(Screen.Inicio.name) { popUpTo(0) }
+                            },
+                            onCategoriasClick = {
+                                bottomBarVM.desbloquearCategorias()
+                                navController.navigate("${Screen.Categoria.name}/-1")
+                            },
+                            onOpcionesClick = {
+                                bottomBarVM.desbloquearOpciones()
+                                navController.navigate("${Screen.Opcion.name}/-1/-1")
                             }
-                        },
-                        onBiomasClick = {
-                            bottomBarVM.desbloquearBiomas()
-                            navController.navigate(Screen.Bioma.name)
-                        },
-                        onCategoriasClick = {
-                            bottomBarVM.desbloquearCategorias()
-                            navController.navigate("${Screen.Categoria.name}/-1")
-                        }
-                    )
-                }
+                        )
+                    }
 
+                    composable(
+                        route = "${Screen.Categoria.name}/{biomaId}",
+                        arguments = listOf(navArgument("biomaId") { type = NavType.IntType })
+                    ) { backStackEntry ->
+                        bottomBarVM.desbloquearCategorias()
+                        val biomaId = backStackEntry.arguments?.getInt("biomaId") ?: -1
+
+                        PantallaCategoria(
+                            windowSize = windowSize, // Pasamos el tamaño a la vista
+                            miViewModel = inicioViewModel,
+                            bottomState = bottomState,
+                            biomaId = biomaId,
+                            onNavegar = { categoriaId ->
+                                bottomBarVM.desbloquearOpciones()
+                                navController.navigate("${Screen.Opcion.name}/$biomaId/$categoriaId")
+                            },
+                            onInicioClick = {
+                                bottomBarVM.soloInicio()
+                                navController.navigate(Screen.Inicio.name) { popUpTo(0) }
+                            },
+                            onBiomasClick = {
+                                bottomBarVM.desbloquearBiomas()
+                                navController.popBackStack()
+                            },
+                            onOpcionesClick = {
+                                bottomBarVM.desbloquearOpciones()
+                                navController.navigate("${Screen.Opcion.name}/-1/-1")
+                            }
+                        )
+                    }
+
+                    composable(
+                        route = "${Screen.Opcion.name}/{biomaId}/{categoriaId}",
+                        arguments = listOf(
+                            navArgument("biomaId") { type = NavType.IntType },
+                            navArgument("categoriaId") { type = NavType.IntType }
+                        )
+                    ) { backStackEntry ->
+                        val biomaId = backStackEntry.arguments?.getInt("biomaId") ?: -1
+                        val categoriaId = backStackEntry.arguments?.getInt("categoriaId") ?: -1
+
+                        if (biomaId == -1 && categoriaId == -1) {
+                            bottomBarVM.soloInicio()
+                        } else {
+                            bottomBarVM.desbloquearOpciones()
+                        }
+
+                        PantallaOpcion(
+                            windowSize = windowSize, // Pasamos el tamaño a la vista
+                            biomaId = biomaId,
+                            categoriaId = categoriaId,
+                            bottomState = bottomBarVM.state.value,
+                            onNavigateBack = { navController.popBackStack() },
+                            onInicioClick = {
+                                bottomBarVM.soloInicio()
+                                navController.navigate(Screen.Inicio.name) { popUpTo(0) }
+                            },
+                            onBiomasClick = {
+                                bottomBarVM.desbloquearBiomas()
+                                navController.navigate(Screen.Bioma.name)
+                            },
+                            onCategoriasClick = {
+                                bottomBarVM.desbloquearCategorias()
+                                navController.navigate("${Screen.Categoria.name}/-1")
+                            }
+                        )
+                    }
+                }
             }
         }
     }
 }
-
-
-
-
-
-
-
