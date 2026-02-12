@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.p4_ciudad_josmarahugopablotapia.ui.components.BarraArriba
 import com.example.p4_ciudad_josmarahugopablotapia.ui.components.BottomBarState
 import com.example.p4_ciudad_josmarahugopablotapia.ui.components.MinecraftBottomBar
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.MinecraftFont
@@ -53,43 +54,13 @@ fun PantallaInicio(
             contentScale = ContentScale.Crop
         )
 
-        Box(modifier = Modifier.fillMaxSize()) {
-
-            Image(
-                painter = painterResource(
-                    if (uiState.isDarkTheme) R.drawable.endermanfondo else R.drawable.fondodia
-                ),
-                contentDescription = null,
-                modifier = Modifier.fillMaxSize(),
-                contentScale = ContentScale.Crop
-            )
-
-            Image(
-                painter = painterResource(R.drawable.logoiidiomas2),
-                contentDescription = "Cambiar Idioma",
-                modifier = Modifier
-                    .align(Alignment.TopStart)
-                    .padding(20.dp)
-                    .size(60.dp)
-                    .clip(RoundedCornerShape(8.dp))
-                    .clickable { }
-                    .padding(5.dp)
-            )
-
-            Image(
-                painter = painterResource(
-                    if (uiState.isDarkTheme) R.drawable.sol else R.drawable.lunaimagen
-                ),
-                contentDescription = "Cambiar Tema",
-                modifier = Modifier
-                    .align(Alignment.TopEnd)
-                    .padding(20.dp)
-                    .size(60.dp)
-                    .clip(RoundedCornerShape(8.dp))
-                    .clickable { miViewModel.toggleTheme() }
-                    .padding(5.dp)
-            )
-        }
+        // ✅ USAR BarraArriba en lugar de los iconos manuales
+        BarraArriba(
+            modifier = Modifier.align(Alignment.TopCenter),
+            titulo = null, // Sin título en la pantalla de inicio
+            isDarkTheme = uiState.isDarkTheme,
+            miViewModel = miViewModel
+        )
 
         Column(
             modifier = Modifier
