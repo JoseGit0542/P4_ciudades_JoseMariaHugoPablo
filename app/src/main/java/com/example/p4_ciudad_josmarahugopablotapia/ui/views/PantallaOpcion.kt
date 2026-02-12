@@ -29,7 +29,6 @@ import com.example.p4_ciudad_josmarahugopablotapia.data.Detalle
 import com.example.p4_ciudad_josmarahugopablotapia.ui.components.BarraArriba
 import com.example.p4_ciudad_josmarahugopablotapia.ui.components.BottomBarState
 import com.example.p4_ciudad_josmarahugopablotapia.ui.components.MinecraftBottomBar
-import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.P4_ciudad_JoséMaríaHugoPabloTapiaTheme
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.grisMinecraftiano
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.grisOscuroMinecraftiano
 import com.example.p4_ciudad_josmarahugopablotapia.viewModel.InicioViewModel
@@ -45,7 +44,6 @@ fun PantallaOpcion(
     miViewModel: InicioViewModel = viewModel(),
     bottomState: BottomBarState
 ) {
-
     val uiState by miViewModel.uiState.collectAsState()
     val isDarkTheme = uiState.isDarkTheme
 
@@ -66,6 +64,13 @@ fun PantallaOpcion(
         ?.nombreResId
         ?.let { stringResource(it) }
         ?: ""
+
+    val titulo = when {
+        biomaId == -1 && categoriaId == -1 -> stringResource(R.string.todos_los_elementos)
+        biomaId == -1 -> categoriaNombre
+        categoriaId == -1 -> biomaNombre
+        else -> "$biomaNombre - $categoriaNombre"
+    }
 
     var selectedValue by rememberSaveable { mutableStateOf<Detalle?>(null) }
 
@@ -91,7 +96,7 @@ fun PantallaOpcion(
         ) {
 
             BarraArriba(
-                titulo = "$biomaNombre - $categoriaNombre",
+                titulo = titulo,
                 isDarkTheme = isDarkTheme,
                 miViewModel = miViewModel
             )
@@ -124,7 +129,7 @@ fun PantallaOpcion(
                         ) {
                             Image(
                                 painter = painterResource(detalle.imagenResId),
-                                contentDescription = detalle.nombre,
+                                contentDescription = stringResource(detalle.nombreResId),
                                 modifier = Modifier
                                     .size(60.dp)
                                     .clip(RoundedCornerShape(6.dp)),
@@ -138,12 +143,12 @@ fun PantallaOpcion(
                                 modifier = Modifier.weight(1f)
                             ) {
                                 Text(
-                                    text = detalle.nombre,
+                                    text = stringResource(detalle.nombreResId),
                                     fontSize = 18.sp,
                                     color = Color.White
                                 )
                                 Text(
-                                    text = detalle.descripcion,
+                                    text = stringResource(detalle.descripcionResId),
                                     fontSize = 14.sp,
                                     color = Color.White
                                 )
@@ -168,7 +173,7 @@ fun PantallaOpcion(
                     border = BorderStroke(2.dp, Color.Black)
                 ) {
                     Text(
-                        "Cancelar",
+                        text = stringResource(R.string.boton_cancelar),
                         modifier = Modifier
                             .padding(12.dp)
                             .fillMaxWidth(),
@@ -186,7 +191,7 @@ fun PantallaOpcion(
                     border = BorderStroke(2.dp, Color.Black)
                 ) {
                     Text(
-                        "Confirmar",
+                        text = stringResource(R.string.boton_confirmar),
                         modifier = Modifier
                             .padding(12.dp)
                             .fillMaxWidth(),
@@ -207,4 +212,3 @@ fun PantallaOpcion(
         )
     }
 }
-

@@ -64,7 +64,7 @@ fun MinecraftBottomBar(
         modifier = modifier
             .fillMaxWidth()
             .height(80.dp)
-            .windowInsetsPadding(WindowInsets.navigationBars)   // ⭐ evita interferir con botones del móvil
+            .windowInsetsPadding(WindowInsets.navigationBars)
     ) {
         Image(
             painter = painterResource(R.drawable.barradeabajo),
@@ -105,5 +105,3 @@ fun MinecraftBottomBar(
         }
     }
 }
-
-

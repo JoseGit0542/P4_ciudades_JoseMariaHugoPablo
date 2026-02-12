@@ -23,8 +23,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.p4_ciudad_josmarahugopablotapia.R
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.grisMinecraftiano
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.grisOscuroMinecraftiano
 import com.example.p4_ciudad_josmarahugopablotapia.viewModel.InicioViewModel
@@ -63,7 +65,7 @@ fun CategoriaCard(
                     .fillMaxWidth()
                     .height(160.dp)
                     .clip(RoundedCornerShape(10.dp))
-                    .clickable { expandido = !expandido },   // 🔹 Ahora solo expande
+                    .clickable { expandido = !expandido },
                 contentScale = ContentScale.Crop
             )
 
@@ -78,9 +80,8 @@ fun CategoriaCard(
 
                 Spacer(modifier = Modifier.height(12.dp))
 
-                // 🔹 BOTÓN PARA NAVEGAR
                 Surface(
-                    color = Color(0xFFFFD700), // amarillo estilo Minecraft
+                    color = Color(0xFFFFD700),
                     shape = RoundedCornerShape(6.dp),
                     border = BorderStroke(2.dp, Color.Black),
                     modifier = Modifier
@@ -88,7 +89,7 @@ fun CategoriaCard(
                         .clickable { onTextoClick() }
                 ) {
                     Text(
-                        text = "explora",
+                        text = stringResource(R.string.boton_explora),
                         fontSize = 18.sp,
                         color = Color.Black,
                         modifier = Modifier

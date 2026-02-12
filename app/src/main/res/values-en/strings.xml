@@ -1,39 +1,99 @@
 <resources>
+    <string name = "descripcionInicio">Discover resources, creatures, and elements from the Minecraft world.</string>
     <string name="app_name">Minecraft Biomes</string>
+
     <string name="start">Start</string>
-    <string name="explore">Explore</string>
     <string name="welcome">Explore Minecraft biomes</string>
 
     <!-- Biomes -->
     <string name="campos_setas">Mushroom Fields</string>
     <string name="taiga">Taiga</string>
-    <string name="descripcion_taiga">A biome full of giant Mushrooms</string>
     <string name="jungla">Jungle</string>
-    <string name="descripcion_jungla">Dense and wet vegetation</string>
     <string name="sabana">Savanna</string>
-    <string name="descripcion_sabana">Plain with yellow grass</string>
     <string name="bosque">Forest</string>
 
     <!-- Categories -->
     <string name="estructuras">Structures</string>
-    <string name="descripcion_estructuras">Buildings automatically generated</string>
     <string name="criaturas">Creatures</string>
-    <string name="descripcion_criaturas">Hostile and non hostile creatures</string>
     <string name="recursos">Resources</string>
-    <string name="descripcion_recursos">Player\'s inventory items</string>
     <string name="vegetacion">Vegetation</string>
 
-    <string name="descripcion_vegetacion">Generated vegetation depending on the biome</string>
-    <string name = "elegirCategoria">Select a category: </string>
-    <string name = "elegirBioma">Choose the biome: </string>
+    <!-- Screen titles -->
+    <string name = "elegirCategoria">Select a category:</string>
+    <string name = "elegirBioma">Choose the biome:</string>
     <string name = "elegirOpcion">Choose the option you want</string>
-    <string name="desc_bosque">A biome with many trees and animals</string>
-    <string name="nombre_desierto">Desert</string>
-    <string name="desc_desierto">A biome with sand and cacti.</string>
-    <string name="mobs">Mobs</string>
-    <string name="desc_mobs">Living creatures in Minecraft</string>
-    <string name="desc_estructuras">Structures and constructions</string>
-    <string name="descripcionInicio">Discover Resources, creatures and elements from the world of Minecraft</string>
-    <string name="begin">Begin</string>
-    <string name="descripcion_setas">A biome full of giant shrooms</string>
+    <string name="todos_los_elementos">All elements</string>
+
+    <!-- Buttons -->
+    <string name="boton_comenzar">Start</string>
+    <string name="boton_explorar">Explore</string>
+    <string name="boton_ver_mas">See more</string>
+    <string name="boton_explora">Explore</string>
+    <string name="boton_cancelar">Cancel</string>
+    <string name="boton_confirmar">Confirm</string>
+    <string name="boton_inicio">Home</string>
+    <string name="boton_biomas">Biomes</string>
+    <string name="boton_categorias">Categories</string>
+    <string name="boton_opciones">Options</string>
+
+    <!-- Biome descriptions (enhanced) -->
+    <string name="descripcion_campos_setas">A magical biome full of giant mushrooms and unique creatures. Mushrooms glow in the dark.</string>
+    <string name="descripcion_taiga">Cold forests with towering spruce trees and wolves. Ideal for getting dark wood.</string>
+    <string name="descripcion_jungla">Dense and humid vegetation. Home to ocelots, parrots, and hidden temples.</string>
+    <string name="descripcion_sabana">Warm plains with yellow grass and acacia trees. Villages are common here.</string>
+
+    <!-- Category descriptions -->
+    <string name="descripcion_estructuras">Automatically generated constructions in the world. Contain treasures and dangers.</string>
+    <string name="descripcion_criaturas">Hostile and friendly creatures that inhabit different biomes.</string>
+    <string name="descripcion_recursos">Elements you can obtain and use in your inventory.</string>
+    <string name="descripcion_vegetacion">Characteristic flora of each biome. From cacti to ferns.</string>
+
+    <!-- Specific object/element names -->
+    <string name="champinaca">Mooshroom</string>
+    <string name="desc_champinaca">Unique creature from the mushroom biome. It is passive and can be sheared.</string>
+
+    <string name="cueva_setas">Mushroom cave</string>
+    <string name="desc_cueva_setas">Underground structure full of glowing mushrooms.</string>
+
+    <string name="hongos_rojos">Red mushrooms</string>
+    <string name="desc_hongos_rojos">Edible resource. You can use them to make stew.</string>
+
+    <string name="setas_gigantes">Giant mushrooms</string>
+    <string name="desc_setas_gigantes">Typical vegetation. You can grow them with bone meal.</string>
+
+    <string name="lobo">Wolf</string>
+    <string name="desc_lobo">Tameable creature. Protect yourself with bones to have a companion.</string>
+
+    <string name="aldea_taiga">Taiga village</string>
+    <string name="desc_aldea_taiga">Generated structure with spruce wood architecture.</string>
+
+    <string name="madera_abeto">Spruce wood</string>
+    <string name="desc_madera_abeto">Dark-colored wood resource. Ideal for rustic constructions.</string>
+
+    <string name="abetos">Spruce trees</string>
+    <string name="desc_abetos">Tall, slender trees characteristic of the taiga.</string>
+
+    <string name="ocelote">Ocelot</string>
+    <string name="desc_ocelote">Wild jungle creature. Scares away creepers.</string>
+
+    <string name="templo_jungla">Jungle temple</string>
+    <string name="desc_templo_jungla">Structure with dispenser traps and hidden chests.</string>
+
+    <string name="bambu">Bamboo</string>
+    <string name="desc_bambu">Fast-growing plant resource. Useful for scaffolding.</string>
+
+    <string name="lianas">Vines</string>
+    <string name="desc_lianas">Climbing vegetation. You can climb them without needing ladders.</string>
+
+    <string name="caballo">Horse</string>
+    <string name="desc_caballo">Tameable creature. The fastest means of transportation.</string>
+
+    <string name="aldea_sabana">Savanna village</string>
+    <string name="desc_aldea_sabana">Acacia constructions typical of warm plains.</string>
+
+    <string name="madera_acacia">Acacia wood</string>
+    <string name="desc_madera_acacia">Orange-colored wood resource. Very decorative.</string>
+
+    <string name="acacias">Acacia trees</string>
+    <string name="desc_acacias">Flat-topped trees characteristic of the savanna.</string>
 </resources>

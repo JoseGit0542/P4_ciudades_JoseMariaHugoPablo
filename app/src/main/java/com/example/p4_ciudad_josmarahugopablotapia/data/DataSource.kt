@@ -1,92 +1,82 @@
 package com.example.p4_ciudad_josmarahugopablotapia.data
 
-import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import com.example.p4_ciudad_josmarahugopablotapia.R
-
-// =====================
-// DATA CLASSES
-// =====================
+import com.example.p4_ciudad_josmarahugopablotapia.data.DataSource.BIOMA_JUNGLA
+import com.example.p4_ciudad_josmarahugopablotapia.data.DataSource.BIOMA_SABANA
+import com.example.p4_ciudad_josmarahugopablotapia.data.DataSource.BIOMA_SETAS
+import com.example.p4_ciudad_josmarahugopablotapia.data.DataSource.BIOMA_TAIGA
+import com.example.p4_ciudad_josmarahugopablotapia.data.DataSource.CAT_CRIATURAS
+import com.example.p4_ciudad_josmarahugopablotapia.data.DataSource.CAT_ESTRUCTURAS
+import com.example.p4_ciudad_josmarahugopablotapia.data.DataSource.CAT_RECURSOS
+import com.example.p4_ciudad_josmarahugopablotapia.data.DataSource.CAT_VEGETACION
 
 data class Categoria(
     val id: Int,
-    @StringRes val nombreResId: Int,
-    @DrawableRes val imagenResId: Int,
-    @StringRes val descripcionResId: Int
+    val nombreResId: Int,
+    val imagenResId: Int,
+    val descripcionResId: Int  // Cambiado de String a Int (resource ID)
 )
 
 data class Bioma(
     val id: Int,
-    @StringRes val nombreResId: Int,
-    @DrawableRes val imagenResId: Int,
-    @StringRes val descripcionResId: Int
+    val nombreResId: Int,
+    val imagenResId: Int,
+    val descripcionResId: Int  // Cambiado de String a Int (resource ID)
 )
 
 data class Detalle(
     val id: Int,
-    val nombre: String,
-    @DrawableRes val imagenResId: Int,
-    val descripcion: String,
+    val nombreResId: Int,      // Cambiado de String a Int (resource ID)
+    val imagenResId: Int,
+    val descripcionResId: Int, // Cambiado de String a Int (resource ID)
     val biomaId: Int,
     val categoriaId: Int
 )
 
-// =====================
-// DATOS PRIVADOS
-// =====================
-
 private val detalles = listOf(
-
     // Campos de setas
-    Detalle(1, "Champiñaca", R.drawable.champinaca, "Criatura del bioma", DataSource.BIOMA_SETAS, DataSource.CAT_CRIATURAS),
-    Detalle(2, "Cueva de setas", R.drawable.cueva_setas, "Estructura generada", DataSource.BIOMA_SETAS, DataSource.CAT_ESTRUCTURAS),
-    Detalle(3, "Hongos rojos", R.drawable.hongos_rojos, "Recurso comestible", DataSource.BIOMA_SETAS, DataSource.CAT_RECURSOS),
-    Detalle(4, "Setas gigantes", R.drawable.setas_gigantes, "Vegetación típica", DataSource.BIOMA_SETAS, DataSource.CAT_VEGETACION),
+    Detalle(1, R.string.champinaca, R.drawable.champinaca, R.string.desc_champinaca, BIOMA_SETAS, CAT_CRIATURAS),
+    Detalle(2, R.string.cueva_setas, R.drawable.cueva_setas, R.string.desc_cueva_setas, BIOMA_SETAS, CAT_ESTRUCTURAS),
+    Detalle(3, R.string.hongos_rojos, R.drawable.hongos_rojos, R.string.desc_hongos_rojos, BIOMA_SETAS, CAT_RECURSOS),
+    Detalle(4, R.string.setas_gigantes, R.drawable.setas_gigantes, R.string.desc_setas_gigantes, BIOMA_SETAS, CAT_VEGETACION),
 
     // Taiga
-    Detalle(5, "Lobo", R.drawable.lobo, "Criatura hostil", DataSource.BIOMA_TAIGA, DataSource.CAT_CRIATURAS),
-    Detalle(6, "Aldea Taiga", R.drawable.aldea_taiga, "Estructura generada", DataSource.BIOMA_TAIGA, DataSource.CAT_ESTRUCTURAS),
-    Detalle(7, "Madera de abeto", R.drawable.madera_abeto, "Recurso de madera", DataSource.BIOMA_TAIGA, DataSource.CAT_RECURSOS),
-    Detalle(8, "Abetos", R.drawable.abetos, "Vegetación típica", DataSource.BIOMA_TAIGA, DataSource.CAT_VEGETACION),
+    Detalle(5, R.string.lobo, R.drawable.lobo, R.string.desc_lobo, BIOMA_TAIGA, CAT_CRIATURAS),
+    Detalle(6, R.string.aldea_taiga, R.drawable.aldea_taiga, R.string.desc_aldea_taiga, BIOMA_TAIGA, CAT_ESTRUCTURAS),
+    Detalle(7, R.string.madera_abeto, R.drawable.madera_abeto, R.string.desc_madera_abeto, BIOMA_TAIGA, CAT_RECURSOS),
+    Detalle(8, R.string.abetos, R.drawable.abetos, R.string.desc_abetos, BIOMA_TAIGA, CAT_VEGETACION),
 
     // Jungla
-    Detalle(9, "Ocelote", R.drawable.ocelote, "Criatura salvaje", DataSource.BIOMA_JUNGLA, DataSource.CAT_CRIATURAS),
-    Detalle(10, "Templo de Jungla", R.drawable.templo_jungla, "Estructura generada", DataSource.BIOMA_JUNGLA, DataSource.CAT_ESTRUCTURAS),
-    Detalle(11, "Bambú", R.drawable.bambu, "Recurso vegetal", DataSource.BIOMA_JUNGLA, DataSource.CAT_RECURSOS),
-    Detalle(12, "Lianas", R.drawable.lianas, "Vegetación típica", DataSource.BIOMA_JUNGLA, DataSource.CAT_VEGETACION),
+    Detalle(9, R.string.ocelote, R.drawable.ocelote, R.string.desc_ocelote, BIOMA_JUNGLA, CAT_CRIATURAS),
+    Detalle(10, R.string.templo_jungla, R.drawable.templo_jungla, R.string.desc_templo_jungla, BIOMA_JUNGLA, CAT_ESTRUCTURAS),
+    Detalle(11, R.string.bambu, R.drawable.bambu, R.string.desc_bambu, BIOMA_JUNGLA, CAT_RECURSOS),
+    Detalle(12, R.string.lianas, R.drawable.lianas, R.string.desc_lianas, BIOMA_JUNGLA, CAT_VEGETACION),
 
     // Sabana
-    Detalle(13, "Caballo", R.drawable.caballo, "Criatura domesticable", DataSource.BIOMA_SABANA, DataSource.CAT_CRIATURAS),
-    Detalle(14, "Aldea Sabana", R.drawable.aldea_sabana, "Estructura generada", DataSource.BIOMA_SABANA, DataSource.CAT_ESTRUCTURAS),
-    Detalle(15, "Madera de acacia", R.drawable.madera_acacia, "Recurso de madera", DataSource.BIOMA_SABANA, DataSource.CAT_RECURSOS),
-    Detalle(16, "Acacias", R.drawable.acacias, "Vegetación típica", DataSource.BIOMA_SABANA, DataSource.CAT_VEGETACION)
+    Detalle(13, R.string.caballo, R.drawable.caballo, R.string.desc_caballo, BIOMA_SABANA, CAT_CRIATURAS),
+    Detalle(14, R.string.aldea_sabana, R.drawable.aldea_sabana, R.string.desc_aldea_sabana, BIOMA_SABANA, CAT_ESTRUCTURAS),
+    Detalle(15, R.string.madera_acacia, R.drawable.madera_acacia, R.string.desc_madera_acacia, BIOMA_SABANA, CAT_RECURSOS),
+    Detalle(16, R.string.acacias, R.drawable.acacias, R.string.desc_acacias, BIOMA_SABANA, CAT_VEGETACION)
 )
-
-// =====================
-// DATA SOURCE
-// =====================
 
 object DataSource {
 
-    // IDs de Biomas
     const val BIOMA_SETAS = 1
     const val BIOMA_TAIGA = 2
     const val BIOMA_JUNGLA = 3
     const val BIOMA_SABANA = 4
 
-    // IDs de Categorías
     const val CAT_ESTRUCTURAS = 1
     const val CAT_CRIATURAS = 2
     const val CAT_RECURSOS = 3
     const val CAT_VEGETACION = 4
 
-    // Lista de Biomas
     val biomas = listOf(
         Bioma(
             id = BIOMA_SETAS,
             nombreResId = R.string.campos_setas,
             imagenResId = R.drawable.mushrooms,
-            descripcionResId = R.string.descripcion_setas
+            descripcionResId = R.string.descripcion_campos_setas
         ),
         Bioma(
             id = BIOMA_TAIGA,
@@ -108,7 +98,6 @@ object DataSource {
         )
     )
 
-    // Lista de Categorías
     val categorias = listOf(
         Categoria(
             id = CAT_ESTRUCTURAS,
@@ -136,14 +125,12 @@ object DataSource {
         )
     )
 
-    // Obtener detalles filtrados
     fun obtenerDetalles(biomaId: Int, categoriaId: Int): List<Detalle> {
         return detalles.filter {
             it.biomaId == biomaId && it.categoriaId == categoriaId
         }
     }
 
-    // Obtener todos los detalles
     fun obtenerTodosLosDetalles(): List<Detalle> {
         return detalles
     }

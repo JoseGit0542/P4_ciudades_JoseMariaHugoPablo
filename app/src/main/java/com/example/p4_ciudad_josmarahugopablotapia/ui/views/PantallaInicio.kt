@@ -5,15 +5,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -48,7 +42,6 @@ fun PantallaInicio(
             .fillMaxSize()
             .statusBarsPadding()
             .windowInsetsPadding(WindowInsets.navigationBars)
-
     ) {
 
         Image(
@@ -128,8 +121,8 @@ fun PantallaInicio(
                 modifier = Modifier.fillMaxWidth(0.85f),
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
-                botonMinecraft(stringResource(R.string.begin), Modifier.weight(1f)) { onComienzaClick() }
-                botonMinecraft(stringResource(R.string.explore), Modifier.weight(1f)) { onObjetoClick() }
+                botonMinecraft(stringResource(R.string.boton_comenzar), Modifier.weight(1f)) { onComienzaClick() }
+                botonMinecraft(stringResource(R.string.boton_explorar), Modifier.weight(1f)) { onObjetoClick() }
             }
         }
 
@@ -143,10 +136,6 @@ fun PantallaInicio(
         )
     }
 }
-
-
-
-// --- Componentes de UI (Sin cambios lógicos, solo visuales) ---
 
 @Composable
 fun MinecraftPanelDescripcion(modifier: Modifier = Modifier, isDarkTheme: Boolean) {
@@ -170,12 +159,11 @@ fun MinecraftPanelDescripcion(modifier: Modifier = Modifier, isDarkTheme: Boolea
             text = stringResource(R.string.descripcionInicio),
             fontSize = 18.sp,
             fontFamily = MinecraftFont,
-            color = Color.White,  // dorado tipo Minecraft
+            color = Color.White,
             modifier = Modifier.fillMaxWidth(),
             textAlign = TextAlign.Center
         )
     }
-
 }
 
 @Composable
@@ -208,11 +196,6 @@ fun botonMinecraft(
     }
 }
 
-
-
-
-//en vez de usar minecraftTextDay usamos esto porque queremos que los colores de los botones
-//sean siempre amarillos
 @Composable
 fun textoBotonesInicio(text: String, modifier: Modifier = Modifier) {
     Box(modifier = modifier) {
@@ -237,8 +220,8 @@ fun textoBotonesInicio(text: String, modifier: Modifier = Modifier) {
     }
 }
 
-@Composable
 @Preview(showBackground = true, showSystemUi = true)
+@Composable
 fun PreviewPantallaInicio() {
     val fakeState = BottomBarState(
         inicio = true,
@@ -254,5 +237,3 @@ fun PreviewPantallaInicio() {
         bottomState = fakeState
     )
 }
-
-

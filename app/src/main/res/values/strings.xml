@@ -1,42 +1,99 @@
 <resources>
-    <string name = "descripcionInicio">Descrube recursos, criaturas y elementos del mundo de Minecraft.</string>
+    <string name = "descripcionInicio">Descubre recursos, criaturas y elementos del mundo de Minecraft.</string>
     <string name="app_name">Biomas de Minecraft</string>
 
     <string name="start">Empezar</string>
-    <string name="begin">Comenzar</string>
-    <string name="explore">Explorar</string>
     <string name="welcome">Explora los biomas de Minecraft</string>
 
     <!-- Biomas -->
     <string name="campos_setas">Campos de setas</string>
-    <string name="descripcion_setas">Un bioma lleno de setas gigantes</string>
     <string name="taiga">Taiga</string>
-    <string name="descripcion_taiga">Bosques frios con abetos.</string>
     <string name="jungla">Jungla</string>
-    <string name="descripcion_jungla">Vegetacion densa y humeda.</string>
     <string name="sabana">Sabana</string>
-    <string name="descripcion_sabana">Llanuras con hierba amarilla.</string>
     <string name="bosque">Bosque</string>
 
     <!-- Categorías -->
     <string name="estructuras">Estructuras</string>
-    <string name="descripcion_estructuras">Construcciones generadas automaticamente</string>
     <string name="criaturas">Criaturas</string>
-    <string name="descripcion_criaturas">Criaturas hostiles y no hostiles</string>
     <string name="recursos">Recursos</string>
-    <string name="descripcion_recursos">Elementos del inventario del jugador</string>
-    <string name="vegetacion">Vegetacion</string>
-    <string name="descripcion_vegetacion">Vegetacion generada segun el bioma</string>
+    <string name="vegetacion">Vegetación</string>
 
-    <string name = "elegirCategoria">Selecciona una categoria: </string>
-    <string name = "elegirBioma">Elige el bioma: </string>
-    <string name = "elegirOpcion">Elige la opcion que quieras</string>
-    <string name="desc_bosque">Un bioma con muchos arboles y animales</string>
-    <string name="nombre_desierto">Desierto</string>
-    <string name="desc_desierto">Un bioma con arena y cactus.</string>
-    <string name="mobs">Mobs</string>
-    <string name="desc_mobs">Criaturas vivas en Minecraft</string>
-    <string name="desc_estructuras">Estructuras y construcciones</string>
+    <!-- Títulos de pantallas -->
+    <string name = "elegirCategoria">Selecciona una categoría:</string>
+    <string name = "elegirBioma">Elige el bioma:</string>
+    <string name = "elegirOpcion">Elige la opción que quieras</string>
+    <string name="todos_los_elementos">Todos los elementos</string>
 
+    <!-- Botones -->
+    <string name="boton_comenzar">Comenzar</string>
+    <string name="boton_explorar">Explorar</string>
+    <string name="boton_ver_mas">Ver más</string>
+    <string name="boton_explora">Explora</string>
+    <string name="boton_cancelar">Cancelar</string>
+    <string name="boton_confirmar">Confirmar</string>
+    <string name="boton_inicio">Inicio</string>
+    <string name="boton_biomas">Biomas</string>
+    <string name="boton_categorias">Categorías</string>
+    <string name="boton_opciones">Opciones</string>
 
+    <!-- Descripciones de biomas (mejoradas) -->
+    <string name="descripcion_campos_setas">Un bioma mágico lleno de setas gigantes y criaturas únicas. Los hongos brillan en la oscuridad.</string>
+    <string name="descripcion_taiga">Bosques fríos con imponentes abetos y lobos. Ideal para conseguir madera oscura.</string>
+    <string name="descripcion_jungla">Vegetación densa y húmeda. Hogar de ocelotes, loros y templos ocultos.</string>
+    <string name="descripcion_sabana">Llanuras cálidas con hierba amarilla y acacias. Las aldeas son comunes aquí.</string>
+
+    <!-- Descripciones de categorías -->
+    <string name="descripcion_estructuras">Construcciones generadas automáticamente en el mundo. Contienen tesoros y peligros.</string>
+    <string name="descripcion_criaturas">Criaturas hostiles y amigables que habitan en los diferentes biomas.</string>
+    <string name="descripcion_recursos">Elementos que puedes obtener y utilizar en tu inventario.</string>
+    <string name="descripcion_vegetacion">Flora característica de cada bioma. Desde cactus hasta helechos.</string>
+
+    <!-- Nombres de objetos/elementos específicos -->
+    <string name="champinaca">Champiñaca</string>
+    <string name="desc_champinaca">Criatura única del bioma de setas. Es pasiva y puede ser esquilada.</string>
+
+    <string name="cueva_setas">Cueva de setas</string>
+    <string name="desc_cueva_setas">Estructura subterránea llena de hongos luminosos.</string>
+
+    <string name="hongos_rojos">Hongos rojos</string>
+    <string name="desc_hongos_rojos">Recurso comestible. Puedes usarlos para hacer estofado.</string>
+
+    <string name="setas_gigantes">Setas gigantes</string>
+    <string name="desc_setas_gigantes">Vegetación típica. Puedes cultivarlas con hueso molido.</string>
+
+    <string name="lobo">Lobo</string>
+    <string name="desc_lobo">Criatura domesticable. Protégete con huesos para tener un compañero.</string>
+
+    <string name="aldea_taiga">Aldea de taiga</string>
+    <string name="desc_aldea_taiga">Estructura generada con arquitectura de madera de abeto.</string>
+
+    <string name="madera_abeto">Madera de abeto</string>
+    <string name="desc_madera_abeto">Recurso de madera de color oscuro. Ideal para construcciones rústicas.</string>
+
+    <string name="abetos">Abetos</string>
+    <string name="desc_abetos">Árboles altos y delgados característicos de la taiga.</string>
+
+    <string name="ocelote">Ocelote</string>
+    <string name="desc_ocelote">Criatura salvaje de la jungla. Espanta a los creepers.</string>
+
+    <string name="templo_jungla">Templo de jungla</string>
+    <string name="desc_templo_jungla">Estructura con trampas de dispensadores y cofres ocultos.</string>
+
+    <string name="bambu">Bambú</string>
+    <string name="desc_bambu">Recurso vegetal de crecimiento rápido. Útil para andamios.</string>
+
+    <string name="lianas">Lianas</string>
+    <string name="desc_lianas">Vegetación trepadora. Puedes escalarlas sin necesidad de escaleras.</string>
+
+    <string name="caballo">Caballo</string>
+    <string name="desc_caballo">Criatura domesticable. El medio de transporte más rápido.</string>
+
+    <string name="aldea_sabana">Aldea de sabana</string>
+    <string name="desc_aldea_sabana">Construcciones de acacia típicas de las llanuras cálidas.</string>
+
+    <string name="madera_acacia">Madera de acacia</string>
+    <string name="desc_madera_acacia">Recurso de madera de color naranja. Muy decorativa.</string>
+
+    <string name="acacias">Acacias</string>
+    <string name="desc_acacias">Árboles de copa plana característicos de la sabana.</string>
 </resources>

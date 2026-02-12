@@ -23,9 +23,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.p4_ciudad_josmarahugopablotapia.R
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.grisMinecraftiano
 import com.example.p4_ciudad_josmarahugopablotapia.ui.theme.grisOscuroMinecraftiano
 import com.example.p4_ciudad_josmarahugopablotapia.viewModel.InicioViewModel
@@ -34,7 +36,7 @@ import com.example.p4_ciudad_josmarahugopablotapia.viewModel.InicioViewModel
 fun TarjetaBioma(
     titulo: String,
     imagenResId: Int,
-    descripcion: Int,
+    descripcion: String,
     onTextoClick: () -> Unit,
     miViewModel: InicioViewModel = viewModel()
 ) {
@@ -45,7 +47,7 @@ fun TarjetaBioma(
         modifier = Modifier
             .fillMaxWidth()
             .padding(4.dp)
-            .animateContentSize(), // animación de expansión
+            .animateContentSize(),
         color = if (uiState.isDarkTheme) grisOscuroMinecraftiano else grisMinecraftiano,
         shape = RoundedCornerShape(12.dp),
         shadowElevation = 2.dp,
@@ -53,12 +55,10 @@ fun TarjetaBioma(
     ) {
         Column(modifier = Modifier.padding(12.dp)) {
 
-            // ---------- TÍTULO ----------
             textoMinecraftTitulos(titulo, isDarkTheme = uiState.isDarkTheme)
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            // ---------- IMAGEN ----------
             Image(
                 painter = painterResource(imagenResId),
                 contentDescription = titulo,
@@ -66,11 +66,10 @@ fun TarjetaBioma(
                     .fillMaxWidth()
                     .height(160.dp)
                     .clip(RoundedCornerShape(10.dp))
-                    .clickable { expandido = !expandido },   // 🔹 Solo expande
+                    .clickable { expandido = !expandido },
                 contentScale = ContentScale.Crop
             )
 
-            // ---------- DESCRIPCIÓN + BOTÓN ----------
             if (expandido) {
                 Spacer(modifier = Modifier.height(8.dp))
 
@@ -82,9 +81,8 @@ fun TarjetaBioma(
 
                 Spacer(modifier = Modifier.height(12.dp))
 
-                // 🔹 BOTÓN MINECRAFT PARA NAVEGAR
                 Surface(
-                    color = Color(0xFFFFD700), // amarillo Minecraft
+                    color = Color(0xFFFFD700),
                     shape = RoundedCornerShape(6.dp),
                     border = BorderStroke(2.dp, Color.Black),
                     modifier = Modifier
@@ -92,7 +90,7 @@ fun TarjetaBioma(
                         .clickable { onTextoClick() }
                 ) {
                     Text(
-                        text = "Ver más",
+                        text = stringResource(R.string.boton_ver_mas),
                         fontSize = 18.sp,
                         color = Color.Black,
                         modifier = Modifier
